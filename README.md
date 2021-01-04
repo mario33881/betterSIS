@@ -76,9 +76,14 @@ You can:
     Download the .deb package file from [Github Release page here](https://github.com/mario33881/betterSIS/releases/latest) and
     install it using the following command:
     ```
-    dpkg -i <file>
+    sudo dpkg -i <file>
     ```
     > Replace ```<file>``` with the path of the .deb file
+
+    > It is necessary to use the super user to install the software,
+    > (the OS will ask for the root password)
+
+    > You can also install the .deb file by double clicking on it and then click "Install"
 
     Advantages:
     * Execute the shell from everywhere by executing the ```bsis``` command on the terminal.
@@ -97,6 +102,11 @@ You can:
     ```
     ./bsis
     ```
+    > If the command says "Permission denied", you need to set the file type to executable using this command:
+    > ```
+    > chmod +x bsis
+    > ```
+    > Make sure that you are in the same directory as the file
 
     Advantages:
     * No installation required
