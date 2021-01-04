@@ -74,7 +74,7 @@ Puoi:
 
 * (soluzione piu' comoda e facile) Installare il software:
 
-    Scarica il pacchetto .deb da [Github Release]() e
+    Scarica il pacchetto .deb da [Github Release](https://github.com/mario33881/betterSIS/releases/latest) e
     installalo utilizzando il seguente comando:
     ```
     dpkg -i <file>
@@ -93,7 +93,7 @@ Puoi:
 
 * Usare l'eseguibile creato da Pyinstaller:
     
-    Scaricare l'eseguibile creato da Pyinstaller dalla pagina [Github Release]()
+    Scaricare l'eseguibile creato da Pyinstaller dalla pagina [Github Release](https://github.com/mario33881/betterSIS/releases/latest)
 
     Puoi eseguire la shell eseguendo il file:
     ```

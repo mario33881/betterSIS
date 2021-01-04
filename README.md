@@ -73,7 +73,7 @@ You can:
 
 * (Easiest and best) Install the software:
 
-    Download the .deb package file from [Github Release page here]() and
+    Download the .deb package file from [Github Release page here](https://github.com/mario33881/betterSIS/releases/latest) and
     install it using the following command:
     ```
     dpkg -i <file>
@@ -91,7 +91,7 @@ You can:
 
 * Use the Pyinstaller executable:
     
-    Download the Pyinstaller executable from [Github Release page here]()
+    Download the Pyinstaller executable from [Github Release page here](https://github.com/mario33881/betterSIS/releases/latest)
 
     You can start the shell by executing the file:
     ```
