@@ -1,20 +1,188 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-SISCOMPLETER: Defines an object that helps for autocompletion of commands.
+BETTERSIS.SISCOMPLETER: 
+Defines an object that helps for autocompletion of commands.
 """
 
 __author__ = "Zenaro Stefano"
 
+import os
+import logging
 from prompt_toolkit.completion import NestedCompleter
+
+import siswrapper
 
 try:
     from ._version import __version__  # noqa: F401
 except ImportError:
     from _version import __version__  # noqa: F401
 
+boold = False
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
+
+
+def get_files():
+    """
+    Returns a dictionary with the files
+    in the current directory.
+    :return dict res: dictionary with files (the keys are filename, value is None)
+    """
+    res = {}
+    for f in os.listdir():
+        if os.path.isfile(f):
+            res[f] = None
+    return res
+
+
+def get_act_map_params():
+    """
+    Returns parameters for the act_map command.
+    :return dict params: dictionary with command parameters
+    """
+    files = get_files()
+    params = {}
+    params.update({
+        "-h": None,
+        "-n": None,
+        "-f": None,
+        "-g": None,
+        "-d": None,
+        "-r": files,
+        "-M": None,
+        "-q": None,
+        "-o": None,
+        "-l": None,
+        "-D": None,
+        "-s": None,
+        "-v": None,
+        })
+
+    return params
+
+
+def get_read_blif_params():
+    """
+    Returns parameters for the read_blif command.
+    :return dict params: dictionary with command parameters
+    """
+    files = get_files()
+
+    params = {
+        "-a": files
+    }
+
+    params.update(files)
+    return params
+
+
+def get_read_eqn_params():
+    """
+    Returns parameters for the read_eqn command.
+    :return dict params: dictionary with command parameters
+    """
+    files = get_files()
+
+    params = {
+        "-a": files
+    }
+
+    params.update(files)
+    return params
+
+
+def get_commands():  # noqa: C901
+    """
+    Returns commands.
+    # TODO: Probably should put a similar function inside the siswrapper library
+
+    :return dict commands: dictionary with commands
+    """
+    params = None
+
+    sis = siswrapper.Siswrapper()
+    if sis.res["success"]:
+        params = {}
+        help_res = sis.exec("help")
+
+        commands = help_res["stdout"].split("\r\n")
+
+        # get index of the start of the commands
+        # > can't split on spaces because the longest command collides
+        # > with the one after it
+        isspace = False
+        indexes = []
+        for index, letter in enumerate(commands[0]):
+            if letter == " ":
+                isspace = True
+            elif letter != " " and isspace is True:
+                isspace = False
+                indexes.append(index)
+
+        if indexes[-1] != len(commands[0]) - 1:
+            indexes.append(len(commands[0]) - 1)
+
+        # repeat this for the second line
+        # (just to be sure that the longest command is not on the first line)
+        isspace = False
+        indexes_secondline = []
+        for index, letter in enumerate(commands[1]):
+            if letter == " ":
+                isspace = True
+            elif letter != " " and isspace is True:
+                isspace = False
+                indexes_secondline.append(index)
+
+        if indexes_secondline[-1] != len(commands[1]) - 1:
+            indexes_secondline.append(len(commands[1]) - 1)
+
+        if boold:
+            print("GET_COMMANDS:")
+            print("indexes line one: ", indexes)
+            print("indexes line two: ", indexes_secondline)
+
+        # get the line with the most commands separated by spaces
+        correct_indexes = indexes_secondline
+        if len(indexes) > len(indexes_secondline):
+            correct_indexes = indexes
+
+        # loop for each command and prepare the bettersis parameters
+        for line in commands:
+            previndex = 0
+            for index in correct_indexes:
+                command = line[previndex:index].strip()
+                params[command] = None
+
+                if boold:
+                    print("Element from position {} to {}: {}".format(previndex, index, command))
+
+                previndex = index
+
+    return params
+
+
+def get_source_params():
+    """
+    Returns parameters for the source command.
+    :return dict params: dictionary with command parameters
+    """
+    files = get_files()
+
+    params = {
+        "script": None,
+        "script.boolean": None,
+        "script.algebraic": None,
+        "script.rugged": None,
+        "script.delay": None
+    }
+
+    params.update(files)
+    return params
+
+
 siscompleter = NestedCompleter.from_nested_dict({
-    "act_map": None,
+    "act_map": get_act_map_params(),
     "add_inverter": None,
     "alias": None,
     "astg_add_state": None,
@@ -41,13 +209,20 @@ siscompleter = NestedCompleter.from_nested_dict({
     "chng_name": None,
     "collapse": None,
     "constraints": None,
-    "decomp": None,
+    "decomp": {
+        "-g": None,
+        "-q": None,
+        "-d": None
+    },
     "echo": None,
-    "eliminate": None,
+    "eliminate": {
+        "-l": None
+    },
     "env_seq_dc": None,
     "env_verify_fsm": None,
     "equiv_nets": None,
     "espresso": None,
+    "exit": None,
     "extract_seq_dc": None,
     "factor": None,
     "fanout_alg": None,
@@ -58,7 +233,7 @@ siscompleter = NestedCompleter.from_nested_dict({
     "fx": None,
     "gcx": None,
     "gkx": None,
-    "help": None,
+    "help": get_commands(),
     "history": None,
     "invert": None,
     "invert_io": None,
@@ -87,10 +262,8 @@ siscompleter = NestedCompleter.from_nested_dict({
     "print_value": None,
     "quit": None,
     "read_astg": None,
-    "read_blif": {
-        "-a": None
-    },
-    "read_eqn": None,
+    "read_blif": get_read_blif_params(),
+    "read_eqn": get_read_eqn_params(),
     "read_kiss": None,
     "read_library": None,
     "read_pla": None,
@@ -111,11 +284,24 @@ siscompleter = NestedCompleter.from_nested_dict({
     "sim_verify": None,
     "simplify": None,
     "simulate": None,
-    "source": None,
+    "source": get_source_params(),
     "speed_up": None,
     "speedup_alg": None,
-    "state_assign": None,
-    "state_minimize": None,
+    "state_assign": {
+        "jedi": {
+            "-e": None,
+            "-h": None
+        },
+        "nova": {
+            "-e": None,
+            "-h": None
+        }
+    },
+    "state_minimize": {
+        "stamina": {
+            "-h": None
+        }
+    },
     "stg_cover": None,
     "stg_extract": None,
     "stg_to_astg": None,
@@ -133,8 +319,13 @@ siscompleter = NestedCompleter.from_nested_dict({
     "wd": None,
     "write_astg": None,
     "write_bdnet": None,
-    "write_blif": None,
-    "write_eqn": None,
+    "write_blif": {
+        "-s": None,
+        "-n": None
+    },
+    "write_eqn": {
+        "-s": None
+    },
     "write_kiss": None,
     "write_pds": None,
     "write_pla": None,
@@ -152,3 +343,11 @@ siscompleter = NestedCompleter.from_nested_dict({
     "xl_rl": None,
     "xl_split": None
 })
+
+
+if __name__ == "__main__":
+
+    print("commands:\n")
+    commands = get_commands()
+    for command in commands.keys():
+        print("* '{}'".format(command))
