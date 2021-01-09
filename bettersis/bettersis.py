@@ -7,6 +7,10 @@ BETTERSIS: The modern shell for SIS
 
 __author__ = "Zenaro Stefano"
 
+import logging
+import logging.handlers
+import platform
+
 import siswrapper
 from prompt_toolkit import PromptSession
 from prompt_toolkit import print_formatted_text, HTML
@@ -18,14 +22,18 @@ except ImportError:
     from _version import __version__  # noqa: F401
 
 import siscompleter
+import update_checker
 
 boold = False
+github_repository_url = "https://github.com/mario33881/betterSIS"
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
 
 
 class Bettersis:
     """
     Shows bettersis' interactive shell.
-    
+
     After the creation of an instance
     a SIS process is ready to receive commands.
     > The SIS process is started and controlled by the siswrapper library
@@ -39,11 +47,18 @@ class Bettersis:
     def __init__(self):
         self.res = {"success": False, "errors": [], "stdout": None}
         self.sis = siswrapper.Siswrapper()
-        self.lastcmd = ""
+        self.lastcmd = "FIRSTCOMMAND"
         self.lastcmd_success = False
 
         if self.sis.res["success"]:
             self.show_msg_on_startup()
+
+            updates_res = update_checker.check_updates("https://api.github.com/repos/mario33881/bettersis/releases", 
+                                                       __version__.split(" ")[1])
+            if updates_res["success"]:
+                if updates_res["update_available"]:
+                    print("\nNew Update Available! (latest: {})".format(updates_res["update_available"]))
+
             self.main()
         else:
             for error in self.sis.res["errors"]:
@@ -54,7 +69,7 @@ class Bettersis:
         Shows the message at the shell startup.
         """
         print("                                                                       ")
-        print(" ██████╗ ███████╗████████╗████████╗███████╗██████╗ ███████╗██╗███████╗ ")        
+        print(" ██████╗ ███████╗████████╗████████╗███████╗██████╗ ███████╗██╗███████╗ ")
         print(" ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗██╔════╝██║██╔════╝ ")
         print(" ██████╔╝█████╗     ██║      ██║   █████╗  ██████╔╝███████╗██║███████╗ ")
         print(" ██╔══██╗██╔══╝     ██║      ██║   ██╔══╝  ██╔══██╗╚════██║██║╚════██║ ")
@@ -76,15 +91,21 @@ class Bettersis:
         print("                                                                       ")
         print(" ===================================================================== ")
         print("                                                                       ")
-        print(" BetterSIS version:    {}".format(__version__)                          )
-        print(" BetterSIS repository: https://github.com/mario33881/bettersis         ")
-        print(" Siswrapper version:   {}".format(siswrapper.__version__)               )
-        print(" Running in the background: ", self.sis.res["stdout"]                   )
+        print(" BetterSIS version:    {}".format(__version__))
+        print(" BetterSIS repository: {}".format(github_repository_url))
+        print(" Siswrapper version:   {}".format(siswrapper.__version__))
+        print(" Running in the background: ", self.sis.res["stdout"])
+
+        logger.debug("[STARTUP_MESSAGE] Showing software versions "
+                     "(BetterSIS: %s, Siswrapper: %s, SIS: %s)" % (__version__,                                                       
+                                                                   siswrapper.__version__,
+                                                                   self.sis.res["stdout"]))
 
     def main(self):
         """
         Starts the interactive shell.
         """
+        # create a Session to memorize user commands
         session = PromptSession()
 
         # get the first command to show the custom toolbar
@@ -95,24 +116,30 @@ class Bettersis:
                                      bottom_toolbar="")                    # empty toolbar
 
         except (KeyboardInterrupt, EOFError):
-            pass
+            # user pressed Ctrl+C or Ctrl+D
+            logger.debug("[MAIN] User wants to exit the software (at least one command has been executed before)")
         else:
             # keep getting commands from the user
             while True:
                 try:
+                    logger.debug("[MAIN] User executed command: " + command.strip())
                     if command.strip() in ["exit", "quit"]:
                         break
-                    self.manage_multiple_commands(command.strip())
 
+                    self.manage_multiple_commands(command.strip())
+                    
+                    print("")
                     command = session.prompt('bsis> ',
-                                            completer=siscompleter.siscompleter,    # use completer from siscompleter.py
-                                            complete_in_thread=True,                # better performance for autocompletion
-                                            auto_suggest=AutoSuggestFromHistory(),  # suggest rest of command from history
-                                            bottom_toolbar=self.bottom_toolbar)     # add toolbar at the bottom
-                                            
+                                             completer=siscompleter.siscompleter,    # use completer from siscompleter.py
+                                             complete_in_thread=True,                # better performance for autocompletion
+                                             auto_suggest=AutoSuggestFromHistory(),  # suggest rest of command from history
+                                             bottom_toolbar=self.bottom_toolbar)     # add toolbar at the bottom
+
                 except (KeyboardInterrupt, EOFError):
+                    # user pressed Ctrl+C or Ctrl+D
+                    logger.debug("[MAIN] User wants to exit the software (at least one command has been executed before)")
                     break
-        
+
         # stop sis process
         self.sis.stop()
 
@@ -125,7 +152,7 @@ class Bettersis:
         toolbar = None
 
         if self.lastcmd != "":
-            toolbar_msg = f'Execution <b>{self.lastcmd}</b> command... '
+            toolbar_msg = f'Executing <b>{self.lastcmd}</b> command... '
 
             if self.lastcmd_success:
                 toolbar_msg += '<style bg="green">Done</style>'
@@ -133,6 +160,8 @@ class Bettersis:
                 toolbar_msg += '<style bg="red">Error</style>'
 
             toolbar = HTML(toolbar_msg)
+
+        logger.debug("[BOTTOM_TOOLBAR] %s" % toolbar)
 
         return toolbar
 
@@ -157,10 +186,13 @@ class Bettersis:
         # try to execute the best possible method
         # to parse the command output
         cmd_res = self.sis.parsed_exec(t_command)
-        
+
         if boold:
-            print_formatted_text(HTML("<b><skyblue>[DEBUG]</skyblue></b> Executed command: '{}'".format(t_command)))
-            print_formatted_text(HTML("<b><skyblue>[DEBUG]</skyblue></b> Returned: {}".format(cmd_res)))
+            print_formatted_text(HTML("<b><skyblue>[DEBUG]</skyblue></b> Executed command: '%s'" % t_command))
+            print_formatted_text(HTML("<b><skyblue>[DEBUG]</skyblue></b> Returned: %s" % cmd_res))
+
+        logger.debug("[%s-EXECUTED_COMMAND] %s" % (self.lastcmd, t_command))
+        logger.debug("[%s-SISWRAPPER_RETURN] %s" % (self.lastcmd, cmd_res))
 
         # set success status (used for the bottom toolbar)
         self.lastcmd_success = cmd_res["success"]
@@ -172,19 +204,20 @@ class Bettersis:
             for line in cmd_res["stdout"].split("\r\n"):
                 if not line.startswith("Warning:") or "warnings" not in cmd_res.keys():
                     print(line)
+                    logger.debug("[%s-STDOUT] %s" % (self.lastcmd, line))
 
         # if the command returns warnings, show the warnings
         if "warnings" in cmd_res.keys():
             if len(cmd_res["warnings"]) > 0:
-                print("")
-                print_formatted_text(HTML("<b>Command execution returned some warnings (which can probably be ignored):</b>"))
+                print_formatted_text(HTML("\n<b>Command execution returned some warnings (which can probably be ignored):</b>"))
                 for warning in cmd_res["warnings"]:
-                    print_formatted_text(HTML(warning.replace("Warning:", "<b><yellow>[Warning]</yellow></b>")))
-        
+                    formatted_warning = HTML(warning.replace("Warning:", "<b><yellow>[Warning]</yellow></b>"))
+                    print_formatted_text(formatted_warning)
+                    logger.debug("[%s-WARNINGS] %s" % (self.lastcmd, formatted_warning))
+
         # if the command returns errors, show the errors
         if len(cmd_res["errors"]) > 0:
-            print("")
-            print_formatted_text(HTML("<b>Command execution returned some ERRORS:</b>"))
+            print_formatted_text(HTML("\n<b>Command execution returned some ERRORS:</b>"))
             for error in cmd_res["errors"]:
                 error_msg = error.replace("[ERROR]", "<b><red>[ERROR]</red></b>")
 
@@ -192,9 +225,34 @@ class Bettersis:
                     error_msg = "<b><red>[ERROR]</red></b> " + error_msg
 
                 print_formatted_text(HTML(error_msg))
+                logger.debug("[%s-ERRORS] %s" % (self.lastcmd, error_msg))
 
 
 if __name__ == '__main__':
+
+    # remove NullHandler
+    logger.removeHandler(logger.handlers[0])
+
+    # create syslog handler
+    handler = logging.handlers.SysLogHandler(address='/dev/log', facility='local5')
+    logger.addHandler(handler)
+
+    # set handler's output format
+    formatter = logging.Formatter('bettersis[%(process)d]: %(levelname)s: [%(asctime)s]%(message)s')
+    handler.setFormatter(formatter)
+
+    if boold:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
+
+    logger.addHandler(handler)
+    logger.info("[PLATFORM] Using OS: %s" % platform.platform())
+    logger.info("[PLATFORM] OS version: %s" % platform.version())
+    logger.info("[PLATFORM] Python version: %s" % platform.python_version())
+
+    bettersis = None
+
     try:
         bettersis = Bettersis()
 
@@ -203,8 +261,12 @@ if __name__ == '__main__':
             print_formatted_text(HTML(error.replace("[ERROR]", "<b><red>[ERROR]</red></b>")))
 
     except Exception as e:
+        logger.critical("[MAIN] This error was unexpected and interrupted the program: ", exc_info=True)
         print_formatted_text(HTML("<red>Exception:</red> {}".format(e)))
+        print("\nPlease, (if someone didn't post this error already) create a Github Issue here: '{}'\n"
+              "and share the /var/log/pybettersis.log log file\nto help the developer to fix the problem\n".format(github_repository_url + "/issues"))
 
     # stop SIS's process if it is still running
-    if bettersis.sis.started:
-        bettersis.sis.stop()
+    if bettersis is not None:
+        if bettersis.sis.started:
+            bettersis.sis.stop()
