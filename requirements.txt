@@ -1,2 +1,2 @@
-siswrapper==1.1.0
+siswrapper==1.1.1
 prompt-toolkit==3.0.8

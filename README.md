@@ -80,6 +80,9 @@ You can:
     ```
     > Replace ```<file>``` with the path of the .deb file
 
+    > You can repeat this command on a new version to update
+    > the software.
+
     > It is necessary to use the super user to install the software,
     > (the OS will ask for the root password)
 
@@ -162,6 +165,18 @@ of this README.
 [Go to the index](#index)
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
+
+**2021-01-09 1.1.0:** <br>
+### Features:
+* Added logs to syslog to help solving problems (and ```/var/log/pybettersis.log``` for .deb package installations)
+* An "Update is available" message is shown when a new Github Release is online
+* Files are shown as parameters (for faster workflow)
+
+### Fixes:
+* ```sim``` command is treated the same as the ```simulate``` command
+* ```siswrapper 1.1.1``` can manage FSM outputs (fix: ```TypeError: 'NoneType' object is not subscriptable```)
+* Builds are made on an older OS (Ubuntu 12.04) to improve OS versions support
+> This should fix this problem: ```Error loading Python lib [...] GLIBC_2.29 not found```
 
 **2020-11-14 1.0.0:** <br>
 First commit

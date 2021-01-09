@@ -80,6 +80,8 @@ Puoi:
     sudo dpkg -i <file>
     ```
     > Sostituire ```<file>``` con il percorso del file .deb
+    
+    > E' possibile rieseguire questo comando per aggiornare il programma.
 
     > E' necessario utilizzare super user per installare il programma
     > (il sistema richiedera' la password di root)
@@ -164,6 +166,18 @@ un esempio di utilizzo.
 [Torna all'indice](#indice)
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
+
+**2021-01-09 1.1.0:** <br>
+### Funzionalita' aggiuntive:
+* Aggiunti log a syslog per aiutare lo sviluppare a risolvere problemi (e il file ```/var/log/pybettersis.log``` per chi installa il pacchetto .deb)
+* Un messaggio che dice "Un nuovo aggiornamento e' disponibile" appare all'avvio del programma quando una nuova Github Release e' online
+* I file sono mostrati come parametri di alcuni comandi (per velocizzare il workflow)
+
+### Fix:
+* Il comando ```sim``` e' trattato come il comando ```simulate```
+* ```siswrapper 1.1.1``` ora puo' gestire output delle FSM (fix: ```TypeError: 'NoneType' object is not subscriptable```)
+* Le build vengono create su un sistema operativo piu' vecchio (Ubuntu 12.04) per aumentare il supporto ad altre versioni di altri sistemi operativi
+> Questo dovrebbe sistemare il problema ```Error loading Python lib [...] GLIBC_2.29 not found```
 
 **2020-11-14 1.0.0:** <br>
 Primo commit
