@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from ._version import __version__
-from .bettersis import Bettersis
+try:
+    from ._version import __version__
+    from .bettersis import Bettersis
+
+except ImportError:
+    from _version import __version__
+    from bettersis import Bettersis
