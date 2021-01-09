@@ -1,4 +1,8 @@
 # BETTERSIS
+![BetterSIS](https://github.com/mario33881/betterSIS/workflows/BetterSIS/badge.svg)
+![Update Checker](https://github.com/mario33881/betterSIS/workflows/Update%20Checker/badge.svg)
+![Siscompleter](https://github.com/mario33881/betterSIS/workflows/Siscompleter/badge.svg)
+![Linter](https://github.com/mario33881/betterSIS/workflows/Linter/badge.svg)
 
 Bettersis, definito brevemente come "bsis", e' una **shell interattiva** 
 che permette di **controllare SIS** (lo strumento per la sintesi e l'ottimizzazione di circuiti sequenziali)
