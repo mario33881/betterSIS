@@ -63,8 +63,13 @@ the bottom toolbar and provides history and autocompletion of commands.
 
 ### Development requirements
 * the requirements specified above
-* Python 3
+* Python 3 (version >= 3.6)
+    > prompt-toolkit doesn't support older python 3 versions
 * the siswrapper library for Python: control SIS via Python
+* the prompt-toolkit library for Python: manages the modern shell and its features
+* (PyInstaller to build the executable)
+    > The OS you build the executable on should be the oldest possibile to support more updated OSes
+    > (builds are not backwards compatible)
 
 [Go to the index](#index)
 

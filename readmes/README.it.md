@@ -63,9 +63,14 @@ la toolbar in basso e fornisce l'autocompletamento e lo storico dei comandi.
 
 ### Requisiti per sviluppatori
 * I requisiti indicati nella sezione precedente
-* Python 3
+* Python 3 (versione >= 3.6)
+    > La libreria prompt-toolkit non supporta le versioni piu' vecchie di Python 3
 * La libreria siswrapper per Python: permette di controllare SIS da Python
+* La libreria prompt-toolkit per Python: gestisce la shell di betterSIS e le sue funzionalita'
 * (Pyinstaller per creare l'eseguibile)
+    > Il sistema operativo su cui si crea l'eseguibile dovrebbe essere il piu' vecchio possibile
+    > per supportare i sistemi operativi piu' moderni
+    > (Le build non sono retrocompatibili)
 
 [Torna all'indice](#indice)
 
