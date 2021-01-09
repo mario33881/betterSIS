@@ -1,0 +1,9 @@
+bettersis/__pycache__
+
+bettersis/bettersis.log
+bettersis/*.blif
+
+buildenv/
+.vagrant/
+
+tmp
