@@ -5,8 +5,8 @@ IFS=$'\n\t'
 SCRIPTDIR=$(dirname $(readlink -f $0))
 
 # get version from _version.py
-VERSION_LINE=$(sed "3q;d" bettersis/_version.py)
-read -ra version_arr -d '' <<<"$VERSION_LINE"
+VERSION_LINE=$(sed "3q;d" $SCRIPTDIR/bettersis/_version.py)
+IFS=' ' read -r -a version_arr <<< "$VERSION_LINE"
 VERSION=${version_arr[3]//\"}
 
 CONTROL_PATH=build/bettersis/DEBIAN/control
@@ -40,7 +40,6 @@ FILESIZE=$(bc -l <<< "scale = 0; $BYTE_FILESIZE / 1024")
 
 echo "[DEBUG] FILESIZE: $FILESIZE"
 echo "[DEBUG] BYTE_FILESIZE: $BYTE_FILESIZE"
-echo "[DEBUG] CHECKSUM_SHA1: $CHECKSUM_SHA1"
 
 # -- Make bettersis debian package
 echo ""
@@ -60,12 +59,13 @@ echo "Essential: no" >> $CONTROL_PATH
 echo "Installed-Size: $FILESIZE" >> $CONTROL_PATH
 echo "Maintainer: Zenaro Stefano" >> $CONTROL_PATH
 echo "Description: Improved interactive shell for SIS" >> $CONTROL_PATH
-echo "Homepage: https://github.com/mario33881/bettersis" >> $CONTROL_PATH
+echo "Homepage: https://github.com/mario33881/betterSIS" >> $CONTROL_PATH
 
 # create the postinst script that creates the syslog config file to also save the logs inside the /var/log/pybettersis.log file
 # then restart rsyslog to commit the configuration
 echo "#!/usr/bin/env bash" > $POSTINST_PATH
-echo "echo ':programname, startswith, \"bettersis\", -/var/log/pybettersis.log' > /etc/rsyslog.d/24-pybettersis.conf" >> $POSTINST_PATH
+echo "echo '\$template AppLogFormat, \"%TIMESTAMP:::date-pgsql%%TIMESTAMP:27:32:date-rfc3339%(%syslogseverity-text%)%msg%\n\"' > /etc/rsyslog.d/24-pybettersis.conf" >> $POSTINST_PATH
+echo "echo 'if \$app-name == '\''bettersis'\'' then -/var/log/pybettersis/pybettersis.log;AppLogFormat' >> /etc/rsyslog.d/24-pybettersis.conf" >> $POSTINST_PATH
 echo "echo '& ~' >> /etc/rsyslog.d/24-pybettersis.conf" >> $POSTINST_PATH
 echo "sudo service rsyslog restart" >> $POSTINST_PATH
 

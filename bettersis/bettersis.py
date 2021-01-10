@@ -264,7 +264,9 @@ if __name__ == '__main__':
         logger.critical("[MAIN] This error was unexpected and interrupted the program: ", exc_info=True)
         print_formatted_text(HTML("<red>Exception:</red> {}".format(e)))
         print("\nPlease, (if someone didn't post this error already) create a Github Issue here: '{}'\n"
-              "and share the /var/log/pybettersis.log log file\nto help the developer to fix the problem\n".format(github_repository_url + "/issues"))
+              "and share the '/var/log/pybettersis/pybettersis.log' log file\nto help the developer to fix the problem\n".format(github_repository_url + "/issues"))
+        print("> If you are using the PyInstaller build, execute this command:")
+        print("> 'cat /var/log/syslog | grep \"bettersis\" > pybettersis.log' to create the log file inside the current directory.")
 
     # stop SIS's process if it is still running
     if bettersis is not None:
