@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-BETTERSIS.UPDATE_CHECKER: 
+BETTERSIS.UPDATE_CHECKER:
 contains function that help BetterSIS to check for updates
 """
 
@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
     import pprint
     ghreleases_apiurl = "https://api.github.com/repos/mario33881/bettersis/releases"
-    
+
     print("This is a simple test for this module:")
 
     updates = check_updates(ghreleases_apiurl, "0.0.0")

@@ -53,7 +53,7 @@ class Bettersis:
         if self.sis.res["success"]:
             self.show_msg_on_startup()
 
-            updates_res = update_checker.check_updates("https://api.github.com/repos/mario33881/bettersis/releases", 
+            updates_res = update_checker.check_updates("https://api.github.com/repos/mario33881/bettersis/releases",
                                                        __version__.split(" ")[1])
             if updates_res["success"]:
                 if updates_res["update_available"]:
@@ -97,7 +97,7 @@ class Bettersis:
         print(" Running in the background: ", self.sis.res["stdout"])
 
         logger.debug("[STARTUP_MESSAGE] Showing software versions "
-                     "(BetterSIS: %s, Siswrapper: %s, SIS: %s)" % (__version__,                                                       
+                     "(BetterSIS: %s, Siswrapper: %s, SIS: %s)" % (__version__,
                                                                    siswrapper.__version__,
                                                                    self.sis.res["stdout"]))
 
@@ -127,7 +127,7 @@ class Bettersis:
                         break
 
                     self.manage_multiple_commands(command.strip())
-                    
+
                     print("")
                     command = session.prompt('bsis> ',
                                              completer=siscompleter.siscompleter,    # use completer from siscompleter.py
@@ -209,7 +209,8 @@ class Bettersis:
         # if the command returns warnings, show the warnings
         if "warnings" in cmd_res.keys():
             if len(cmd_res["warnings"]) > 0:
-                print_formatted_text(HTML("\n<b>Command execution returned some warnings (which can probably be ignored):</b>"))
+                print_formatted_text(HTML("\n<b>Command execution returned some "
+                                          "warnings (which can probably be ignored):</b>"))
                 for warning in cmd_res["warnings"]:
                     formatted_warning = HTML(warning.replace("Warning:", "<b><yellow>[Warning]</yellow></b>"))
                     print_formatted_text(formatted_warning)
@@ -264,9 +265,11 @@ if __name__ == '__main__':
         logger.critical("[MAIN] This error was unexpected and interrupted the program: ", exc_info=True)
         print_formatted_text(HTML("<red>Exception:</red> {}".format(e)))
         print("\nPlease, (if someone didn't post this error already) create a Github Issue here: '{}'\n"
-              "and share the '/var/log/pybettersis/pybettersis.log' log file\nto help the developer to fix the problem\n".format(github_repository_url + "/issues"))
+              "and share the '/var/log/pybettersis/pybettersis.log' log file\n"
+              "to help the developer to fix the problem\n".format(github_repository_url + "/issues"))
         print("> If you are using the PyInstaller build, execute this command:")
-        print("> 'cat /var/log/syslog | grep \"bettersis\" > pybettersis.log' to create the log file inside the current directory.")
+        print("> 'cat /var/log/syslog | grep \"bettersis\" > pybettersis.log'\n"
+              "to create the log file inside the current directory.")
 
     # stop SIS's process if it is still running
     if bettersis is not None:

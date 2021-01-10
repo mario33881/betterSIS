@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-BETTERSIS.SISCOMPLETER: 
+BETTERSIS.SISCOMPLETER:
 Defines an object that helps for autocompletion of commands.
 """
 

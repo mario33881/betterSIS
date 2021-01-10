@@ -27,7 +27,7 @@ class TestUpdateChecker(unittest.TestCase):
 
     def test_extract_version(self):
         """
-        Tests extract_version() function: 
+        Tests extract_version() function:
         extracts the version numbers from a string.
         """
         ver_data = update_checker.extract_version("")
@@ -72,10 +72,10 @@ class TestUpdateChecker(unittest.TestCase):
         self.assertEqual(ver_data["major_version"], 1)
         self.assertEqual(ver_data["minor_version"], 2)
         self.assertEqual(ver_data["patch_version"], 3)
-    
+
     def test_check_updates(self):
         """
-        Tests check_updates() function: tells if an update is available 
+        Tests check_updates() function: tells if an update is available
         and, if so, which version is the latest version.
         """
         cu_data = update_checker.check_updates("https://api.github.com/repos/mario33881/bettersis/releases",
