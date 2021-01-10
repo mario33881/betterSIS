@@ -178,7 +178,7 @@ of this README.
 
 **2021-01-09 1.1.0:** <br>
 ### Features:
-* Added logs to syslog to help solving problems (and ```/var/log/pybettersis.log``` for .deb package installations)
+* Added logs to syslog to help solving problems (and ```/var/log/pybettersis/pybettersis.log``` for .deb package installations)
 * An "Update is available" message is shown when a new Github Release is online
 * Files are shown as parameters (for faster workflow)
 

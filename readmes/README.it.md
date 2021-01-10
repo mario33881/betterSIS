@@ -178,7 +178,7 @@ un esempio di utilizzo.
 
 **2021-01-09 1.1.0:** <br>
 ### Funzionalita' aggiuntive:
-* Aggiunti log a syslog per aiutare lo sviluppare a risolvere problemi (e il file ```/var/log/pybettersis.log``` per chi installa il pacchetto .deb)
+* Aggiunti log a syslog per aiutare lo sviluppare a risolvere problemi (e il file ```/var/log/pybettersis/pybettersis.log``` per chi installa il pacchetto .deb)
 * Un messaggio che dice "Un nuovo aggiornamento e' disponibile" appare all'avvio del programma quando una nuova Github Release e' online
 * I file sono mostrati come parametri di alcuni comandi (per velocizzare il workflow)
 
