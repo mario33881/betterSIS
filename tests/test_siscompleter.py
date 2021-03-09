@@ -39,6 +39,15 @@ class TestSiscompleter(unittest.TestCase):
             self.assertIsNone(files[file_param], "files don't have sub-parameters")
             self.assertEqual(type(file_param), str, "files should be strings")
 
+    def test_get_folders(self):
+        """
+        Tests the get_folders() function.
+        """
+        folders = siscompleter.get_folders()
+        for folder_param in folders.keys():
+            self.assertIsNone(folders[folder_param], "folders don't have sub-parameters")
+            self.assertEqual(type(folder_param), str, "folders should be strings")
+
     def test_get_act_map_params(self):
         """
         Tests the get_act_map_params() function.

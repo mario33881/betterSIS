@@ -10,6 +10,8 @@ __author__ = "Zenaro Stefano"
 import logging
 import logging.handlers
 import platform
+import re
+import os
 
 import siswrapper
 from prompt_toolkit import PromptSession
@@ -23,11 +25,30 @@ except ImportError:
 
 import siscompleter
 import update_checker
+import texteditor
 
 boold = False
 github_repository_url = "https://github.com/mario33881/betterSIS"
+bettersis_cmds = [
+    "edit",
+    "cd",
+    "ls",
+]
+
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
+
+
+def show_ghissues_msg():
+    """
+    Shows the "please, report this to the developer" message.
+    """
+    print("\nPlease, (if someone didn't post this error already) create a Github Issue here: '{}'\n"
+          "and share the '/var/log/pybettersis/pybettersis.log' log file\n"
+          "to help the developer to fix the problem\n".format(github_repository_url + "/issues"))
+    print("> If you are using the PyInstaller build, execute this command:")
+    print("> 'cat /var/log/syslog | grep \"bettersis\" > pybettersis.log'\n"
+          "to create the log file inside the current directory.")
 
 
 class Bettersis:
@@ -111,9 +132,9 @@ class Bettersis:
         # get the first command to show the custom toolbar
         try:
             command = session.prompt('bsis> ',
-                                     completer=siscompleter.siscompleter,  # use completer from siscompleter.py
-                                     complete_in_thread=True,              # better performance for autocompletion
-                                     bottom_toolbar="")                    # empty toolbar
+                                     completer=siscompleter.get_siscompleter(),  # use completer from siscompleter.py
+                                     complete_in_thread=True,                    # better performance for autocompletion
+                                     bottom_toolbar="")                          # empty toolbar
 
         except (KeyboardInterrupt, EOFError):
             # user pressed Ctrl+C or Ctrl+D
@@ -130,10 +151,10 @@ class Bettersis:
 
                     print("")
                     command = session.prompt('bsis> ',
-                                             completer=siscompleter.siscompleter,    # use completer from siscompleter.py
-                                             complete_in_thread=True,                # better performance for autocompletion
-                                             auto_suggest=AutoSuggestFromHistory(),  # suggest rest of command from history
-                                             bottom_toolbar=self.bottom_toolbar)     # add toolbar at the bottom
+                                             completer=siscompleter.get_siscompleter(),  # use completer from siscompleter.py
+                                             complete_in_thread=True,                    # better performance for autocompletion
+                                             auto_suggest=AutoSuggestFromHistory(),      # suggest rest of command from history
+                                             bottom_toolbar=self.bottom_toolbar)         # add toolbar at the bottom
 
                 except (KeyboardInterrupt, EOFError):
                     # user pressed Ctrl+C or Ctrl+D
@@ -168,11 +189,139 @@ class Bettersis:
     def manage_multiple_commands(self, t_commands):
         """
         Executes the command(s) <t_commands>.
-        :param str t_commands: command(s) to execute using SIS
+        :param str t_commands: command(s) to execute (using SIS or special bSIS commands)
         """
         # loop for each command separated by ";"
         for command in t_commands.split(";"):
-            self.manage_command(command.strip())
+            if command.strip().split(" ")[0] in bettersis_cmds:
+                # intercept betterSIS commands
+                self.manage_bsis_command(command.strip())
+            else:
+                # manage SIS commands
+                self.manage_command(command.strip())
+
+    def manage_bsis_command(self, t_command):
+        """
+        Executes the <t_command> command betterSIS.
+        :param str t_command: custom betterSIS command to execute
+        """
+        # memorize command to show it on the toolbar
+        command = t_command.split(" ")[0]
+        self.lastcmd = command
+
+        cd_matches = re.match(r"cd[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
+        ls_matches = re.match(r"ls[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
+        edit_matches = re.match(r"edit[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
+        
+        logger.debug("[%s-BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+
+        # cd command
+        if cd_matches:
+            if cd_matches.groups()[0].strip() != "":
+                self.bsiscmd_cd(cd_matches.groups()[0])
+                logger.debug("[%s-EXECUTED_CD_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+            else:
+                logger.debug("[%s-EXECUTED_INCOMPLETE_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+                error_msg = "<b><red>[ERROR]</red></b> Incomplete cd command (need to specify the directory)"
+                print_formatted_text(HTML(error_msg))
+                self.lastcmd_success = False
+
+        # ls command
+        elif t_command == "ls":
+            self.bsiscmd_ls("")
+            logger.debug("[%s-EXECUTED_LS_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+
+        elif ls_matches:
+            if ls_matches.groups()[0].strip() != "":
+                self.bsiscmd_ls(ls_matches.groups()[0])
+                logger.debug("[%s-EXECUTED_LS_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+            else:
+                error_msg = "<b><red>[ERROR]</red></b> Incomplete ls command"
+                logger.debug("[%s-EXECUTED_INCOMPLETE_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+                print_formatted_text(HTML(error_msg))
+                self.lastcmd_success = False
+        
+        # edit command
+        elif edit_matches:
+            if edit_matches.groups()[0].strip() != "":
+                self.bsiscmd_edit(edit_matches.groups()[0])
+                logger.debug("[%s-EXECUTED_EDIT_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+            else:
+                error_msg = "<b><red>[ERROR]</red></b> Incomplete edit command (need to specify the filename to edit)"
+                logger.debug("[%s-EXECUTED_INCOMPLETE_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+                print_formatted_text(HTML(error_msg))
+                self.lastcmd_success = False
+        
+        # unexpected bsis command
+        else:
+            self.lastcmd_success = False
+            error_msg = "<b><red>[ERROR]</red></b> Unexpected betterSIS command ('" + t_command + "')..."
+            show_ghissues_msg()
+            logger.critical("[%s-UNKNOWN_BSIS_COMMAND] %s" % (self.lastcmd, t_command), exc_info=True)
+            print_formatted_text(HTML(error_msg))
+    
+    def bsiscmd_cd(self, t_path):
+        """
+        Changes current directory to the <t_path> directory.
+        :param str t_path: new working path
+        """
+        if os.path.isdir(t_path):
+            os.chdir(t_path)
+            self.lastcmd_success = True
+        else:
+            self.lastcmd_success = False
+            error_msg = "<b><red>[ERROR]</red></b> '" + t_path + "' folder doesn't exist"
+            print_formatted_text(HTML(error_msg))
+    
+    def bsiscmd_ls(self, t_path):
+        """
+        Lists files and directories inside the <t_path> folder.
+        :param str t_path: path in which to execute the "ls" command
+        """
+        if t_path == "":
+            # show files and directories inside the current folder
+            print_formatted_text(HTML("<orange>(F)iles</orange> and <blue>(D)irectories</blue> inside '" + os.getcwd() + "'"))
+            print("-" * 50)
+            self.lastcmd_success = True
+            for el in os.listdir():
+                if os.path.isdir(el):
+                    print_formatted_text(HTML("<blue>(D) " + el + "</blue>"))
+                else:
+                    print_formatted_text(HTML("<orange>(F) " + el + "</orange>"))
+            
+        elif os.path.isdir(t_path):
+            # show files and directories inside the specified folder
+            print_formatted_text(HTML("<orange>(F)iles</orange> and <blue>(D)irectories</blue> inside '" + t_path + "'"))
+            print("-" * 50)
+            self.lastcmd_success = True
+            for el in os.listdir(t_path):
+                if os.path.isdir(el):
+                    print_formatted_text(HTML("<blue>(D) " + el + "</blue>"))
+                else:
+                    print_formatted_text(HTML("<orange>(F) " + el + "</orange>"))
+        else:
+            self.lastcmd_success = False
+            error_msg = "<b><red>[ERROR]</red></b> '" + t_path + "' folder doesn't exist"
+            print_formatted_text(HTML(error_msg))
+
+    def bsiscmd_edit(self, t_path):
+        """
+        Opens the <t_path> file with the text editor.
+        :param str t_path: path of the file to open.
+        """
+        directory = os.path.dirname(os.path.abspath(t_path))
+        if os.path.isdir(directory):
+            self.lastcmd_success = True
+
+            # the directory exists, make sure that the file exists
+            with open(t_path, "a") as f:
+                pass
+            
+            # open it with the text editor
+            texteditor.SimpleTextEditor(t_path)
+        else:
+            error_msg = "<b><red>[ERROR]</red></b> '" + directory + "' folder doesn't exist (can't open/create file)"
+            self.lastcmd_success = False
 
     def manage_command(self, t_command):
         """
@@ -264,12 +413,7 @@ if __name__ == '__main__':
     except Exception as e:
         logger.critical("[MAIN] This error was unexpected and interrupted the program: ", exc_info=True)
         print_formatted_text(HTML("<red>Exception:</red> {}".format(e)))
-        print("\nPlease, (if someone didn't post this error already) create a Github Issue here: '{}'\n"
-              "and share the '/var/log/pybettersis/pybettersis.log' log file\n"
-              "to help the developer to fix the problem\n".format(github_repository_url + "/issues"))
-        print("> If you are using the PyInstaller build, execute this command:")
-        print("> 'cat /var/log/syslog | grep \"bettersis\" > pybettersis.log'\n"
-              "to create the log file inside the current directory.")
+        show_ghissues_msg()
 
     # stop SIS's process if it is still running
     if bettersis is not None:

@@ -36,6 +36,23 @@ def get_files():
     return res
 
 
+def get_folders():
+    """
+    Returns a dictionary with the folders
+    in the current directory.
+    :return dict res: dictionary with directories (the keys are directory names, value is None)
+    """
+    res = {}
+    
+    res[".."] = None
+
+    for f in os.listdir():
+        if os.path.isdir(f):
+            res[f] = None
+    
+    return res
+
+
 def get_act_map_params():
     """
     Returns parameters for the act_map command.
@@ -181,168 +198,177 @@ def get_source_params():
     return params
 
 
-siscompleter = NestedCompleter.from_nested_dict({
-    "act_map": get_act_map_params(),
-    "add_inverter": None,
-    "alias": None,
-    "astg_add_state": None,
-    "astg_contract": None,
-    "astg_current": None,
-    "astg_encode": None,
-    "astg_lockgraph": None,
-    "astg_marking": None,
-    "astg_persist": None,
-    "astg_print_sg": None,
-    "astg_print_stat": None,
-    "astg_slow": None,
-    "astg_state_min": None,
-    "astg_stg_scr": None,
-    "astg_syn": None,
-    "astg_to_f": None,
-    "astg_to_stg": None,
-    "atpg": None,
-    "bdsyn": None,
-    "buffer_opt": None,
-    "c_check": None,
-    "c_opt": None,
-    "chng_clock": None,
-    "chng_name": None,
-    "collapse": None,
-    "constraints": None,
-    "decomp": {
-        "-g": None,
-        "-q": None,
-        "-d": None
-    },
-    "echo": None,
-    "eliminate": {
-        "-l": None
-    },
-    "env_seq_dc": None,
-    "env_verify_fsm": None,
-    "equiv_nets": None,
-    "espresso": None,
-    "exit": None,
-    "extract_seq_dc": None,
-    "factor": None,
-    "fanout_alg": None,
-    "fanout_param": None,
-    "force_init_0": None,
-    "free_dc": None,
-    "full_simplify": None,
-    "fx": None,
-    "gcx": None,
-    "gkx": None,
-    "help": get_commands(),
-    "history": None,
-    "invert": None,
-    "invert_io": None,
-    "ite_map": None,
-    "latch_output": None,
-    "map": None,
-    "one_hot": None,
-    "phase": None,
-    "power_estimate": None,
-    "power_free_info": None,
-    "power_print": None,
-    "print": None,
-    "print_altname": None,
-    "print_clock": None,
-    "print_delay": None,
-    "print_factor": None,
-    "print_gate": None,
-    "print_io": None,
-    "print_kernel": None,
-    "print_latch": None,
-    "print_level": None,
-    "print_library": None,
-    "print_map_stats": None,
-    "print_state": None,
-    "print_stats": None,
-    "print_value": None,
-    "quit": None,
-    "read_astg": None,
-    "read_blif": get_read_blif_params(),
-    "read_eqn": get_read_eqn_params(),
-    "read_kiss": None,
-    "read_library": None,
-    "read_pla": None,
-    "read_slif": None,
-    "red_removal": None,
-    "reduce_depth": None,
-    "remove_dep": None,
-    "remove_latches": None,
-    "replace": None,
-    "reset_name": None,
-    "resub": None,
-    "retime": None,
-    "save": None,
-    "set": None,
-    "set_delay": None,
-    "set_state": None,
-    "short_tests": None,
-    "sim_verify": None,
-    "simplify": None,
-    "simulate": None,
-    "source": get_source_params(),
-    "speed_up": None,
-    "speedup_alg": None,
-    "state_assign": {
-        "jedi": {
-            "-e": None,
-            "-h": None
+def get_siscompleter():
+    """
+    Returns the siscompleter object.
+    """
+    siscompleter = NestedCompleter.from_nested_dict({
+        "act_map": get_act_map_params(),
+        "add_inverter": None,
+        "alias": None,
+        "astg_add_state": None,
+        "astg_contract": None,
+        "astg_current": None,
+        "astg_encode": None,
+        "astg_lockgraph": None,
+        "astg_marking": None,
+        "astg_persist": None,
+        "astg_print_sg": None,
+        "astg_print_stat": None,
+        "astg_slow": None,
+        "astg_state_min": None,
+        "astg_stg_scr": None,
+        "astg_syn": None,
+        "astg_to_f": None,
+        "astg_to_stg": None,
+        "atpg": None,
+        "bdsyn": None,
+        "buffer_opt": None,
+        "c_check": None,
+        "c_opt": None,
+        "chng_clock": None,
+        "chng_name": None,
+        "collapse": None,
+        "constraints": None,
+        "decomp": {
+            "-g": None,
+            "-q": None,
+            "-d": None
         },
-        "nova": {
-            "-e": None,
-            "-h": None
-        }
-    },
-    "state_minimize": {
-        "stamina": {
-            "-h": None
-        }
-    },
-    "stg_cover": None,
-    "stg_extract": None,
-    "stg_to_astg": None,
-    "stg_to_network": None,
-    "sweep": None,
-    "tech_decomp": None,
-    "time": None,
-    "timeout": None,
-    "unalias": None,
-    "undo": None,
-    "unset": None,
-    "usage": None,
-    "verify": None,
-    "verify_fsm": None,
-    "wd": None,
-    "write_astg": None,
-    "write_bdnet": None,
-    "write_blif": {
-        "-s": None,
-        "-n": None
-    },
-    "write_eqn": {
-        "-s": None
-    },
-    "write_kiss": None,
-    "write_pds": None,
-    "write_pla": None,
-    "write_slif": None,
-    "xl_absorb": None,
-    "xl_ao": None,
-    "xl_coll_ck": None,
-    "xl_cover": None,
-    "xl_decomp_two": None,
-    "xl_imp": None,
-    "xl_k_decomp": None,
-    "xl_merge": None,
-    "xl_part_coll": None,
-    "xl_partition": None,
-    "xl_rl": None,
-    "xl_split": None
-})
+        "echo": None,
+        "eliminate": {
+            "-l": None
+        },
+        "env_seq_dc": None,
+        "env_verify_fsm": None,
+        "equiv_nets": None,
+        "espresso": None,
+        "exit": None,
+        "extract_seq_dc": None,
+        "factor": None,
+        "fanout_alg": None,
+        "fanout_param": None,
+        "force_init_0": None,
+        "free_dc": None,
+        "full_simplify": None,
+        "fx": None,
+        "gcx": None,
+        "gkx": None,
+        "help": get_commands(),
+        "history": None,
+        "invert": None,
+        "invert_io": None,
+        "ite_map": None,
+        "latch_output": None,
+        "map": None,
+        "one_hot": None,
+        "phase": None,
+        "power_estimate": None,
+        "power_free_info": None,
+        "power_print": None,
+        "print": None,
+        "print_altname": None,
+        "print_clock": None,
+        "print_delay": None,
+        "print_factor": None,
+        "print_gate": None,
+        "print_io": None,
+        "print_kernel": None,
+        "print_latch": None,
+        "print_level": None,
+        "print_library": None,
+        "print_map_stats": None,
+        "print_state": None,
+        "print_stats": None,
+        "print_value": None,
+        "quit": None,
+        "read_astg": None,
+        "read_blif": get_read_blif_params(),
+        "read_eqn": get_read_eqn_params(),
+        "read_kiss": None,
+        "read_library": None,
+        "read_pla": None,
+        "read_slif": None,
+        "red_removal": None,
+        "reduce_depth": None,
+        "remove_dep": None,
+        "remove_latches": None,
+        "replace": None,
+        "reset_name": None,
+        "resub": None,
+        "retime": None,
+        "save": None,
+        "set": None,
+        "set_delay": None,
+        "set_state": None,
+        "short_tests": None,
+        "sim_verify": None,
+        "simplify": None,
+        "simulate": None,
+        "source": get_source_params(),
+        "speed_up": None,
+        "speedup_alg": None,
+        "state_assign": {
+            "jedi": {
+                "-e": None,
+                "-h": None
+            },
+            "nova": {
+                "-e": None,
+                "-h": None
+            }
+        },
+        "state_minimize": {
+            "stamina": {
+                "-h": None
+            }
+        },
+        "stg_cover": None,
+        "stg_extract": None,
+        "stg_to_astg": None,
+        "stg_to_network": None,
+        "sweep": None,
+        "tech_decomp": None,
+        "time": None,
+        "timeout": None,
+        "unalias": None,
+        "undo": None,
+        "unset": None,
+        "usage": None,
+        "verify": None,
+        "verify_fsm": None,
+        "wd": None,
+        "write_astg": None,
+        "write_bdnet": None,
+        "write_blif": {
+            "-s": None,
+            "-n": None
+        },
+        "write_eqn": {
+            "-s": None
+        },
+        "write_kiss": None,
+        "write_pds": None,
+        "write_pla": None,
+        "write_slif": None,
+        "xl_absorb": None,
+        "xl_ao": None,
+        "xl_coll_ck": None,
+        "xl_cover": None,
+        "xl_decomp_two": None,
+        "xl_imp": None,
+        "xl_k_decomp": None,
+        "xl_merge": None,
+        "xl_part_coll": None,
+        "xl_partition": None,
+        "xl_rl": None,
+        "xl_split": None,
+        "cd": get_folders(),
+        "ls": get_folders(),
+        "edit": get_files()
+    })
+
+    return siscompleter
 
 
 if __name__ == "__main__":
