@@ -39,7 +39,7 @@ class TestLexer(unittest.TestCase):
         testtext = TestText(".model test")
 
         chars_prop = lexer.lex_document(testtext)(0)
-        
+
         # "." blue
         char_color = chars_prop[0][0]
         char = chars_prop[0][1]

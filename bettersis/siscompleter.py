@@ -43,13 +43,13 @@ def get_folders():
     :return dict res: dictionary with directories (the keys are directory names, value is None)
     """
     res = {}
-    
+
     res[".."] = None
 
     for f in os.listdir():
         if os.path.isdir(f):
             res[f] = None
-    
+
     return res
 
 

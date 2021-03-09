@@ -8,14 +8,13 @@ Features:
 * syntax highlighting
 
 > This code was inspired by the prompt_toolkit example:
-> https://github.com/prompt-toolkit/python-prompt-toolkit/blob/7fdd81597597a7a2f47655238b7f0cb3ea637091/examples/full-screen/text-editor.py
+> https://github.com/prompt-toolkit/python-prompt-toolkit/blob/7fdd81597597a7a2f47655238b7f0cb3ea637091/examples/full-screen/text-editor.py  # noqa: E501
 
 """
 
 __author__ = "Zenaro Stefano"
 
 import os
-from asyncio import Future, ensure_future
 
 from prompt_toolkit.application import Application
 from prompt_toolkit.application.current import get_app
@@ -41,8 +40,8 @@ except ImportError:
     from _version import __version__  # noqa: F401
 
 keywords = [
-    ".model", 
-    ".inputs", 
+    ".model",
+    ".inputs",
     ".outputs",
     ".names",
     ".exdc",
@@ -102,7 +101,7 @@ class SisLexer(Lexer):
                         color = "Green"
                         commented = True
                     colored_words.append((color, char))
-                
+
                 colored_words.append((color, " "))
 
             return colored_words
@@ -120,10 +119,10 @@ class SimpleTextEditor():
         """
         if not os.path.isfile(t_file):
             raise Exception("ERROR: '{}' file doesn't exist".format(t_file))
-        
+
         # define highlighter/completer
         sis_completer = WordCompleter(keywords, ignore_case=False)
-        
+
         # create the text field with the content of the file
         self.text_field = None
 
@@ -153,7 +152,7 @@ class SimpleTextEditor():
                         ),
                     ],
                     height=1,
-                ) 
+                )
             ]
         )
 
@@ -162,12 +161,10 @@ class SimpleTextEditor():
 
         # define control hotkeys
 
-
         @bindings.add("c-c")
         def _(event):
             "Closes the app (hotkey Ctrl + C)"
             get_app().exit()
-
 
         @bindings.add("c-s")
         def _(event):
@@ -177,14 +174,12 @@ class SimpleTextEditor():
             with open(t_file, "w") as f:
                 f.write(self.text_field.text)
 
-
         @bindings.add("c-u")
         def _(event):
             """
             Undoes the last action (hotkey Ctrl + U)
             """
             self.text_field.buffer.undo()
-
 
         style = Style.from_dict(
             {

@@ -152,7 +152,7 @@ class Bettersis:
                     print("")
                     command = session.prompt('bsis> ',
                                              completer=siscompleter.get_siscompleter(),  # use completer from siscompleter.py
-                                             complete_in_thread=True,                    # better performance for autocompletion
+                                             complete_in_thread=True,                    # better performance autocompletion
                                              auto_suggest=AutoSuggestFromHistory(),      # suggest rest of command from history
                                              bottom_toolbar=self.bottom_toolbar)         # add toolbar at the bottom
 
@@ -212,7 +212,7 @@ class Bettersis:
         cd_matches = re.match(r"cd[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
         ls_matches = re.match(r"ls[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
         edit_matches = re.match(r"edit[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
-        
+
         logger.debug("[%s-BSIS_COMMAND] %s" % (self.lastcmd, t_command))
 
         # cd command
@@ -240,7 +240,7 @@ class Bettersis:
                 logger.debug("[%s-EXECUTED_INCOMPLETE_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
                 print_formatted_text(HTML(error_msg))
                 self.lastcmd_success = False
-        
+
         # edit command
         elif edit_matches:
             if edit_matches.groups()[0].strip() != "":
@@ -251,7 +251,7 @@ class Bettersis:
                 logger.debug("[%s-EXECUTED_INCOMPLETE_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
                 print_formatted_text(HTML(error_msg))
                 self.lastcmd_success = False
-        
+
         # unexpected bsis command
         else:
             self.lastcmd_success = False
@@ -259,7 +259,7 @@ class Bettersis:
             show_ghissues_msg()
             logger.critical("[%s-UNKNOWN_BSIS_COMMAND] %s" % (self.lastcmd, t_command), exc_info=True)
             print_formatted_text(HTML(error_msg))
-    
+
     def bsiscmd_cd(self, t_path):
         """
         Changes current directory to the <t_path> directory.
@@ -272,7 +272,7 @@ class Bettersis:
             self.lastcmd_success = False
             error_msg = "<b><red>[ERROR]</red></b> '" + t_path + "' folder doesn't exist"
             print_formatted_text(HTML(error_msg))
-    
+
     def bsiscmd_ls(self, t_path):
         """
         Lists files and directories inside the <t_path> folder.
@@ -288,7 +288,7 @@ class Bettersis:
                     print_formatted_text(HTML("<blue>(D) " + el + "</blue>"))
                 else:
                     print_formatted_text(HTML("<orange>(F) " + el + "</orange>"))
-            
+
         elif os.path.isdir(t_path):
             # show files and directories inside the specified folder
             print_formatted_text(HTML("<orange>(F)iles</orange> and <blue>(D)irectories</blue> inside '" + t_path + "'"))
@@ -314,13 +314,14 @@ class Bettersis:
             self.lastcmd_success = True
 
             # the directory exists, make sure that the file exists
-            with open(t_path, "a") as f:
+            with open(t_path, "a") as _:
                 pass
-            
+
             # open it with the text editor
             texteditor.SimpleTextEditor(t_path)
         else:
             error_msg = "<b><red>[ERROR]</red></b> '" + directory + "' folder doesn't exist (can't open/create file)"
+            print_formatted_text(HTML(error_msg))
             self.lastcmd_success = False
 
     def manage_command(self, t_command):

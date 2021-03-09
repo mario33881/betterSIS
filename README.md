@@ -176,6 +176,17 @@ of this README.
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
+**WIP 1.2.0:** <br>
+### Features:
+* Added the ```ls``` command: it shows files and directories in the given/current path
+* Added the ```cd``` command: you can use it to navigate directories from betterSIS
+* Added the ```edit``` command: opens the specified file with a simple text editor
+    > Editor's features: syntax highlighting, basic edit/save functionality, use the tab key to write/complete keywords
+
+### Fixes:
+* (siswrapper fix) Now the ```write_eqn``` command gives the expected result when used to output to a file.
+* (siswrapper fix) When SIS is not installed the error message shows exactly what the problem is
+
 **2021-01-09 1.1.0:** <br>
 ### Features:
 * Added logs to syslog to help solving problems (and ```/var/log/pybettersis/pybettersis.log``` for .deb package installations)
