@@ -182,10 +182,48 @@ of this README.
 * Added the ```cd``` command: you can use it to navigate directories from betterSIS
 * Added the ```edit``` command: opens the specified file with a simple text editor
     > Editor's features: syntax highlighting, basic edit/save functionality, use the tab key to write/complete keywords
+* (siswrapper feature) Added ```bsis_script``` command. Its accepted parameters are:
+    * ```fsm_autoencoding_area```, useful for FSM circuits: minimizes states, automatically encodes states, optimizes area and maps the circuit by area (synch library)
+        > Executed commands: ```state_minimize stamina```, ```state_assign jedi```, ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
+    * ```fsm_autoencoding_delay```, useful for FSM circuits: minimizes states, automatically encodes states, optimizes delay and maps the circuit by delay (synch library)
+        > Executed commands: ```state_minimize stamina```, ```state_assign jedi```, ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
+    * ```fsm_area```, useful for FSM circuits: minimizes states, uses manual states encoding, optimizes area and maps the circuit by area (synch library)
+        > Executed commands: ```state_minimize stamina```, ```stg_to_network```, ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
+    * ```fsm_delay```, useful for FSM circuits: minimizes states, uses manual states encoding, optimizes delay and maps the circuit by delay (synch library)
+        > Executed commands: ```state_minimize stamina```, ```stg_to_network```, ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
+    * ```lgate_area_mcnc```, useful for combinational circuits: optimizes area and maps the circuit by area (mcnc library)
+        > Executed commands: ```source script.rugged```, ```read_library mcnc.genlib```, ```map -m 0 -W -s```
+    * ```lgate_delay_mcnc``, useful for combinational circuits`: optimizes delay and maps the circuit by delay (mcnc library)
+        > Executed commands: ```reduce_depth```, ```source script.rugged```, ```read_library mcnc.genlib```, ```map -n 1 -W -s```
+    * ```lgate_area_synch```, useful for combinational circuits: optimizes area and maps the circuit by area (synch library)
+        > Executed commands: ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
+    * ```lgate_delay_synch```, useful for combinational circuits: optimizes delay and maps the circuit by delay (synch library)
+        > Executed commands: ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
+    * ```fsmd_area```, useful for FSMD circuits (circuits which include datapaths and an FSM): optimizes area and maps the circuit by area (synch library)
+        > Executed commands: ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
+    * ```fsmd_delay```, useful for FSMD circuits (circuits which include datapaths and an FSM): optimizes delay and maps the circuit by delay (synch library)
+        > Executed commands: ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
+
+    > This command also shows which command is executed and the statistics after some commands
+
+    > Partial and full results are written to new BLIF files.
+
+    > WARNING! These commands are executed in this order, thus does NOT guarantee the best result: multi-level minimization is not perfect!
+    > to obtain better results you should try to execute these commands manually in a diffent order (try also to execute them more than once)
+* (siswrapper feature) Now this library verifies if the stg_to_network command is successful
 
 ### Fixes:
 * (siswrapper fix) Now the ```write_eqn``` command gives the expected result when used to output to a file.
+     > Before this fix the ```write_blif``` method was executed instead of the correct method
 * (siswrapper fix) When SIS is not installed the error message shows exactly what the problem is
+* (siswrapper fix) If you call the ```write_eqn``` and ```write_blif``` method without parameters the output doesn't contain the command.
+* (siswrapper fix) Can't execute the rugged script if no file as been read with a read command
+* (siswrapper fix) When you execute a read command, this library calls the ```reset``` method to close the SIS session and 
+  open a new session inside the folder of the input file
+    > This "fixes" the ".search x file not found" error when you try to read a file that is in another folder and contains the .search keyword.
+    >
+    > This error was normal but not intuitive (because the imported file was present inside the same folder as the input file but not inside the current folder).
+    > It was the original SIS behaviour.
 
 **2021-01-09 1.1.0:** <br>
 ### Features:

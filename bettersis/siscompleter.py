@@ -365,7 +365,19 @@ def get_siscompleter():
         "xl_split": None,
         "cd": get_folders(),
         "ls": get_folders(),
-        "edit": get_files()
+        "edit": get_files(),
+        "bsis_script": {
+            "fsm_autoencoding_area": None,
+            "fsm_autoencoding_delay": None,
+            "fsm_area": None,
+            "fsm_delay": None,
+            "lgate_area_mcnc": None,
+            "lgate_delay_mcnc": None,
+            "lgate_area_synch": None,
+            "lgate_delay_synch": None,
+            "fsmd_area": None,
+            "fsmd_delay": None
+        }
     })
 
     return siscompleter

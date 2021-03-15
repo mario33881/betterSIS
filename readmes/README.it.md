@@ -176,6 +176,55 @@ un esempio di utilizzo.
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
+**WIP 1.2.0:** <br>
+### Funzionalita' aggiuntive:
+* Aggiunto il comando ```ls```: mostra i file e le cartelle di una cartella data come parametro/della cartella corrente
+* Aggiunto il comando ```cd```: permette di navigare le cartelle direttamente da betterSIS (senza necessita' di chiudere e riaprire il programma)
+* Aggiunto il comando ```edit```: apre il file specificato come parametro con un semplice editor di testo
+    > funzionalita' dell'editor di testo: syntax highlighting, funzionalita' base per modificare/salvare il file, tasto tab per scrivere/completare le keyword
+* (feature siswrapper) Aggiunto il comando ```bsis_script``` command. I suoi parametri sono:
+    * ```fsm_autoencoding_area```, utile per le FSM: minimizza gli stati, assegna automaticamente la codifica degli stati, ottimizza l'area e mappa il circuito per area (libreria synch)
+        > Esegue ```state_minimize stamina```, ```state_assign jedi```, ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
+    * ```fsm_autoencoding_delay```, utile per le FSM: minimizza gli stati, assegna automaticamente la codifica degli stati, ottimizza il ritardo e mappa il circuito per ritardo (libreria synch)
+        > Esegue ```state_minimize stamina```, ```state_assign jedi```, ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
+    * ```fsm_area```, utile per le FSM: minimizza gli stati, usa la codifica manuale degli stati, ottimizza l'area e mappa il circuito per area (libreria synch)
+        > Esegue ```state_minimize stamina```, ```stg_to_network```, ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
+    * ```fsm_delay```, utile per le FSM: minimizza gli stati, usa la codifica manuale degli stati, ottimizza il ritardo e mappa il circuito per ritardo (libreria synch)
+        > Esegue ```state_minimize stamina```, ```stg_to_network```, ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
+    * ```lgate_area_mcnc```, utile per i circuiti combinatori: ottimizza l'area e mappa il circuito per area (libreria mcnc)
+        > Esegue ```source script.rugged```, ```read_library mcnc.genlib```, ```map -m 0 -W -s```
+    * ```lgate_delay_mcnc```, utile per i circuiti combinatori: ottimizza il ritardo e mappa il circuito per ritardo (libreria mcnc)
+        > Esegue ```reduce_depth```, ```source script.rugged```, ```read_library mcnc.genlib```, ```map -n 1 -W -s```
+    * ```lgate_area_synch```, utile per i circuiti combinatori: ottimizza l'area e mappa il circuito per area (libreria synch)
+        > Esegue ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
+    * ```lgate_delay_synch```, utile per i circuiti combinatori: ottimizza il ritardo e mappa il circuito per ritardo (libreria synch)
+        > Esegue ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
+    * ```fsmd_area```, utile per le FSMD (circuiti che includono datapath e FSM): ottimizza l'area e mappa il circuito per area (libreria synch)
+        > Esegue ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
+    * ```fsmd_delay```, utile per le FSMD (circuiti che includono datapath e FSM): ottimizza il ritardo e mappa il circuito per ritardo (libreria synch)
+        > Esegue ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
+
+    > Il comando visualizza anche i comandi eseguiti e le statistiche dopo i comandi che eseguono modifiche importanti ai circuiti
+
+    > I risultati parziali e completi dei comandi vengono scritti su nuovi file BLIF.
+
+    > ATTENZIONE! L'esecuzione di questi comandi in questo ordine non garantisce il risultato migliore: la minimizzazione multilivello non e' esatta!
+    > per ottenere risultati migliori si e' invitati ad eseguire manualmente i comandi in ordine sparso (ed eventualmente eseguire gli stessi comandi piu' volte)
+* (feature siswrapper) Adesso questa libreria verifica se il comando ```stg_to_network``` ha successo
+
+### Fix
+* (fix siswrapper) Adesso il metodo ```write_eqn``` viene eseguito quando il comando ```write_eqn``` viene passato al metodo ```parsed_output()```.
+    > Prima veniva eseguito il metodo ```write_blif```
+* (fix siswrapper) Richiamando il metodo ```write_eqn``` e ```write_blif``` senza parametri non restituisce piu' il comando nell'output.
+* (fix siswrapper) Quando SIS non e' installato sul computer il messaggio di errore mostra esattamente quale e' il problema
+* (fix siswrapper) Non e' possibile eseguire lo script rugged se non sono stati letti file con un comando read
+* (fix siswrapper) Quando si esegue un comando read, viene richiamato il metodo ```reset``` per terminare la sessione di SIS attuale e avviarne
+  una nuova all'interno della cartella del file in input
+    > In questo modo si "risolve" l'errore ".search x file not found" quando si cerca di leggere un file che si trova in un'altra cartella e che usa la keyword .search.
+    >
+    > Questo errore era normale ma non intuitivo (perche' il file era presente nella cartella del file in input ma non nella cartella corrente).
+    > Era il comportamento di SIS.
+
 **2021-01-09 1.1.0:** <br>
 ### Funzionalita' aggiuntive:
 * Aggiunti log a syslog per aiutare lo sviluppare a risolvere problemi (e il file ```/var/log/pybettersis/pybettersis.log``` per chi installa il pacchetto .deb)
