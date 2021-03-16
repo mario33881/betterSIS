@@ -193,7 +193,7 @@ of this README.
         > Executed commands: ```state_minimize stamina```, ```stg_to_network```, ```reduce_depth```, ```source script.rugged```, ```read_library synch.genlib```, ```map -n 1 -W -s```
     * ```lgate_area_mcnc```, useful for combinational circuits: optimizes area and maps the circuit by area (mcnc library)
         > Executed commands: ```source script.rugged```, ```read_library mcnc.genlib```, ```map -m 0 -W -s```
-    * ```lgate_delay_mcnc``, useful for combinational circuits`: optimizes delay and maps the circuit by delay (mcnc library)
+    * ```lgate_delay_mcnc```, useful for combinational circuits: optimizes delay and maps the circuit by delay (mcnc library)
         > Executed commands: ```reduce_depth```, ```source script.rugged```, ```read_library mcnc.genlib```, ```map -n 1 -W -s```
     * ```lgate_area_synch```, useful for combinational circuits: optimizes area and maps the circuit by area (synch library)
         > Executed commands: ```source script.rugged```, ```read_library synch.genlib```, ```map -m 0 -W -s```
