@@ -224,6 +224,8 @@ un esempio di utilizzo.
     >
     > Questo errore era normale ma non intuitivo (perche' il file era presente nella cartella del file in input ma non nella cartella corrente).
     > Era il comportamento di SIS.
+* (fix siswrapper) L'output del comando ```print_stats``` non veniva interpretato correttamente quando i letterali/stati erano superiori a 10000
+    > L'output era corretto ma il programma considerava l'output come un errore
 
 **2021-01-09 1.1.0:** <br>
 ### Funzionalita' aggiuntive:

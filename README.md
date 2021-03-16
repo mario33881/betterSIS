@@ -224,6 +224,8 @@ of this README.
     >
     > This error was normal but not intuitive (because the imported file was present inside the same folder as the input file but not inside the current folder).
     > It was the original SIS behaviour.
+* (siswrapper fix) The output of the ```print_stats``` command couldn't be intepreted as correct when the circuit had more than a 10000 literals/states
+    > The output was correct but the program reported it as an error
 
 **2021-01-09 1.1.0:** <br>
 ### Features:
