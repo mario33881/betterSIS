@@ -176,7 +176,7 @@ of this README.
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
-**WIP 1.2.0:** <br>
+**2021-03-17 1.2.0:** <br>
 ### Features:
 * Added the ```ls``` command: it shows files and directories in the given/current path
 * Added the ```cd``` command: you can use it to navigate directories from betterSIS

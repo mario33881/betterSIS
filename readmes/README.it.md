@@ -176,7 +176,7 @@ un esempio di utilizzo.
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
-**WIP 1.2.0:** <br>
+**2021-03-17 1.2.0:** <br>
 ### Funzionalita' aggiuntive:
 * Aggiunto il comando ```ls```: mostra i file e le cartelle di una cartella data come parametro/della cartella corrente
 * Aggiunto il comando ```cd```: permette di navigare le cartelle direttamente da betterSIS (senza necessita' di chiudere e riaprire il programma)
