@@ -75,6 +75,7 @@ la toolbar in basso e fornisce l'autocompletamento e lo storico dei comandi.
     > Il sistema operativo su cui si crea l'eseguibile dovrebbe essere il piu' vecchio possibile
     > per supportare i sistemi operativi piu' moderni
     > (Le build non sono retrocompatibili)
+* La libreria certifi: gestisce cerificati SSL/TLS. E' necessaria per collegarsi a Github Release per verificare presenza di aggiornamenti.
 
 [Torna all'indice](#indice)
 
@@ -175,6 +176,10 @@ un esempio di utilizzo.
 [Torna all'indice](#indice)
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
+
+**WIP 1.2.1:** <br>
+### Fix:
+* Adesso il programma riesce a verificare la presenza di aggiornamenti
 
 **2021-03-17 1.2.0:** <br>
 ### Funzionalita' aggiuntive:

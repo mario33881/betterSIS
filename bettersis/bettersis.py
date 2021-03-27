@@ -78,7 +78,10 @@ class Bettersis:
                                                        __version__.split(" ")[1])
             if updates_res["success"]:
                 if updates_res["update_available"]:
-                    print("\nNew Update Available! (latest: {})".format(updates_res["update_available"]))
+                    print("\nNew Update Available! (latest: {})".format(updates_res["update_version"]))
+            else:
+                for error in updates_res["errors"]:
+                    logger.warning("[ERROR-UPDATE] {}".format(error), exc_info=True)
 
             self.main()
         else:

@@ -75,6 +75,7 @@ the bottom toolbar and provides history and autocompletion of commands.
 * (PyInstaller to build the executable)
     > The OS you build the executable on should be the oldest possibile to support more updated OSes
     > (builds are not backwards compatible)
+* certifi: a library that manages SSL/TLS certificates. It is necessary to connect to Github Release to check if there are updates.
 
 [Go to the index](#index)
 
@@ -175,6 +176,9 @@ of this README.
 [Go to the index](#index)
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
+**WIP 1.2.1:** <br>
+### Fixes:
+* Now the program can correctly check if an update is available.
 
 **2021-03-17 1.2.0:** <br>
 ### Features:
