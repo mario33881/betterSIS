@@ -232,6 +232,10 @@ un esempio di utilizzo.
 * (fix siswrapper) L'output del comando ```print_stats``` non veniva interpretato correttamente quando i letterali/stati erano superiori a 10000
     > L'output era corretto ma il programma considerava l'output come un errore
 
+### bug conosciuti:
+* La versione eseguibile di betterSIS (sia il pacchetto deb sia l'eseguibile di PyInstaller) non riescono a connettersi correttamente a Github Release per controllare la presenza di aggiornamenti (dovuto ad un errore di verifica del certificato SSL)
+    > Questo problema sara' risolto nella prossima versione(per ora e' necessario controllare manualmente se un aggiornamento e' disponibile
+
 **2021-01-09 1.1.0:** <br>
 ### Funzionalita' aggiuntive:
 * Aggiunti log a syslog per aiutare lo sviluppare a risolvere problemi (e il file ```/var/log/pybettersis/pybettersis.log``` per chi installa il pacchetto .deb)

@@ -231,6 +231,10 @@ of this README.
 * (siswrapper fix) The output of the ```print_stats``` command couldn't be intepreted as correct when the circuit had more than a 10000 literals/states
     > The output was correct but the program reported it as an error
 
+### Known bugs:
+* The executable version of betterSIS (both the deb package and the PyInstaller executable) can't correctly connect to Github Release to check for updates (SSL verification error)
+    > This will be fixed in the next version (for now you need to manually check if an update is available)
+    
 **2021-01-09 1.1.0:** <br>
 ### Features:
 * Added logs to syslog to help solving problems (and ```/var/log/pybettersis/pybettersis.log``` for .deb package installations)
