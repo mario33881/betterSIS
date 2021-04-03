@@ -177,6 +177,16 @@ of this README.
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 **WIP 1.2.1:** <br>
+### Features:
+* Added persistent command history across different sessions (they are saved inside the ```~/.bsis_history``` file): 
+  set the "```BSIS_HISTORY_ENABLED```" environment variable to "true" to enable it (you need to close and then re-open the shell)
+    > The default history file size limit is 100 KB but you can set it using the "```BSIS_HISTORY_SIZELIMIT```" environment variable (the minimum limit is 1000 bytes)
+
+    > To set the environment variable modify the ```~/.bashrc``` file (or an equivalent file based on your default OS shell):
+    > add this line ```export BSIS_HISTORY_ENABLED=true``` to the end of the file.
+    >
+    > To change the history file size limit add this line: ```export BSIS_HISTORY_SIZELIMIT=10000``` (replace "10000" with the number of bytes you wish to cap the file size)
+
 ### Fixes:
 * Now the program can correctly check if an update is available.
 

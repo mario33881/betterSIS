@@ -178,6 +178,16 @@ un esempio di utilizzo.
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
 **WIP 1.2.1:** <br>
+### Funzionalita' aggiuntive:
+* Aggiunto storico permanente dei comandi tra piu' sessioni (vengono salvati all'interno del file ```~/.bsis_history```):
+  impostare la variabile d'ambiente "```BSIS_HISTORY_ENABLED```" a "true" per abilitare questa funzione (e' necessario chiudere e poi riaprire la shell)
+    > Il limite della dimensione del file di default e' di 100 KB ma e' possibile cambiarlo impostando la variabile d'ambiente "```BSIS_HISTORY_SIZELIMIT```" (la dimensione minima consentita e' di 1000 byte)
+
+    > Per impostare le variabili d'ambiente modificare il file ```~/.bashrc``` (o l'equivalente della shell di default del sistema operativo)
+    > aggiungendo la riga ```export BSIS_HISTORY_ENABLED=true``` in fondo al file.
+    >
+    > Per il limite della dimensione del file ```.bsis_history``` aggiungere la seguente riga: ```export BSIS_HISTORY_SIZELIMIT=10000``` (sostituire "10000" con il numero di byte desiderato)
+
 ### Fix:
 * Adesso il programma riesce a verificare la presenza di aggiornamenti
 

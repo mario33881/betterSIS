@@ -17,6 +17,7 @@ import siswrapper
 from prompt_toolkit import PromptSession
 from prompt_toolkit import print_formatted_text, HTML
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.history import FileHistory
 
 try:
     from ._version import __version__  # noqa: F401
@@ -26,6 +27,7 @@ except ImportError:
 import siscompleter
 import update_checker
 import texteditor
+import history_utils
 
 boold = False
 github_repository_url = "https://github.com/mario33881/betterSIS"
@@ -64,12 +66,14 @@ class Bettersis:
     * sis: connection to SIS's process
     * lastcmd: contains the last command
     * lastcmd_success: boolean that is set to True if the last command execution was successfull
+    * history_file_path: path to the history file (used when BSIS_HISTORY_ENABLED env variable is "true")
     """
     def __init__(self):
         self.res = {"success": False, "errors": [], "stdout": None}
         self.sis = siswrapper.Siswrapper()
         self.lastcmd = "FIRSTCOMMAND"
         self.lastcmd_success = False
+        self.history_file_path = os.path.join(os.path.expanduser("~"), ".bsis_history")
 
         if self.sis.res["success"]:
             self.show_msg_on_startup()
@@ -120,10 +124,10 @@ class Bettersis:
         print(" Siswrapper version:   {}".format(siswrapper.__version__))
         print(" Running in the background: ", self.sis.res["stdout"])
 
-        logger.debug("[STARTUP_MESSAGE] Showing software versions "
-                     "(BetterSIS: %s, Siswrapper: %s, SIS: %s)" % (__version__,
-                                                                   siswrapper.__version__,
-                                                                   self.sis.res["stdout"]))
+        logger.info("[STARTUP_MESSAGE] Showing software versions "
+                    "(BetterSIS: %s, Siswrapper: %s, SIS: %s)" % (__version__,
+                                                                  siswrapper.__version__,
+                                                                  self.sis.res["stdout"]))
 
     def main(self):
         """
@@ -131,6 +135,12 @@ class Bettersis:
         """
         # create a Session to memorize user commands
         session = PromptSession()
+
+        # if the BSIS_HISTORY_ENABLED environment variable is set to "true",
+        # use a history file inside the home directory
+        if self.manage_history_file():
+            history_file = FileHistory(self.history_file_path)
+            session = PromptSession(history=history_file)
 
         # get the first command to show the custom toolbar
         try:
@@ -164,8 +174,57 @@ class Bettersis:
                     logger.debug("[MAIN] User wants to exit the software (at least one command has been executed before)")
                     break
 
+        # control, if necessary, the size of the history file before closing betterSIS
+        self.manage_history_file()
+
         # stop sis process
         self.sis.stop()
+
+    def manage_history_file(self):
+        """
+        Manages the history file size and usage.
+
+        Checks if the BSIS_HISTORY_ENABLED environment variable is set to true:
+        if is is set to true the function returns True and betterSIS
+        will use the history file,
+        else the history will expire at the end of the session.
+
+        Then, if a history file already exists, checks the BSIS_HISTORY_SIZELIMIT environment:
+        if the value is a number it is used as a size limit,
+        else the limit is the default one (0.1 MB)
+        """
+        default_size = 0.1 * 1000 * 1000
+        history_file_enabled = False
+
+        if os.getenv("BSIS_HISTORY_ENABLED"):
+            logger.debug("[MANAGE_HISTORY_FILE] The BSIS_HISTORY_ENABLED env. variable is set to '{}'".format(os.getenv("BSIS_HISTORY_ENABLED")))
+            if os.getenv("BSIS_HISTORY_ENABLED") == "true":
+                history_file_enabled = True
+
+                # if the history file exists, manage its size
+                if os.path.isfile(self.history_file_path):
+                    logger.debug("[MANAGE_HISTORY_FILE] The history file exists, controlling its size...")
+                    if os.getenv("BSIS_HISTORY_SIZELIMIT"):
+                        # try to use custom size limit (use default one on error)
+                        try:
+                            size = int(os.getenv("BSIS_HISTORY_SIZELIMIT"))
+                            logger.debug("[MANAGE_HISTORY_FILE] Using custom size limit: '{}' bytes".format(size))
+                            history_utils.limit_history_size(self.history_file_path, size)
+                        except ValueError:
+                            logger.debug("[MANAGE_HISTORY_FILE] Using default size limit: '{}' bytes (BSIS_HISTORY_SIZELIMIT is invalid)".format(default_size))
+                            warning_msg = "<b><yellow>[Warning]</yellow></b> The BSIS_HISTORY_SIZELIMIT env. variable value" \
+                                          " ('{}') is invalid: it needs to be a number".format(os.getenv("BSIS_HISTORY_SIZELIMIT"))
+                            print_formatted_text(warning_msg)
+
+                            history_utils.limit_history_size(self.history_file_path, default_size)
+                    else:
+                        # use default size limit
+                        logger.debug("[MANAGE_HISTORY_FILE] Using default size limit: '{}' bytes".format(default_size))
+                        history_utils.limit_history_size(self.history_file_path, default_size)
+        else:
+            logger.debug("[MANAGE_HISTORY_FILE] The BSIS_HISTORY_ENABLED env. variable is NOT set, using normal session")
+
+        return history_file_enabled
 
     def bottom_toolbar(self):
         """
