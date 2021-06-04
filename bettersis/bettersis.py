@@ -21,13 +21,16 @@ from prompt_toolkit.history import FileHistory
 
 try:
     from ._version import __version__  # noqa: F401
+    import bettersis.siscompleter as siscompleter
+    import bettersis.update_checker as update_checker
+    import bettersis.texteditor as texteditor
+    import bettersis.history_utils as history_utils
 except ImportError:
     from _version import __version__  # noqa: F401
-
-import siscompleter
-import update_checker
-import texteditor
-import history_utils
+    import siscompleter
+    import update_checker
+    import texteditor
+    import history_utils
 
 boold = False
 github_repository_url = "https://github.com/mario33881/betterSIS"

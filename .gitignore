@@ -7,3 +7,5 @@ buildenv/
 .vagrant/
 
 tmp
+
+docs/build

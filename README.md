@@ -15,19 +15,21 @@ more easily than its default shell thanks to modern features such as:
 
 > Read this README in: 
 >
-> |[English](README.md)|[Italiano](readmes/README.it.md)|
-> |-|-|
+> | [English](README.md) | [Italiano](readmes/README.it.md) |
+> | :--- | ---: |
+> |      |      |
+
 
 <br>
 <p align="center">
-    <img height="350px" alt="logo" src="images/logo.svg">
+    <img style="max-width: 100%; height: 350px;" height="350px" alt="logo" src="_static/images/logo.svg">
 </p>
 
 
 <br>
 
 <p align="center">
-    <img height="350px" alt="example" src="images/example.gif">
+    <img style="max-width: 100%;" height="350px" alt="example" src="_static/images/example.gif">
 </p>
 
 <br>

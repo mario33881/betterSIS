@@ -19,14 +19,14 @@ piu' comodamente rispetto alla shell di default di SIS grazie alle sue nuove fun
 
 <br>
 <p align="center">
-    <img height="350px" alt="logo" src="../images/logo.svg">
+    <img height="350px" alt="logo" src="../_static/images/logo.svg">
 </p>
 
 
 <br>
 
 <p align="center">
-    <img height="350px" alt="esempio" src="../images/example.gif">
+    <img height="350px" alt="esempio" src="../_static/images/example.gif">
 </p>
 
 <br>
