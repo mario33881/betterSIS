@@ -3,6 +3,7 @@
 ![Update Checker](https://github.com/mario33881/betterSIS/workflows/Update%20Checker/badge.svg)
 ![Siscompleter](https://github.com/mario33881/betterSIS/workflows/Siscompleter/badge.svg)
 ![Linter](https://github.com/mario33881/betterSIS/workflows/Linter/badge.svg)
+[![Documentation Status](https://readthedocs.org/projects/bettersis/badge/?version=latest)](https://bettersis.readthedocs.io/en/latest/?badge=latest)
 
 Bettersis, definito brevemente come "bsis", e' una **shell interattiva** 
 che permette di **controllare SIS** (lo strumento per la sintesi e l'ottimizzazione di circuiti sequenziali)
@@ -56,6 +57,8 @@ Questo software fornisce una nuova shell interattiva che
 La shell interattiva e' controllata da una istanza della classe ```Bettersis```
 che usa la libreria ```prompt_toolkit``` per visualizzare il promt e
 la toolbar in basso e fornisce l'autocompletamento e lo storico dei comandi.
+
+Puoi leggere piu' informazioni riguardo al codice di betterSIS su readthedocs [cliccando qui](https://bettersis.readthedocs.io/en/latest/readme.html)
 
 [Torna all'indice](#indice)
 
