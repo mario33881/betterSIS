@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-BETTERSIS.UPDATE_CHECKER:
+**BETTERSIS.UPDATE_CHECKER**:
 contains function that help BetterSIS to check for updates
 """
 
@@ -25,7 +25,8 @@ logger.addHandler(logging.NullHandler())
 
 def extract_version(version_string):
     """
-    Extract major, minor and path number from <version_string>
+    Extract major, minor and path number from ``<version_string>``.
+
     :param str version_string: string with the version (ex. '1.0.0')
     :return dict res: result of the operation (success boolean and parsed data)
     """
@@ -65,6 +66,7 @@ def extract_version(version_string):
 def check_updates(t_ghreleases_apiurl, t_version):  # noqa: C901
     """
     Checks for updates.
+
     :param str t_version: current version
     :param str t_ghreleases_apiurl: api url for gh releases
     :return dict res: dictionary with success status, errors, update_version, update_available

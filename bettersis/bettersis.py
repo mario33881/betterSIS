@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-BETTERSIS: The modern shell for SIS
+**BETTERSIS**: The modern shell for SIS
 """
 
 __author__ = "Zenaro Stefano"
@@ -62,14 +62,17 @@ class Bettersis:
 
     After the creation of an instance
     a SIS process is ready to receive commands.
-    > The SIS process is started and controlled by the siswrapper library
+
+    .. note:: The SIS process is started and controlled by
+              the `siswrapper <https://github.com/mario33881/siswrapper>`_. library
 
     Shared variables:
-    * res: dictionary with results of the start operation (success, errors, stdout)
-    * sis: connection to SIS's process
-    * lastcmd: contains the last command
-    * lastcmd_success: boolean that is set to True if the last command execution was successfull
-    * history_file_path: path to the history file (used when BSIS_HISTORY_ENABLED env variable is "true")
+
+    - ``res``: dictionary with results of the start operation (success, errors, stdout)
+    - ``sis``: connection to SIS's process
+    - ``lastcmd``: contains the last command
+    - ``lastcmd_success``: boolean that is set to True if the last command execution was successfull
+    - ``history_file_path``: path to the history file (used when ``BSIS_HISTORY_ENABLED`` environment variable is "true")
     """
     def __init__(self):
         self.res = {"success": False, "errors": [], "stdout": None}
@@ -187,12 +190,12 @@ class Bettersis:
         """
         Manages the history file size and usage.
 
-        Checks if the BSIS_HISTORY_ENABLED environment variable is set to true:
+        Checks if the ``BSIS_HISTORY_ENABLED`` environment variable is set to true:
         if is is set to true the function returns True and betterSIS
         will use the history file,
         else the history will expire at the end of the session.
 
-        Then, if a history file already exists, checks the BSIS_HISTORY_SIZELIMIT environment:
+        Then, if a history file already exists, checks the ``BSIS_HISTORY_SIZELIMIT`` environment:
         if the value is a number it is used as a size limit,
         else the limit is the default one (0.1 MB)
         """
@@ -232,7 +235,8 @@ class Bettersis:
     def bottom_toolbar(self):
         """
         Returns message to show inside the toolbar at the bottom.
-        :return toolbar: toolbar message
+
+        :return str toolbar: toolbar message
         """
         toolbar_msg = ""
         toolbar = None
@@ -254,6 +258,7 @@ class Bettersis:
     def manage_multiple_commands(self, t_commands):
         """
         Executes the command(s) <t_commands>.
+
         :param str t_commands: command(s) to execute (using SIS or special bSIS commands)
         """
         # loop for each command separated by ";"
@@ -267,7 +272,8 @@ class Bettersis:
 
     def manage_bsis_command(self, t_command):
         """
-        Executes the <t_command> command betterSIS.
+        Executes the ``<t_command>`` command betterSIS.
+
         :param str t_command: custom betterSIS command to execute
         """
         # memorize command to show it on the toolbar
@@ -327,7 +333,8 @@ class Bettersis:
 
     def bsiscmd_cd(self, t_path):
         """
-        Changes current directory to the <t_path> directory.
+        Changes current directory to the ``<t_path>`` directory.
+
         :param str t_path: new working path
         """
         if os.path.isdir(t_path):
@@ -340,7 +347,8 @@ class Bettersis:
 
     def bsiscmd_ls(self, t_path):
         """
-        Lists files and directories inside the <t_path> folder.
+        Lists files and directories inside the ``<t_path>`` folder.
+
         :param str t_path: path in which to execute the "ls" command
         """
         if t_path == "":
@@ -371,7 +379,8 @@ class Bettersis:
 
     def bsiscmd_edit(self, t_path):
         """
-        Opens the <t_path> file with the text editor.
+        Opens the ``<t_path>`` file with the text editor.
+
         :param str t_path: path of the file to open.
         """
         directory = os.path.dirname(os.path.abspath(t_path))
@@ -391,7 +400,8 @@ class Bettersis:
 
     def manage_command(self, t_command):
         """
-        Executes the <t_command> command using SIS.
+        Executes the ``<t_command>`` command using SIS.
+
         :param str t_command: command to execute using SIS
         """
         # memorize command to show it on the toolbar

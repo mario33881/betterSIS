@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-BETTERSIS.SISCOMPLETER:
+**BETTERSIS.SISCOMPLETER**:
 Defines an object that helps for autocompletion of commands.
 """
 
@@ -27,6 +27,7 @@ def get_files():
     """
     Returns a dictionary with the files
     in the current directory.
+
     :return dict res: dictionary with files (the keys are filename, value is None)
     """
     res = {}
@@ -40,6 +41,7 @@ def get_folders():
     """
     Returns a dictionary with the folders
     in the current directory.
+
     :return dict res: dictionary with directories (the keys are directory names, value is None)
     """
     res = {}
@@ -56,6 +58,7 @@ def get_folders():
 def get_act_map_params():
     """
     Returns parameters for the act_map command.
+
     :return dict params: dictionary with command parameters
     """
     files = get_files()
@@ -82,6 +85,7 @@ def get_act_map_params():
 def get_read_blif_params():
     """
     Returns parameters for the read_blif command.
+
     :return dict params: dictionary with command parameters
     """
     files = get_files()
@@ -97,6 +101,7 @@ def get_read_blif_params():
 def get_read_eqn_params():
     """
     Returns parameters for the read_eqn command.
+
     :return dict params: dictionary with command parameters
     """
     files = get_files()
@@ -112,7 +117,8 @@ def get_read_eqn_params():
 def get_commands():  # noqa: C901
     """
     Returns commands.
-    # TODO: Probably should put a similar function inside the siswrapper library
+
+    .. note:: TODO: Probably should put a similar function inside the siswrapper library
 
     :return dict commands: dictionary with commands
     """
@@ -182,6 +188,7 @@ def get_commands():  # noqa: C901
 def get_source_params():
     """
     Returns parameters for the source command.
+
     :return dict params: dictionary with command parameters
     """
     files = get_files()
@@ -201,6 +208,8 @@ def get_source_params():
 def get_siscompleter():
     """
     Returns the siscompleter object.
+
+    :return prompt_toolkit.completion.nested.NestedCompleter siscompleter: contains SIS commands with their parameters
     """
     siscompleter = NestedCompleter.from_nested_dict({
         "act_map": get_act_map_params(),

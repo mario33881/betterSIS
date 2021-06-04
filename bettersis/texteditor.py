@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-BETTERSIS.TEXTEDITOR: A simple text editor for betterSIS.
+**BETTERSIS.TEXTEDITOR**: A simple text editor for betterSIS.
 
 Features:
-* edit (and save) files
-* syntax highlighting
 
-> This code was inspired by the prompt_toolkit example:
-> https://github.com/prompt-toolkit/python-prompt-toolkit/blob/7fdd81597597a7a2f47655238b7f0cb3ea637091/examples/full-screen/text-editor.py  # noqa: E501
+- edit (and save) files
+- syntax highlighting
+
+.. note:: This code was inspired by the prompt_toolkit example:
+          https://github.com/prompt-toolkit/python-prompt-toolkit/blob/7fdd81597597a7a2f47655238b7f0cb3ea637091/examples/full-screen/text-editor.py  # noqa: E501
 
 """
 
@@ -62,7 +63,7 @@ keywords = [
 
 class SisLexer(Lexer):
     """
-    Defines a lexer.
+    Defines a lexer for the text editor.
     """
     def lex_document(self, document):
         """
@@ -110,13 +111,12 @@ class SisLexer(Lexer):
 
 
 class SimpleTextEditor():
+    """
+    Opens the ``<t_file>`` file with the a simple CLI text editor.
 
+    :param str t_file: file to open with the text editor
+    """
     def __init__(self, t_file):
-        """
-        Opens the <t_file> file with the text editor.
-
-        :param str t_file: file to open with the text editor
-        """
         if not os.path.isfile(t_file):
             raise Exception("ERROR: '{}' file doesn't exist".format(t_file))
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-BETTERSIS.HISTORY_UTILS:
+**BETTERSIS.HISTORY_UTILS**:
 Defines functions to keep control of the size of the history file.
 """
 
@@ -45,8 +45,8 @@ def remove_blank_lines(t_input, t_output):
 def truncate_beginning(t_input, t_output, t_limit):
     """
     Removes the first chars/bytes from
-    the <t_input> file and saves the last <t_limit> bytes
-    inside the <t_output> file.
+    the ``<t_input>`` file and saves the last ``<t_limit>`` bytes
+    inside the ``<t_output>`` file.
 
     :param str t_input: path to the input file
     :param str t_output: path to the output file
@@ -61,9 +61,13 @@ def truncate_beginning(t_input, t_output, t_limit):
 
 def limit_history_size(t_file, t_size_limit, t_output=None):
     """
-    Limits the size of <t_file> to <t_size_limit> bytes/chars.
-    If <t_output> is set the output is the <t_output> file,
-    else the <t_file> is overwritten.
+    Limits the size of ``<t_file>`` to ``<t_size_limit>`` bytes/chars.
+    If ``<t_output>`` is set the output is the ``<t_output>`` file,
+    else the ``<t_file>`` is overwritten.
+
+    :param str t_file: path of the file of which to limit its size
+    :param int t_size_limit: limit of ``<t_file>`` size
+    :param str t_output: output file path (if equal to None ``<t_file>`` gets modified in place)
     """
     t_limit = t_size_limit
 
@@ -75,7 +79,6 @@ def limit_history_size(t_file, t_size_limit, t_output=None):
     # prepare a temporary folder with partial files
     tmp_dir = tempfile.TemporaryDirectory()
     filename = os.path.basename(t_file)
-    filepath = os.path.dirname(t_file)
     tmp_filepath = os.path.join(tmp_dir.name, filename)
 
     # remove blank lines
@@ -84,7 +87,7 @@ def limit_history_size(t_file, t_size_limit, t_output=None):
     # if the file size permits to read last t_limit bytes, remove the first bytes
     if filesize > t_size_limit:
         # truncate the file by keeping the last t_limit chars/bytes
-        truncate_beginning(tmp_filepath + ".nospaces.txt", tmp_filepath + ".trunc.txt", t_size_limit)
+        truncate_beginning(tmp_filepath + ".nospaces.txt", tmp_filepath + ".trunc.txt", t_limit)
 
         # be sure that the first command starts with the timestamps
         found_ts = False
