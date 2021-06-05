@@ -178,6 +178,8 @@ simulate them, ...
 You can see a usage example in the gif at the start
 of this README.
 
+There are also some tutorials on readthedocs (in italian): [click here](https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html)
+
 [Go to the index](#index)
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)

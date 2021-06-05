@@ -176,6 +176,8 @@ simularli, ...
 E' possibile vedere nella GIF ad inizio documentazione
 un esempio di utilizzo.
 
+Sono stati scritti dei tutorial su readthedocs (in italiano): [clicca qui per vedere i tutorial](https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html)
+
 [Torna all'indice](#indice)
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
