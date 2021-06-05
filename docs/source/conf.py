@@ -15,7 +15,7 @@ import sys
 import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.join(os.path.abspath('.'), "..", ".."))
-import bettersis
+from bettersis import *
 
 # -- Project information -----------------------------------------------------
 
@@ -24,8 +24,12 @@ copyright = '2021, Stefano Zenaro'
 author = 'Stefano Zenaro'
 
 # The full version, including alpha/beta/rc tags
-release = '1.2.0'
-
+try:
+    # only get the version number (skip date)
+    release = _version.__version__.split(" ")[1]
+except IndexError:
+    # use all the __version__ attribute to be safe
+    release = _version.__version__
 
 # -- General configuration ---------------------------------------------------
 
