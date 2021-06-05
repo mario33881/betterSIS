@@ -8,6 +8,7 @@
 maxdepth: 2
 ---
 readme.md
+tutorials/tutorials.rst
 bettersis.rst
 history_utils.rst
 siscompleter.rst
