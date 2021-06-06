@@ -21,6 +21,7 @@ history_utils.rst
 siscompleter.rst
 texteditor.rst
 update_checker.rst
+web_utils.rst
 ```
 
 ## Indices and tables

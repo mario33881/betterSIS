@@ -386,7 +386,10 @@ def get_siscompleter():
             "lgate_delay_synch": None,
             "fsmd_area": None,
             "fsmd_delay": None
-        }
+        },
+        "bsis_tutorials": None,
+        "bsis_documentation": None,
+        "bsis_releases": None
     })
 
     return siscompleter

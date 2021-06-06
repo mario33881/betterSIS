@@ -25,12 +25,15 @@ try:
     import bettersis.update_checker as update_checker
     import bettersis.texteditor as texteditor
     import bettersis.history_utils as history_utils
+    import bettersis.web_utils as web_utils
+
 except ImportError:
     from _version import __version__  # noqa: F401
     import siscompleter
     import update_checker
     import texteditor
     import history_utils
+    import web_utils
 
 boold = False
 github_repository_url = "https://github.com/mario33881/betterSIS"
@@ -38,6 +41,9 @@ bettersis_cmds = [
     "edit",
     "cd",
     "ls",
+    "bsis_documentation",
+    "bsis_tutorials",
+    "bsis_releases",
 ]
 
 logger = logging.getLogger(__name__)
@@ -89,6 +95,7 @@ class Bettersis:
             if updates_res["success"]:
                 if updates_res["update_available"]:
                     print("\nNew Update Available! (latest: {})".format(updates_res["update_version"]))
+                    print("Type the 'bsis_releases' command to open the download webpage for the last release!")
             else:
                 for error in updates_res["errors"]:
                     logger.warning("[ERROR-UPDATE] {}".format(error), exc_info=True)
@@ -322,6 +329,24 @@ class Bettersis:
                 logger.debug("[%s-EXECUTED_INCOMPLETE_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
                 print_formatted_text(HTML(error_msg))
                 self.lastcmd_success = False
+
+        # bsis_documentation command
+        elif t_command == "bsis_documentation":
+            url = "https://bettersis.readthedocs.io/en/latest/readme.html"
+            self.lastcmd_success = web_utils.open_browser(url, "documentation")
+            logger.debug("[%s-EXECUTED_BSIS_DOCUMENTATION_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+
+        # bsis_tutorials command
+        elif t_command == "bsis_tutorials":
+            url = "https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html"
+            self.lastcmd_success = web_utils.open_browser(url, "tutorials")
+            logger.debug("[%s-EXECUTED_BSIS_TUTORIALS_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+        
+        # bsis_releases command
+        elif t_command == "bsis_releases":
+            url = "https://github.com/mario33881/betterSIS/releases/latest"
+            self.lastcmd_success = web_utils.open_browser(url, "Github releases")
+            logger.debug("[%s-EXECUTED_BSIS_RELEASES_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
 
         # unexpected bsis command
         else:

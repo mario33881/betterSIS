@@ -192,6 +192,9 @@ Sono stati scritti dei tutorial su readthedocs (in italiano): [clicca qui per ve
     > aggiungendo la riga ```export BSIS_HISTORY_ENABLED=true``` in fondo al file.
     >
     > Per il limite della dimensione del file ```.bsis_history``` aggiungere la seguente riga: ```export BSIS_HISTORY_SIZELIMIT=10000``` (sostituire "10000" con il numero di byte desiderato)
+* Aggiunto il comando ```bsis_tutorials```: apre il browser alla [pagina dei tutorial SIS](https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html)
+* Aggiunto il comando ```bsis_documentation```: apre il browser alla [pagina della documentazione di betterSIS](https://bettersis.readthedocs.io/en/latest/readme.html)
+* Aggiunto il comando ```bsis_releases```: apre il browser alla [pagina per scaricare l'ultima versione di betterSIS](https://github.com/mario33881/betterSIS/releases/latest)
 
 ### Fix:
 * Adesso il programma riesce a verificare la presenza di aggiornamenti
