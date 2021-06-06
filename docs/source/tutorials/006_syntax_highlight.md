@@ -1,3 +1,11 @@
+---
+html_meta:
+  "description lang=en": "syntax highlighting for BLIF (SIS) files. Extensions for Visual Studio Code, Sublime Text, Notepad++ and Vim."
+  "description lang=it": "syntax highlight per i file BLIF (SIS). Estensioni per Visual Studio Code, Sublime Text, Notepad++ e Vim."
+  "keywords": "betterSIS, SIS, BLIF, syntax highlight, Visual Studio Code extension, Sublime Text package, Notepad++, Vim"
+  "property=og:locale": "en_US"
+---
+
 # Syntax Highlighting per file BLIF
 
 Questa pagina elenca delle estensioni che permettono al

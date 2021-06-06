@@ -1,3 +1,11 @@
+---
+html_meta:
+  "description lang=en": "Errors and warnings in SIS and how to fix them. warning node does not fanout, network contains a cycle, must give F or R, but not both ..."
+  "description lang=it": "Errori e warning in SIS e come risolverli. warning node does not fanout, network contains a cycle, must give F or R, but not both ..."
+  "keywords": "betterSIS, SIS, BLIF, SIS errors, SIS warnings, fanout warning, network cycle error"
+  "property=og:locale": "en_US"
+---
+
 # Errori e Warning in SIS
 
 Questo articolo contiene una lista di errori o warning che possono apparire utilizzando SIS (Sequential Interactive Synthesis).

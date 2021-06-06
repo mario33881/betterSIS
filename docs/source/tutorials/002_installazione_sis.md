@@ -1,3 +1,11 @@
+---
+html_meta:
+  "description lang=en": "SIS installation. How to install SIS."
+  "description lang=it": "Installazione SIS. Come installare SIS."
+  "keywords": "betterSIS, SIS, BLIF, install SIS"
+  "property=og:locale": "en_US"
+---
+
 # Installazione SIS
 
 ## Premessa

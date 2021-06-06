@@ -1,3 +1,11 @@
+---
+html_meta:
+  "description lang=en": "SIS introduction. What is SIS? Should you use it? How to use it."
+  "description lang=it": "Introduzione a SIS. Cosa e' SIS? Dovresti usare SIS? Come usarlo."
+  "keywords": "betterSIS, SIS, BLIF"
+  "property=og:locale": "en_US"
+---
+
 # Introduzione a SIS
 
 ## Cosa e' SIS?
