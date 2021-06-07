@@ -1,0 +1,14 @@
+[flake8]
+count = true
+exit-zero = true
+statistics = true
+max-complexity = 11
+max-line-length = 127
+per-file-ignores =
+    # Imports are not on the top of the file because the PATH needs to be modified first
+    tests/test_siscompleter.py: E402 
+    tests/test_bettersis.py: E402 
+    tests/test_update_checker.py: E402 
+    tests/test_texteditor.py: E402
+    # Linter doesn't know that what is imported is being run by unittest
+    tests/test_all.py: F401, F403

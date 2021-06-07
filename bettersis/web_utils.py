@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-**BETTERSIS.WEB_UTILS**: 
+**BETTERSIS.WEB_UTILS**:
 web utilities used to manage web pages
 """
 
@@ -26,7 +26,7 @@ def open_browser(t_url, t_details=""):
     ``<t_details>`` is shown before "page" inside messages.
 
     Example:
-    
+
     .. code-block:: python
 
         >>> details = "tutorials"
@@ -44,7 +44,7 @@ def open_browser(t_url, t_details=""):
     success = False
 
     print("Trying to open the " + t_details + " page on a browser... ", end="")
-    
+
     try:
         # try to "make a folder" a file to test if root (and then delete it)
         os.mkdir('/etc/random_not_existing_directory_name.very_specific')
@@ -52,10 +52,10 @@ def open_browser(t_url, t_details=""):
 
         print("can't open the browser because you are running betterSIS as root!\n")
         print("You can find the " + t_details + " page at this URL: ", t_url)
-    
-    except PermissionError:              
+
+    except PermissionError:
         webbrowser.open(t_url)
         print("Done, the webpage is open")
         success = True
-    
+
     return success

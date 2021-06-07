@@ -133,7 +133,7 @@ class SimpleTextEditor():
                 scrollbar=False,
                 line_numbers=True,
                 completer=sis_completer,
-                style = 'bg:#131926'
+                style='bg:#131926'
             )
 
         # create a layout with the text field and the statusbar

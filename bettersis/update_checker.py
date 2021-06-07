@@ -78,7 +78,10 @@ def check_updates(t_ghreleases_apiurl, t_version):  # noqa: C901
 
         if current_version["success"]:
             # Get Github Releases information
-            with urllib.request.urlopen(t_ghreleases_apiurl, context=ssl.create_default_context(cafile=certifi.where())) as url:
+            with urllib.request.urlopen(
+                t_ghreleases_apiurl,
+                context=ssl.create_default_context(cafile=certifi.where())
+            ) as url:
                 releases_data = json.loads(url.read().decode())
 
             latest_data = {"success": False, "major_version": 0, "minor_version": 0, "patch_version": 0}

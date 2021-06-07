@@ -23,8 +23,7 @@ jobs:
         pip install flake8
     - name: Lint with flake8
       run: |
-        # stop the build if there are Python syntax errors or undefined names
+        # Stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        # ignore not used import inside __init__.py and import position in unit_tests.py
-        flake8 . --count --exit-zero --max-complexity=11 --per-file-ignores='bettersis/__init__.py:F401 tests/test_siscompleter.py:E402 tests/test_bettersis.py:E402 tests/test_update_checker.py:E402 tests/test_texteditor.py:E402' --max-line-length=127 --statistics
+        # Show if there are other lint issues without setting the workflow to failed status
+        flake8 --config .flake8

@@ -210,7 +210,9 @@ class Bettersis:
         history_file_enabled = False
 
         if os.getenv("BSIS_HISTORY_ENABLED"):
-            logger.debug("[MANAGE_HISTORY_FILE] The BSIS_HISTORY_ENABLED env. variable is set to '{}'".format(os.getenv("BSIS_HISTORY_ENABLED")))
+            logger.debug("[MANAGE_HISTORY_FILE] The BSIS_HISTORY_ENABLED "
+                         "env. variable is set to '{}'".format(os.getenv("BSIS_HISTORY_ENABLED")))
+
             if os.getenv("BSIS_HISTORY_ENABLED") == "true":
                 history_file_enabled = True
 
@@ -224,9 +226,12 @@ class Bettersis:
                             logger.debug("[MANAGE_HISTORY_FILE] Using custom size limit: '{}' bytes".format(size))
                             history_utils.limit_history_size(self.history_file_path, size)
                         except ValueError:
-                            logger.debug("[MANAGE_HISTORY_FILE] Using default size limit: '{}' bytes (BSIS_HISTORY_SIZELIMIT is invalid)".format(default_size))
+                            logger.debug("[MANAGE_HISTORY_FILE] Using default size limit: '{}' bytes "
+                                         "(BSIS_HISTORY_SIZELIMIT is invalid)".format(default_size))
                             warning_msg = "<b><yellow>[Warning]</yellow></b> The BSIS_HISTORY_SIZELIMIT env. variable value" \
-                                          " ('{}') is invalid: it needs to be a number".format(os.getenv("BSIS_HISTORY_SIZELIMIT"))
+                                          " ('{}') is invalid: " \
+                                          "it needs to be a number".format(os.getenv("BSIS_HISTORY_SIZELIMIT"))
+
                             print_formatted_text(warning_msg)
 
                             history_utils.limit_history_size(self.history_file_path, default_size)
@@ -341,7 +346,7 @@ class Bettersis:
             url = "https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html"
             self.lastcmd_success = web_utils.open_browser(url, "tutorials")
             logger.debug("[%s-EXECUTED_BSIS_TUTORIALS_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
-        
+
         # bsis_releases command
         elif t_command == "bsis_releases":
             url = "https://github.com/mario33881/betterSIS/releases/latest"

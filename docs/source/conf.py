@@ -12,11 +12,11 @@
 #
 import os
 import sys
-import sphinx_rtd_theme
+import sphinx_rtd_theme  # noqa: F401
 
 sys.path.insert(0, os.path.join(os.path.abspath('.'), "..", ".."))
-from bettersis import *
-from tests import *
+from bettersis import *  # need to import this for sphinx to document the code | # noqa: E402, F403
+from tests import *      # need to import this for sphinx to document the code | # noqa: E402, F403
 
 # -- Project information -----------------------------------------------------
 
@@ -25,12 +25,14 @@ copyright = '2021, Stefano Zenaro'
 author = 'Stefano Zenaro'
 
 # The full version, including alpha/beta/rc tags
+# use all the __version__ attribute to be safe
+release = _version.__version__  # noqa: F405
+
 try:
-    # only get the version number (skip date)
-    release = _version.__version__.split(" ")[1]
+    # try to only get the version number (skip date)
+    release = _version.__version__.split(" ")[1]  # noqa: F405
 except IndexError:
-    # use all the __version__ attribute to be safe
-    release = _version.__version__
+    pass
 
 # -- General configuration ---------------------------------------------------
 
@@ -38,8 +40,8 @@ except IndexError:
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx.ext.todo", 
-    "sphinx.ext.viewcode", 
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
     "sphinx.ext.autodoc",
     "sphinx_rtd_theme",
     "myst_parser",
