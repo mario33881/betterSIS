@@ -1,8 +1,5 @@
 # BETTERSIS
 
-![BetterSIS](https://github.com/mario33881/betterSIS/workflows/BetterSIS/badge.svg)
-![Update Checker](https://github.com/mario33881/betterSIS/workflows/Update%20Checker/badge.svg)
-![Siscompleter](https://github.com/mario33881/betterSIS/workflows/Siscompleter/badge.svg)
 ![Linter](https://github.com/mario33881/betterSIS/workflows/Linter/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/bettersis/badge/?version=latest)](https://bettersis.readthedocs.io/en/latest/?badge=latest)
 
