@@ -16,6 +16,7 @@ import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.join(os.path.abspath('.'), "..", ".."))
 from bettersis import *
+from tests import *
 
 # -- Project information -----------------------------------------------------
 

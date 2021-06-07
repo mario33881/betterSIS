@@ -1,4 +1,4 @@
-bettersis/__pycache__
+*/__pycache__/
 
 bettersis/bettersis.log
 bettersis/*.blif

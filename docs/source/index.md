@@ -16,12 +16,8 @@ maxdepth: 2
 ---
 readme.md
 tutorials/tutorials.rst
-bettersis.rst
-history_utils.rst
-siscompleter.rst
-texteditor.rst
-update_checker.rst
-web_utils.rst
+code_documentation/index.md
+tests_documentation/index.md
 ```
 
 ## Indices and tables
