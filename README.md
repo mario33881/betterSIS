@@ -1,5 +1,6 @@
 # BETTERSIS
 
+[![Unit Tests](https://github.com/mario33881/betterSIS/actions/workflows/unittests.yml/badge.svg)](https://github.com/mario33881/betterSIS/actions/workflows/unittests.yml)
 ![Linter](https://github.com/mario33881/betterSIS/workflows/Linter/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/bettersis/badge/?version=latest)](https://bettersis.readthedocs.io/en/latest/?badge=latest)
 
