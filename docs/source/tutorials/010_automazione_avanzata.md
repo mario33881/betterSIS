@@ -3,7 +3,7 @@ html_meta:
   "description lang=en": "SIS advanced automation: How to automate components verification in SIS using CI/CD workflows."
   "description lang=it": "Automazione avanzata in SIS: come automatizzare la verifica dei componenti in SIS utilizzando workflow CI/CD."
   "keywords": "betterSIS, SIS, BLIF, SIS automation, SIS scripting, CI/CD, Github Actions"
-  "property=og:locale": "en_US"
+  "property=og:locale": "it_IT"
 ---
 
 # Automazione avanzata di SIS
@@ -35,14 +35,14 @@ diff:
 * visualizzera' le differenze tra i due file
 * restituira' al sistema operativo un exit code che indica se i file sono identici oppure no
 
-E' possibile visualizzare manualmente il exit code dell'ultimo comando eseguito con il comando:
-
+E' possibile visualizzare manualmente l'exit code dell'ultimo comando eseguito con il comando:
 ```
 echo $?
 ```
 
-A questo punto e' possibile creare un programma bash
-simile a questo:
+Se viene visualizzato "0" i file sono uguali, altrimenti sono diversi.
+
+A questo punto e' possibile creare un programma bash simile a questo:
 
 ```bash
 ./testa_blif.sh  # contiene "sis -t pla -f scriptfantastico.script -x" 
@@ -52,8 +52,10 @@ simile a questo:
 # che indica a sis di scrivere l'output nel file output_sis.txt
 # e in fondo allo script "quit" che dice a sis di chiudersi a fine script
 
-# abbiamo scritto un file output_atteso.txt
+# abbiamo scritto manualmente un file output_atteso.txt
 # con l'esatto output che ci aspettiamo da sis
+
+# Verifichiamo se output_sis.txt output_atteso.txt sono identici o meno
 diff output_sis.txt output_atteso.txt
 
 if [ "$?" = "0" ] ; then
@@ -65,10 +67,36 @@ fi
 
 ```{note}
 Personalmente non ho testato questo codice
-ma dovrebbe funzionare correttamente.
+ma dovrebbe funzionare correttamente... 
+Ho sviluppato ed utilizzato il programma Python descritto nella prossima sezione.
 
 NOTARE: gli spazi sono tutti necessari
-(tra "```[```" e  "```$?```" e "```=```" e ...)
+(tra "```[```" e  "```$?```" e "```=```" ecc...)
+```
+
+Se non si desidera vedere la differenza tra output atteso e output di SIS
+e' possibile dirottare l'output del comando "diff" a null.
+
+```bash
+./testa_blif.sh  # contiene "sis -t pla -f scriptfantastico.script -x" 
+                 # che esegue scriptfantastico.script con sis
+
+# scriptfantastico.script contiene "set sisout output_sis.txt"
+# che indica a sis di scrivere l'output nel file output_sis.txt
+# e in fondo allo script "quit" che dice a sis di chiudersi a fine script
+
+# abbiamo scritto manualmente un file output_atteso.txt
+# con l'esatto output che ci aspettiamo da sis
+
+# Verifichiamo se output_sis.txt output_atteso.txt sono identici o meno
+# e NON visualizziamo la differenza tra i due file su terminale
+diff output_sis.txt output_atteso.txt &>/dev/null
+
+if [ "$?" = "0" ] ; then
+    echo "TEST PASSATO: SIS ha restituito l'output atteso"
+else
+    echo "TEST FALLITO: output diverso da quello atteso"
+fi
 ```
 
 ## Verifica avanzata con Python
@@ -100,7 +128,10 @@ Una breve descrizione del programma e' presente alla fine della prossima sezione
 ```{note}
 Questa sezione descrive il ragionamento che c'e' dietro alla configurazione di un sistema CI/CD:
 
-E' possibile semplicemente leggere e capire come funziona e poi copiare da [https://github.com/arc6-202021/lib_componenti_sis](https://github.com/arc6-202021/lib_componenti_sis) la cartella ```.github``.
+E' possibile semplicemente leggere e capire come funziona e poi copiare da [https://github.com/arc6-202021/lib_componenti_sis](https://github.com/arc6-202021/lib_componenti_sis) la cartella ```.github```.
+
+In parole povere: creando la stessa struttura di sottocartelle e copiando + incollando
+gli script (e forse con alcune piccole modifiche) tutto dovrebbe funzionare correttamente.
 ```
 
 Questo e' un uso "molto avanzato" di SIS: e' possibile
@@ -129,7 +160,9 @@ deve essere eseguito con pochi comandi da terminale.
 
 I passi che dobbiamo seguire sono:
 
-* Copiare l'url che e' "puntato" dal pulsante "Scarica" della sezione "Installazione su Debian o simili" (e' possibile cliccare con il tasto destro sul pulsante e poi cliccare su "Copia indirizzo link")
+* Copiare l'url per scaricare il pacchetto di installazione di SIS che e' "puntato" dal pulsante "Scarica" (per raggiungerlo guardare nella pagina ["installare SIS"](002_installazione_sis.md)).
+
+    E' possibile cliccare con il tasto destro sul pulsante e poi cliccare su "Copia indirizzo link"
 
 * Aggiungere il comando ```wget``` davanti all'url per automatizzare il processo di download.
     ```{note}
@@ -342,6 +375,26 @@ inviare notifiche via mail / discord (tramite webhook) / altro e in generale
 eseguire tutti i comandi che si possono eseguire manualmente da terminale.
 
 
+---
+
+Per chi e' arrivato in fondo a questa pagina: grazie dell'attenzione.
+Per chi non ha mai usato un sistema CI/CD la lettura di questa pagina puo' essere risultata abbastanza pesante e complessa...
+
+Molto probabilmente sei interessato/a ad automatizzare tutto cio' che e' possibile
+nel tuo progetto magari sviluppando altro codice per fare cio' che non e' stato mostrato
+in questo documento...
+
+Alcune delle mie idee riguardo a progetti che si sviluppano attorno a SIS sono le seguenti:
+* Continuare betterSIS e tutto cio' che riguarda betterSIS ([E' possibile leggere qui alcune delle mie idee](https://github.com/mario33881/betterSIS/projects/1))
+* Realizzare un template per i progetti SIS in modo che un nuovo studente possa partire da una base solida per l'automazione dei test e per la documentazione (es. in Latex o Markdown). Personalmente pensavo di utilizzare [cookiecutter](https://github.com/cookiecutter/cookiecutter) per questo scopo.
+
+Se non riesco a realizzare questi progetti accetto piu' che volentieri:
+* aiuto con Pull Requests per quanto riguarda betterSIS "versione base" (cio' che e' gia' stato implementato da me in/per betterSIS)
+* che qualcuno utilizzi le mie idee per realizzare un template o un qualsiasi tool che possa essere facilmente integrato in betterSIS (idealmente sotto forma di libreria Python hostata su PiPy)
+
+Per chi invece trova bug di betterSIS:
+* accetto Github Issues e, per quanto/quando mi sara' possibile, cerchero' di risolvere i bug
+* accetto Pull Requests per risolverli
 
 <div align=center>
 

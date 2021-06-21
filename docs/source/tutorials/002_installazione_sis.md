@@ -3,7 +3,7 @@ html_meta:
   "description lang=en": "SIS installation. How to install SIS."
   "description lang=it": "Installazione SIS. Come installare SIS."
   "keywords": "betterSIS, SIS, BLIF, install SIS"
-  "property=og:locale": "en_US"
+  "property=og:locale": "it_IT"
 ---
 
 # Installazione SIS
@@ -20,22 +20,23 @@ Attualmente (anno 2020-2021), e' consigliato installare la versione 1.3.6 di SIS
   ```{admonition} nota
   Se si desidera comunque installare SIS su Windows provare ad utilizzarlo su [WSL](https://docs.microsoft.com/it-it/windows/wsl/about) (permette di eseguire comandi e applicazioni GNU/Linux in un sottosistema, o "container", su Windows). 
    
-  Per installarlo procedere come se si avesse un sistema basato su Debian.
+  Per installare SIS su WSL procedere come se si avesse un sistema basato su Debian.
    
   Altri metodi sono sconsigliati.
   ```
 
 Personalmente ho testato SIS 1.3.6 su Ubuntu 18.04 e Ubuntu 20.
 ```{admonition} nota
-Sono a conoscenza del fatto che altre persone hanno usato Debian 10 per il proprio progetto.
-Non posso confermare con certezza che tutto sia andato a buon fine.
+Sono a conoscenza del fatto che altre persone abbiano utilizzato Debian 10 per il proprio elaborato di Architettura degli Elaboratori.
+
+Non avendo sufficientemente testato di persona SIS con altri sistemi operativi diversi da Ubuntu non posso confermare con certezza che SIS non gli abbia creato problemi.
 ```
 
 ## Installazione su Debian o derivati
 
-1. [Clicca qui](https://jackhack96.github.io/logic-synthesis/sis.html) per accedere alla pagina da cui e' possibile scaricare SIS
+1. [Cliccare qui](https://jackhack96.github.io/logic-synthesis/sis.html) per accedere alla pagina da cui e' possibile scaricare SIS
 
-2. Scorrere la pagina fino alla sezione "Downloads" e scaricare il pacchetto ```.deb``` cliccando sul pulsante "Download Debian package" della versione 1.3 (1.3.6)
+2. Scorrere la pagina fino alla sezione "Downloads" e scaricare il pacchetto ```.deb``` cliccando sul pulsante "Download Debian package" della versione 1.3 (che sarebbe la versione 1.3.6)
    
    ![Download](https://i.imgur.com/qwQco9W.png)
 
@@ -46,9 +47,9 @@ Non posso confermare con certezza che tutto sia andato a buon fine.
    ```
 
 ```{admonition} nota
-Verra' chiesta la password del "super user" (possiamo definirlo come l'equivalente dell'account amministratore per Windows): inserirla e premere invio.
+Verra' chiesta la password del "super user" (possiamo definirlo per semplicita' come l'equivalente dell'account amministratore per Windows): inserirla e premere invio.
  
-**NOTA**: la password per sicurezza non viene visualizzata sul terminale (NEMMENO nascosta tra asterischi "\*")
+**NOTA**: la password per sicurezza non viene visualizzata sul terminale (NEMMENO nascosta da asterischi "\*")
 ```
 
 ```{admonition} nota
@@ -57,7 +58,7 @@ Se il file scaricato si chiama in maniera diversa modificare nel comando ```sis_
 
 ## Verifica l'installazione
 
-Per prima cosa assicurarsi che la installazione abbia avuto successo eseguendo il comando su terminale:
+Per prima cosa assicurarsi che la installazione abbia avuto successo eseguendo SIS da terminale con il comando:
 
 ```
 sis

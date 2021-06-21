@@ -3,7 +3,7 @@ html_meta:
   "description lang=en": "SIS simple automation: How to automate script execution in SIS."
   "description lang=it": "Automazione semplice in SIS: come automatizzare l'esecuzione di script in SIS."
   "keywords": "betterSIS, SIS, BLIF, SIS automation, SIS scripting"
-  "property=og:locale": "en_US"
+  "property=og:locale": "it_IT"
 ---
 
 # Semplice automazione in SIS
@@ -137,26 +137,85 @@ veramente molte piu' operazioni! E questo permette anche di velocizzare il workf
 
 Supponiamo che non vogliamo neanche uscire manualmente da SIS...
 
-Basta aggiungere a fine script ```quit``` e il gioco e' fatto.
-```{note}
-Si poteva fare anche prima in realta'...
+Basta aggiungere a fine script ```quit``` e il gioco e' fatto:
+
+```
+echo Leggo il file blif
+read_blif miocircuito.blif
+
+echo Simulo: 0 0 0 0 1 0 1 0 1 0 1
+simulate 0 0 0 0 1 0 1 0 1 0 1
+
+echo Simulo: 0 0 0 0 1 0 1 0 1 0 1
+simulate 0 0 0 0 1 0 1 0 1 0 1
+
+echo Simulo: 0 1 0 0 1 0 1 1 1 0 1
+simulate 0 1 0 0 1 0 1 1 1 0 1
+
+echo Simulo: 0 0 1 0 1 1 1 0 1 0 1
+simulate 0 0 1 0 1 1 1 0 1 0 1
+
+echo Statistiche prima di rugged:
+print_stats
+
+echo Adesso eseguo lo script rugged
+source script.rugged
+
+echo Statistiche dopo rugged:
+print_stats
+
+echo Esco da SIS
+quit
 ```
 
 Supponiamo ora che non vogliamo neppure vedere il risultato su terminale
-perche' vogliamo avere gli output permanenti su un file per una possibile analisi automatica...
+perche' vogliamo avere gli output permanenti su un file per visualizzarlo dopo o per una possibile analisi automatica...
 
 Basta aggiungere come prima riga dello script:
 
     set sisout <file_output>
 
+Ad esempio:
+```
+set sisout output_comandi.txt
+
+echo Leggo il file blif
+read_blif miocircuito.blif
+
+echo Simulo: 0 0 0 0 1 0 1 0 1 0 1
+simulate 0 0 0 0 1 0 1 0 1 0 1
+
+echo Simulo: 0 0 0 0 1 0 1 0 1 0 1
+simulate 0 0 0 0 1 0 1 0 1 0 1
+
+echo Simulo: 0 1 0 0 1 0 1 1 1 0 1
+simulate 0 1 0 0 1 0 1 1 1 0 1
+
+echo Simulo: 0 0 1 0 1 1 1 0 1 0 1
+simulate 0 0 1 0 1 1 1 0 1 0 1
+
+echo Statistiche prima di rugged:
+print_stats
+
+echo Adesso eseguo lo script rugged
+source script.rugged
+
+echo Statistiche dopo rugged:
+print_stats
+
+echo Esco da SIS
+quit
+```
+
 ```{note}
-Questo e' un comando in sis. ```<file_output>``` e' il nome del file di output.
+```set sisout``` e' un comando di SIS. ```<file_output>``` e' il nome del file di output.
+
+Nell'esempio il file con gli output si chiama "output_comandi.txt".
 ```
 
 Adesso abbiamo gli input a portata di un comando e l'output
-scritto su file: possiamo creare uno script bash, ad esempio ```testa_blif.sh```, per
-eseguire il comando SIS e a questo punto basta eseguire lo script da terminale
-e aprire il file al termine.
+scritto su file: possiamo anche creare uno script bash, ad esempio ```testa_blif.sh```, per
+eseguire il comando SIS "```sis -t pla -f scriptfantastico.script -x```" e a questo punto basta eseguire lo script da terminale (cosi' non occorre neanche ricordare le flag di SIS) in questo modo:
 
 ```
 ./testa_blif.sh
@@ -166,8 +225,7 @@ e aprire il file al termine.
 Da notare il ```./``` a inizio comando
 ```
 
-Un solo comando facilmente ricordabile (e un editor che riconosce in tempo reale la modifica del file di output)
-e potete immediatamente vedere e scorrere gli output di tutti i comandi!
+Ora con un solo comando facilmente ricordabile e un editor che riconosce in tempo reale la modifica del file di output potete fare modifiche "al volo" al file BLIF, eseguire SIS e memorizzare gli output di tutti i comandi su file!
 
 ## Automazione avanzata
 

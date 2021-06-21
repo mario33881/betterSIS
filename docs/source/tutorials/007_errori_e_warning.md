@@ -3,15 +3,15 @@ html_meta:
   "description lang=en": "Errors and warnings in SIS and how to fix them. warning node does not fanout, network contains a cycle, must give F or R, but not both ..."
   "description lang=it": "Errori e warning in SIS e come risolverli. warning node does not fanout, network contains a cycle, must give F or R, but not both ..."
   "keywords": "betterSIS, SIS, BLIF, SIS errors, SIS warnings, fanout warning, network cycle error"
-  "property=og:locale": "en_US"
+  "property=og:locale": "it_IT"
 ---
 
 # Errori e Warning in SIS
 
 Questo articolo contiene una lista di errori o warning che possono apparire utilizzando SIS (Sequential Interactive Synthesis).
 
-In generale i warning possono essere ignorati se le simulazioni danno i risultati
-attesi mentre gli errori devono essere risolti.
+In generale i **warning possono essere ignorati se le simulazioni danno i risultati attesi** 
+mentre **gli errori devono essere risolti**.
 
 Se le soluzioni indicate qua sotto non funzionano controllare se si sta utilizzando SIS versione 1.3.6 (non la 1.4) su un sistema operativo basato su Debian (come Ubuntu).
 ```{note}
@@ -28,12 +28,12 @@ Ulteriori soluzioni "generiche" verranno elencate nella sezione "[Errore non in 
 **!! MESSAGGIO IMPORTANTE per la persona che sta facendo troubleshooting !!**                
 
 
-Se stai cercando la soluzione ad un errore che qui sotto non e' elencato e riesci a                        
-trovare la soluzione per conto tuo crea una Github Issue: [https://github.com/mario33881/betterSIS/issues](https://github.com/mario33881/betterSIS/issues)
+Per favore, se stai cercando la soluzione ad un errore che qui sotto non e' elencato e riesci a                        
+trovare la soluzione per conto tuo crea una Github Issue con tutti i dettagli qui: [https://github.com/mario33881/betterSIS/issues](https://github.com/mario33881/betterSIS/issues)
 
 
-Questo permettera' a chi si trovera' nella tua situazione di trovare velocemente e facilmente              
-la soluzione al problema! 
+Questo mi permettera' di aggiungere l'errore alla guida e 
+chi si trovera' nella tua situazione potra' in futuro trovare velocemente e facilmente la soluzione al problema! 
 
 Grazie.                                                                          
 ```
@@ -52,31 +52,31 @@ Gli errori simili sono stati messi nella stessa sezione. Il nome usa ```/``` per
 
 * [model already defined](#model-already-defined)
 
-* [read_blif: no network found](#read_blif-no-network-found)
+* [read_blif: no network found](#read-blif-no-network-found)
 
 * [search file not found](#search-file-not-found)
 
-* [.output / .input / .name](#output--input--name)
+* [.output / .input / .name](#output-input-name)
 
-* [.end ... (null)](#end--null-)
+* [.end ... (null)](#end-null)
     ```{note}
     Dove "..." puo' essere il contenuto di una riga oppure parte di una keyword
     ```
 
-* [X is output but Y already has function](#X-is-output-but-Y-already-has-function)
+* [X is output but Y already has function](#x-is-output-but-y-already-has-function)
     ```{note}
     Dove "X" e "Y" dipendono dai nomi delle variabili nel file blif
     ```
 
-* [must give F or R, but not both](#must-give-F-or-R-but-not-both)
+* [must give F or R, but not both](#must-give-f-or-r-but-not-both)
 
-* [can't find model in files or library](#cant-find-model-in-files-or-library)
+* [can't find model in files or library](#can-t-find-model-in-files-or-library)
 
-* [calling subckt (contains `=')](#calling-subckt-contains--)
+* [calling subckt (contains `=')](#calling-subckt-contains)
 
-* [Cyclic model dependency detected](#Cyclic-model-dependency-detected)
+* [Cyclic model dependency detected](#cyclic-model-dependency-detected)
 
-* [warning input does not fanout / warning node does not fanout](#warning-input-does-not-fanout--warning-node-does-not-fanout)
+* [warning input does not fanout / warning node does not fanout](#warning-input-does-not-fanout-warning-node-does-not-fanout)
 
 * [warning node is not driven](#warning-node-is-not-driven)
 
@@ -177,15 +177,15 @@ che viene visualizzata da SIS.
 La causa, probabilmente, e' 
 l'aver scritto il file su un sistema
 Windows e poi aver copiato il file
-su un sistema GNU/Linux su cui si e' eseguito SIS.
+su un sistema GNU/Linux su cui si e' eseguito SIS (questo puo' capitare ad esempio se si lavora su un cartella condivisa tra un host Windows e una macchina virtuale Linux).
 
 I sistemi operativi identificano i caratteri
 di newline in maniera diversa.
 
-Questa e' una teoria che potrebbe essere sbagliata.
+Forse e' possibile risolvere semplicemente lavorando direttamente su Linux... Questa pero' e' SOLO una teoria: potrebbe essere sbagliata.
 
 Una cosa e' sicura: aggiungere una riga vuota sotto
-alla riga che crea il messaggio risolve il problema...
+alla riga che crea il messaggio di warning risolve il problema...
 
 Esempi di messaggio:
 ```
@@ -207,7 +207,7 @@ Esempi di messaggio:
 
 ## X is output but Y already has function
 Questo errore appare perche' un output
-e' stato definito piu' volte
+e' stato definito piu' volte.
 
 Esempio:
 ```
@@ -217,7 +217,7 @@ Esempio:
 
 .search circuit2.blif
 
-# problema: sto definendo e qui
+# problema: sto definendo 'e' qui
 .subckt circuit2 param=b out=e
 
 # e anche qui
@@ -309,15 +309,16 @@ Per sistemare il problema:
 * controllare di aver scritto correttamente il nome del modello da importare oppure
 * controllare di aver scritto correttamente il nome del modello importato
 
-Controllare per sicurezza di non aver ottenuto anche l'errore ```calling subckt (contains `=')```:
-in quel caso controllare in questo articolo come sistemare quel problema [cliccando qui](#calling-subckt-contains--).
+Controllare per sicurezza di non aver ottenuto contemporaneamente anche l'errore ```calling subckt (contains `=')```:
+in quel caso controllare come sistemare quel problema [cliccando qui](#calling-subckt-contains)
+e l'errore "can't find model in files or library" potrebbe "scomparire".
 
 
 ---
 
 ## calling subckt (contains `=')
 
-Questo errore puo' apparire subito prima l'errore ```can't find model in files or library```:
+Questo errore puo' apparire subito prima dell'errore ```can't find model in files or library```:
 significa che molto probabilmente ci si e' dimenticati di specificare
 il nome del modello da importare con la keyword ```.subckt```.
 
@@ -336,7 +337,7 @@ Esempio:
 
 .search file.blif
 
-# manca il nome... oppure il nome contiene =
+# manca il nome... oppure il nome contiene = (simbolo di uguale)
 # che e' un carattere non accettato
 .subckt a=b out=o
 .end
@@ -374,13 +375,16 @@ e sostituirlo con il nome corretto.
 Questo tipicamente NON e' un errore: e' un warning.
 
 Warning significa che POTREBBERO esserci problemi.
+Verificare l'output del circuito: se e' corretto molto probabilmente e' possibile ignorare questo messaggio.
+
+Per sicurezza e' possibile verificare qua sotto il motivo per cui appare e agire di conseguenza.
 
 Questo warning appare quando:
 
 * vengono utilizzate delle keyword andando a capo con la ```"\"```
   
   ```{note}
-  Questo spesso accade perche' questo viene fatto in automatico sui file ottimizzati
+  Questo spesso accade perche' SIS lo fa in automatico sui file durante le ottimizzazioni
   ```
 
   Esempio:
@@ -391,7 +395,7 @@ Questo warning appare quando:
   in4 in 5
   ```
   
-  In questo caso il warning e' possibile ignorare tranquillamente il warning se la simulazione del circuito da il risultato atteso.
+  In questo caso e' possibile ignorare tranquillamente il warning se la simulazione del circuito da il risultato atteso.
 
 * non vengono utilizzati tutti i nodi specificati nel file.
   
@@ -432,10 +436,11 @@ Questo warning appare quando:
     .model mycircuit
     .inputs a b
     .outputs o
+    
     .start_kiss
-    # da notare
-    # che i nomi degli input non vengono
-    # mai richiamati nel file
+    # notare che i nomi degli input in .inputs non vengono
+    # mai utilizzati esplicitamente nel file: questo e' un utilizzo corretto di SIS
+    # eppure SIS visualizzera' comunque il messaggio di warning
     .i 2
     .o 1
     .s 2
@@ -455,6 +460,7 @@ Questo warning appare quando:
     
     l'ultimo riporto non e' utile al risultato e ignorarlo porta alla visualizzazione del warning.
 
+    Anche in questo caso e' possibile ignorare il warning.
 
 ---
 

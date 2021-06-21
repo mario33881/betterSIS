@@ -3,7 +3,7 @@ html_meta:
   "description lang=en": "syntax highlighting for BLIF (SIS) files. Extensions for Visual Studio Code, Sublime Text, Notepad++ and Vim."
   "description lang=it": "syntax highlight per i file BLIF (SIS). Estensioni per Visual Studio Code, Sublime Text, Notepad++ e Vim."
   "keywords": "betterSIS, SIS, BLIF, syntax highlight, Visual Studio Code extension, Sublime Text package, Notepad++, Vim"
-  "property=og:locale": "en_US"
+  "property=og:locale": "it_IT"
 ---
 
 # Syntax Highlighting per file BLIF
@@ -20,7 +20,7 @@ BLIF e colorare le parole chiave. (piu' altre funzionalita' ugualmente utili)
 <img src="https://github.com/mario33881/vscode-blif/blob/9c1c9abb292ec0ed749e85ead7f2fdea4b80dbfc/images/presentation.gif?raw=true" />
 </p>
 
-Gli editor di testo, come Visual Studio Code, non riconoscono il formato e quindi non possono aiutare con:
+Gli editor di testo, come Visual Studio Code, non riconoscono il formato BLIF e quindi non possono aiutare con:
 
 * Highlight della sintassi
 
@@ -28,7 +28,7 @@ Gli editor di testo, come Visual Studio Code, non riconoscono il formato e quind
 
 * descrizione delle parole chiave
 
-* template standard
+* template standard (iniziare a scrivere il punto esclamativo "!", selezionare uno dei template e premere il tasto tab)
 
 Ho realizzato una estensione per Visual Studio Code per aggiungere queste funzionalita'.
 
@@ -36,18 +36,22 @@ L'estensione si chiama ["BLIF (SIS)" sul marketplace](https://marketplace.visual
 
 #### Installare l'estensione
 
-Per installare l'estensione e' possibile:
+Per installare l'estensione e' possibile scegliere UNO dei seguenti metodi:
 
-* Accedere con il browser al [marketplace di Visual Studio Code cliccando qui](https://marketplace.visualstudio.com/items?itemName=mario33881.vscode-blif) e cliccare sul pulsante verde "Install". A questo punto, dando il consenso, il browser aprira' Visual Studio Code per installare l'estensione.
+* Accedere con il browser al [marketplace ufficiale di Visual Studio Code cliccando qui](https://marketplace.visualstudio.com/items?itemName=mario33881.vscode-blif) e cliccare sul pulsante verde "Install". A questo punto, dopo aver dato il consenso, il browser aprira' Visual Studio Code per installare l'estensione.
 
 * Cercare "BLIF (SIS)" sul marketplace delle estensioni di Visual Studio Code mediante l'editor stesso e installarla cliccando sul pulsante "Install".
 
 * Se si apre un file con estensione ```.blif``` Visual Studio Code vi dira' con una notifica in basso a destra 
 che esistono estensioni nel marketplace per questo formato: cliccare il pulsante che vi fa accedere al marketplace.
 
-    A sinistra verranno elencate le varie estensioni (attualmente solo una): cliccare su "BLIF (SIS)" e poi cliccare sul pulsante "Install" per installarla
+    A sinistra verranno elencate le estensioni per i file BLIF (attualmente solo una): cliccare su "BLIF (SIS)" (di "mario33881") e poi cliccare sul pulsante "Install" per installarla
 
 Per ulteriori informazioni su questi ed altri metodi di installazione accedere al repository Github [cliccando qui](https://github.com/mario33881/vscode-blif)
+
+```{note}
+Per chi fosse interessato il repository contiene anche il codice sorgente della estensione.
+```
 
 ---
 
@@ -71,13 +75,31 @@ Lo sviluppatore si chiama [Dapizz01 su Github](https://github.com/Dapizz01)
 Simile alla estensione vscode-blif, questa estensione permette di avere Syntax Highlighting,
 autocompletamento e template base per l'editor di testo Sublime Text.
 
-L'estensione, attualmente, non e' stata aggiunta al Package Control Channel quindi
-non e' possibile installarla direttamente da Sublime Text.
+L'estensione e' stata approvata e aggiunta a Package Control, il package manager ufficiale dei pacchetti(/estensioni) per Sublime Text, quindi
+e' possibile installarla direttamente da Sublime Text.
 
-[E' possibile scaricare l'estensione per Sublime Text da qui](https://github.com/mario33881/sublime-blif_sis)
+Ecco i passi per installarla:
+
+* Installa il [package manager "package control" seguendo questa guida](https://packagecontrol.io/installation) su Sublime Text
+* Da Sublime Text nella toolbar in alto andare su ```Tools```, poi cliccare ```Command Palette```.
+* Digitare "Install Package": dovrebbe apparire l'opzione ```Package Control: Install Package```, cliccare quella opzione per selezionarla
+* Cercare "blif" oppure "sis" oppure "blif_sis".
+* Cliccare sul pacchetto chiamato "blif_sis" per installarlo.
+
 ```{note}
-E' stata ufficialmente verificata ed e' possibile installarla dal package manager di Sublime Text chiamato "package control".
+Assicurarsi prima che l'URL del repository (indicato sotto al nome del pacchetto) sia https://github.com/mario33881/sublime-blif_sis
 ```
+
+* Chiudere e riaprire Sublime Text.
+* Verificare che sia presente il syntax highlight aprendo un file BLIF con Sublime Text. Se funziona l'estensione e' stata installata correttamente.
+
+Se non funziona provare ad aprire un file .blif e POI (mentre il file BLIF e' aperto) dalla Command Palette eseguire il comando:
+```{note}
+Set Syntax: blif
+```
+Questo dice a Sublime Text che i file .blif hanno la sintassi "blif", descritta nella estensione.
+
+[Per ulteriori informazioni, ad esempio per vedere il codice corgente, clicca qui](https://github.com/mario33881/sublime-blif_sis)
 
 ---
 ## notepadpp-blif_sis: L'estensione per Notepad++

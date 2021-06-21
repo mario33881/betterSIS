@@ -3,7 +3,7 @@ html_meta:
   "description lang=en": "siswrapper: SIS wrapper for Python. What is siswrapper? How to install siswrapper."
   "description lang=it": "siswrapper: wrapper di SIS per Python. Cosa e' siswrapper? Come installare siswrapper."
   "keywords": "betterSIS, SIS, BLIF, install siswrapper, siswrapper"
-  "property=og:locale": "en_US"
+  "property=og:locale": "it_IT"
 ---
 
 # siswrapper: il wrapper per automatizzare SIS con Python

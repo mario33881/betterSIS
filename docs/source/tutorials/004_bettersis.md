@@ -3,7 +3,7 @@ html_meta:
   "description lang=en": "betterSIS: the modern shell for SIS. What is betterSIS? How to install betterSIS."
   "description lang=it": "betterSIS: la shell moderna per SIS. Cosa e' betterSIS? Come installare betterSIS."
   "keywords": "betterSIS, SIS, BLIF, install betterSIS"
-  "property=og:locale": "en_US"
+  "property=og:locale": "it_IT"
 ---
 
 # betterSIS: la shell moderna per SIS
@@ -15,7 +15,7 @@ html_meta:
 <img height="450px" src="https://raw.githubusercontent.com/mario33881/betterSIS/69a1208e0bcb21236b9daf3318763ed793cada8d/images/example.gif" />
 </p>
 
-SIS non ha alcune funzionalita' che ci si possono aspettare da una shell moderna come, ad esempio, autocompletamento dei comandi con il tasto tab, storico dei comandi con cui si puo' interagire utilizzando i pulsanti freccia verso l'alto e verso il basso, modifica dei comandi gia' scritti spostando il cursore a destra e a sinistra con i relativi tasti freccia...
+SIS non ha alcune funzionalita' che ci si possono aspettare da una shell moderna come, ad esempio, l'autocompletamento dei comandi con il tasto tab, storico dei comandi con cui si puo' interagire utilizzando i pulsanti freccia verso l'alto e verso il basso, modifica dei comandi gia' scritti spostando il cursore a destra e a sinistra con i relativi tasti freccia...
 
 Ho programmato il software betterSIS per aggiungere queste ed altre funzionalita' aggiuntive per migliorare la user experience di SIS.
 
