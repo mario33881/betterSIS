@@ -9,3 +9,6 @@ buildenv/
 tmp
 
 docs/build
+
+build/
+dist/

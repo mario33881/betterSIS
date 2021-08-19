@@ -1,0 +1,30 @@
+name: Builder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - name: Install docker
+      run: |
+        apt-get update
+        apt-get install apt-transport-https ca-certificates curl gnupg lsb-release -y
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+             $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        apt-get update
+        apt-get install docker-ce docker-ce-cli containerd.io -y
+    - name: Build
+      run: |
+        docker run -v "$(pwd):/src/" --entrypoint /bin/sh cdrx/pyinstaller-linux:python3 -c "pip install pyinstaller==4.5.1 && /entrypoint.sh"
+    
+    - name: Archive bettersis executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: bettersis
+        path: dist/bettersis
