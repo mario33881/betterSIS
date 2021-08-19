@@ -14,6 +14,7 @@ import re
 import os
 
 import siswrapper
+import blifparser.blifparser as blifparser
 from prompt_toolkit import PromptSession
 from prompt_toolkit import print_formatted_text, HTML
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
@@ -44,6 +45,8 @@ bettersis_cmds = [
     "bsis_documentation",
     "bsis_tutorials",
     "bsis_releases",
+    "bsis_checkblif",
+    "help",
 ]
 
 logger = logging.getLogger(__name__)
@@ -295,6 +298,7 @@ class Bettersis:
         cd_matches = re.match(r"cd[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
         ls_matches = re.match(r"ls[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
         edit_matches = re.match(r"edit[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
+        checkblif_matches = re.match(r"bsis_checkblif[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
 
         logger.debug("[%s-BSIS_COMMAND] %s" % (self.lastcmd, t_command))
 
@@ -352,6 +356,68 @@ class Bettersis:
             url = "https://github.com/mario33881/betterSIS/releases/latest"
             self.lastcmd_success = web_utils.open_browser(url, "Github releases")
             logger.debug("[%s-EXECUTED_BSIS_RELEASES_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+
+        # bsis_checkblif command
+        elif checkblif_matches:
+            filepath = checkblif_matches.groups()[0]
+            filepath = filepath.strip()
+
+            if filepath != "":
+                # user specified the input path
+                if os.path.isfile(filepath):
+                    blif = blifparser.BlifParser(filepath).blif
+
+                    print("\nISSUES LIST:\n")
+
+                    for problem in blif.problems:
+                        print(problem)
+
+                    print("=" * 50)
+                    print("\n{} issues found".format(len(blif.problems)))
+                    self.lastcmd_success = True
+                else:
+                    print_formatted_text(HTML("<b><red>[ERROR]</red></b> bsis_checkblif input file doesn't exist: "
+                                              "please specify a correct path OR "
+                                              "call bsis_checkblif (with no parameters) AFTER using the read_blif command"))
+                    self.lastcmd_success = False
+            else:
+                # user didn't specify input path: using the file read using the read_blif command (if available)
+                if self.sis.read_path is not None:
+                    blif = blifparser.BlifParser(self.sis.read_path).blif
+
+                    print("\nISSUES LIST:\n")
+
+                    for problem in blif.problems:
+                        print(problem)
+
+                    print("=" * 50)
+                    print("\n{} issues found".format(len(blif.problems)))
+                    self.lastcmd_success = True
+                else:
+                    print_formatted_text(HTML("<b><red>[ERROR]</red></b> no file was specified for the bsis_checkblif command: "
+                                              "please specify a correct path as a parameter OR call bsis_checkblif "
+                                              "(with no parameters) AFTER using the read_blif command"))
+                    self.lastcmd_success = False
+
+        # help command
+        elif t_command == "help":
+            print("\nSIS COMMANDS:")
+            self.manage_command(t_command)
+
+            print("\nBETTERSIS COMMANDS:\n")
+            print("* edit : opens a file with a simple CLI text editor")
+            print("* cd : changes current working directory")
+            print("* ls : shows the content of the current working directory")
+            print("* bsis_documentation : opens the website with the betterSIS documentation")
+            print("* bsis_tutorials : opens the website with SIS/betterSIS tutorials")
+            print("* bsis_releases : opens the betterSIS's download page")
+            print("* bsis_checkblif : BLIF parser/validation tool")
+            print("* bsis_script : executes optimization and mapping commands in one command "
+                  "(needs parameters to specify the type of circuit to optimize/map)")
+
+            print("\n> If you would like to know more about these commands, "
+                  "execute the 'bsis_documentation' command to open the documentation website")
+            self.lastcmd_success = True
 
         # unexpected bsis command
         else:

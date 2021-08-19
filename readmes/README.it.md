@@ -134,6 +134,9 @@ Puoi:
         > altrimenti occorre richiamare il programma con il percorso completo oppure 
         > occorre leggere i file blif specificando il percorso completo
 
+    
+    > Su molte distro e' possibile scaricare l'eseguibile nella cartella ```bin``` della cartella home (```$HOME```): questo permette di eseguire il comando ```bsis``` da qualsiasi cartella come se betterSIS fosse installato
+
 * Usare il codice sorgente:
 
     1. Scarica questo repository
@@ -194,6 +197,8 @@ Sono stati scritti dei tutorial su readthedocs (in italiano): [clicca qui per ve
 * Aggiunto il comando ```bsis_tutorials```: apre il browser alla [pagina dei tutorial SIS](https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html)
 * Aggiunto il comando ```bsis_documentation```: apre il browser alla [pagina della documentazione di betterSIS](https://bettersis.readthedocs.io/en/latest/readme.html)
 * Aggiunto il comando ```bsis_releases```: apre il browser alla [pagina per scaricare l'ultima versione di betterSIS](https://github.com/mario33881/betterSIS/releases/latest)
+* Aggiunto il comando ```bsis_checkblif```: utilizza la libreria blifparser come un semplice tool di verifica per validare i file BLIF
+* Adesso il comando ```help``` visualizza anche i comandi di betterSIS
 
 ### Fix:
 * Adesso il programma riesce a verificare la presenza di aggiornamenti

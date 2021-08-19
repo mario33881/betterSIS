@@ -134,6 +134,8 @@ You can:
         > You could add it to the path environment variable,
         > otherwise you have to call it using the full path or you
         > have to read blif files using their full path
+    
+    > On many distros you can put the executable inside the ```bin``` folder inside your home folder (```$HOME```): this allows you to execute the ```bsis``` command from every folder. The result is the same as installing betterSIS and executing that command.
 
 * Use the source code:
 
@@ -194,6 +196,8 @@ There are also some tutorials on readthedocs (in italian): [click here](https://
 * Added the ```bsis_tutorials``` command: it opens the browser on the [SIS tutorials webpage](https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html)
 * Added the ```bsis_documentation``` command: it opens the browser on the [betterSIS documentation webpage](https://bettersis.readthedocs.io/en/latest/readme.html)
 * Added the ```bsis_releases``` command: it opens the browser on the [download page for the latest betterSIS](https://github.com/mario33881/betterSIS/releases/latest)
+* Added the ```bsis_checkblif``` command: uses the blifparser library as a basic parser/validation tool for BLIF files
+* Now the ```help``` command also shows betterSIS commands
 
 ### Fixes:
 * Now the program can correctly check if an update is available.

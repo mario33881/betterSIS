@@ -389,7 +389,8 @@ def get_siscompleter():
         },
         "bsis_tutorials": None,
         "bsis_documentation": None,
-        "bsis_releases": None
+        "bsis_releases": None,
+        "bsis_checkblif": get_files()
     })
 
     return siscompleter
