@@ -21,10 +21,10 @@ jobs:
         sudo apt-get install docker-ce docker-ce-cli containerd.io -y
     - name: Build
       run: |
-        docker run -v "$(pwd):/src/" --entrypoint /bin/sh cdrx/pyinstaller-linux:python3 -c "pip install pyinstaller==4.5.1 && /entrypoint.sh"
+        docker run -v "$(pwd):/src/" --entrypoint /bin/sh cdrx/pyinstaller-linux:python3
     
     - name: Archive bettersis executable
       uses: actions/upload-artifact@v2
       with:
         name: bettersis
-        path: dist/bettersis
+        path: dist/linux/bettersis
