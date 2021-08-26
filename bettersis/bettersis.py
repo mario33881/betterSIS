@@ -112,13 +112,20 @@ class Bettersis:
         """
         Shows the message at the shell startup.
         """
-        print("                                                                       ")
-        print(" ██████╗ ███████╗████████╗████████╗███████╗██████╗ ███████╗██╗███████╗ ")
-        print(" ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗██╔════╝██║██╔════╝ ")
-        print(" ██████╔╝█████╗     ██║      ██║   █████╗  ██████╔╝███████╗██║███████╗ ")
-        print(" ██╔══██╗██╔══╝     ██║      ██║   ██╔══╝  ██╔══██╗╚════██║██║╚════██║ ")
-        print(" ██████╔╝███████╗   ██║      ██║   ███████╗██║  ██║███████║██║███████║ ")
-        print(" ╚═════╝ ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝ ")
+
+        try:
+            print("                                                                       ")
+            print(" ██████╗ ███████╗████████╗████████╗███████╗██████╗ ███████╗██╗███████╗ ")
+            print(" ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗██╔════╝██║██╔════╝ ")
+            print(" ██████╔╝█████╗     ██║      ██║   █████╗  ██████╔╝███████╗██║███████╗ ")
+            print(" ██╔══██╗██╔══╝     ██║      ██║   ██╔══╝  ██╔══██╗╚════██║██║╚════██║ ")
+            print(" ██████╔╝███████╗   ██║      ██║   ███████╗██║  ██║███████║██║███████║ ")
+            print(" ╚═════╝ ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝ ")
+        except UnicodeEncodeError:
+            # The user probably didn't set an UTF-8 language 
+            # in the $LANG environment variable
+            pass
+
         print("                                                                       ")
         print(" ===================================================================== ")
         print("                                                                       ")
@@ -550,8 +557,10 @@ class Bettersis:
                 logger.debug("[%s-ERRORS] %s" % (self.lastcmd, error_msg))
 
 
-if __name__ == '__main__':
-
+def main():
+    """
+    Main function: sets up the logger, calls betterSIS and manages exceptions
+    """
     # remove NullHandler
     logger.removeHandler(logger.handlers[0])
 
@@ -591,3 +600,7 @@ if __name__ == '__main__':
     if bettersis is not None:
         if bettersis.sis.started:
             bettersis.sis.stop()
+
+
+if __name__ == "__main__":
+    main()

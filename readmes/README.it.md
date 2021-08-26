@@ -202,6 +202,11 @@ Sono stati scritti dei tutorial su readthedocs (in italiano): [clicca qui per ve
 
 ### Fix:
 * Adesso il programma riesce a verificare la presenza di aggiornamenti
+* Risolto l'errore ```UnicodeEncodeError: 'ascii' codec can't encode character in position 0: ordinal not in range(128)```
+    > Questo errore appariva quando veniva visualizzato il titolo "BETTERSIS" come "ASCII art": 
+    > il terminale deve essere configurato per usare una lingua con encoding UTF-8 con la variabile d'ambiente ```$LANG``` per poter visualizzare quei caratteri ASCII.
+    >
+    > Ora la "ASCII art" non viene visualizzata quando il terminale non e' configurato con encoding UTF-8.
 
 **2021-03-17 1.2.0:** <br>
 ### Funzionalita' aggiuntive:

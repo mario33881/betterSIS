@@ -201,6 +201,11 @@ There are also some tutorials on readthedocs (in italian): [click here](https://
 
 ### Fixes:
 * Now the program can correctly check if an update is available.
+* Fixed the ```UnicodeEncodeError: 'ascii' codec can't encode character in position 0: ordinal not in range(128)``` error
+    > This happened because of the ASCII art that is shown when bettersis is executed: 
+    > the terminal must be set to use an UTF-8 language using the ```$LANG``` environment variable to be able to show those ASCII characters.
+    >
+    > Now the ASCII art is simply not shown if the user's terminal doesn't support it.
 
 **2021-03-17 1.2.0:** <br>
 ### Features:
