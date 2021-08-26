@@ -14,7 +14,7 @@ description: |
 
   You can read more about betterSIS here: https://github.com/mario33881/betterSIS
 base: core18
-confinement: devmode
+confinement: strict
 
 
 parts:
