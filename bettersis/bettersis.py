@@ -122,7 +122,7 @@ class Bettersis:
             print(" ██████╔╝███████╗   ██║      ██║   ███████╗██║  ██║███████║██║███████║ ")
             print(" ╚═════╝ ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝ ")
         except UnicodeEncodeError:
-            # The user probably didn't set an UTF-8 language 
+            # The user probably didn't set an UTF-8 language
             # in the $LANG environment variable
             pass
 
@@ -292,7 +292,7 @@ class Bettersis:
                 # manage SIS commands
                 self.manage_command(command.strip())
 
-    def manage_bsis_command(self, t_command):
+    def manage_bsis_command(self, t_command):  # noqa: C901
         """
         Executes the ``<t_command>`` command betterSIS.
 
@@ -401,7 +401,8 @@ class Bettersis:
                     print("\n{} issues found".format(len(blif.problems)))
                     self.lastcmd_success = True
                 else:
-                    print_formatted_text(HTML("<b><red>[ERROR]</red></b> no file was specified for the bsis_checkblif command: "
+                    print_formatted_text(HTML("<b><red>[ERROR]</red></b> "
+                                              "no file was specified for the bsis_checkblif command: "
                                               "please specify a correct path as a parameter OR call bsis_checkblif "
                                               "(with no parameters) AFTER using the read_blif command"))
                     self.lastcmd_success = False

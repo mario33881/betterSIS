@@ -53,10 +53,9 @@ if __name__ == '__main__':
         name='bettersis',  # name of the PyPI-package.
         version=version,    # version number
         author="Zenaro Stefano (mario33881)",
-        entry_points = {
-        "console_scripts": ["bettersis = bettersis.bettersis:main"]
+        entry_points={
+            "console_scripts": ["bettersis = bettersis.bettersis:main"]
         },
-        #scripts = ['bin/bettersis'],
         author_email="mariortgasd@hotmail.com",
         url="https://github.com/mario33881/betterSIS",
         keywords='SIS BLIF',

@@ -5,7 +5,7 @@ Imports modules and packages for the user that executes:
 python -m bettersis
 """
 
-from ._version import __version__
+from ._version import __version__  # noqa: F401
 
 try:
     from . import bettersis
