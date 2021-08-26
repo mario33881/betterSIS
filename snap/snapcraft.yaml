@@ -1,0 +1,46 @@
+name: bettersis
+version: git
+summary: The modern shell for SIS (the circuit simulator and optimizer)
+description: |
+  Bettersis, or bsis for short, is an **interactive shell** 
+  that allows you to **control SIS** (the tool for synthesis and optimization of sequential circuits)
+  more easily than its default shell thanks to modern features such as:
+
+  * command **autocompletion**
+  * command **history**
+  * command **suggestions**
+
+  > **Disclaimer:** I'm not affiliated with the SIS developers in any way.
+
+  You can read more about betterSIS here: https://github.com/mario33881/betterSIS
+base: core18
+confinement: devmode
+
+
+parts:
+  sis:
+    plugin: dump
+    source: https://github.com/JackHack96/logic-synthesis/releases/download/1.3.6/sis_1.3.6-1_amd64.deb
+    source-type: deb
+
+  sisexecutable:
+    plugin: dump
+    source: ./snap/local/includes
+
+  bettersis:
+    plugin: python
+    python-version: python3
+    source: .
+
+apps:
+  sis:
+    command: bin/sis
+  bettersis:
+    command: bin/bettersis
+    environment:
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+    plugs:
+      - network
+      - home
+      - removable-media

@@ -12,3 +12,6 @@ docs/build
 
 build/
 dist/
+
+*.egg-info/
+*.snap
