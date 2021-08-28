@@ -1,46 +1,61 @@
 name: bettersis
 version: git
+base: core18
+
 summary: The modern shell for SIS (the circuit simulator and optimizer)
 description: |
-  Bettersis, or bsis for short, is an **interactive shell** 
+  Bettersis, or bsis for short, is an **interactive shell**
   that allows you to **control SIS** (the tool for synthesis and optimization of sequential circuits)
   more easily than its default shell thanks to modern features such as:
-
   * command **autocompletion**
   * command **history**
   * command **suggestions**
-
   > **Disclaimer:** I'm not affiliated with the SIS developers in any way.
-
   You can read more about betterSIS here: https://github.com/mario33881/betterSIS
-base: core18
-confinement: strict
+
+grade: stable
+confinement: strict  # block everything put the things specified as "plugs"
 
 
 parts:
+  # dump the content of the deb package in the snap
   sis:
     plugin: dump
     source: https://github.com/JackHack96/logic-synthesis/releases/download/1.3.6/sis_1.3.6-1_amd64.deb
     source-type: deb
 
-  sisexecutable:
-    plugin: dump
-    source: ./snap/local/includes
-
+  # use the setup.py file to install the python app
   bettersis:
     plugin: python
     python-version: python3
     source: .
 
+
 apps:
   sis:
-    command: bin/sis
-  bettersis:
-    command: bin/bettersis
-    environment:
-      LANG: C.UTF-8
-      LC_ALL: C.UTF-8
+    command: usr/local/bin/sis  # this is where the dump plugin puts the executable
     plugs:
-      - network
-      - home
-      - removable-media
+      - home                    # the app reads and writes blif files
+      - removable-media         # the app reads and writes blif files in USBs, /mnt/, ...
+
+  bettersis:
+    command: bin/bettersis  # setup.py contains entry point that creates this executable
+    environment:
+      LANG: C.UTF-8         # needed for the logo / ASCII art
+      LC_ALL: C.UTF-8       # needed for the logo / ASCII art
+    plugs:
+      - network             # the app checks if new versions are available
+      - home                # the app reads and writes blif files
+      - removable-media     # the app reads and writes blif files in USBs, /mnt/, ...
+
+
+# these bindings allow sis to find files
+# like *.genlib files, script.rugged, ...
+
+layout:
+  /usr/share:
+    bind: $SNAP/usr/share
+
+  /usr/local:
+    bind: $SNAP/usr/local
+
