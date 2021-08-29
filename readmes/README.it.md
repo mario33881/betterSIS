@@ -3,6 +3,7 @@
 [![Unit Tests](https://github.com/mario33881/betterSIS/actions/workflows/unittests.yml/badge.svg)](https://github.com/mario33881/betterSIS/actions/workflows/unittests.yml)
 ![Linter](https://github.com/mario33881/betterSIS/workflows/Linter/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/bettersis/badge/?version=latest)](https://bettersis.readthedocs.io/en/latest/?badge=latest)
+[![bettersis](https://snapcraft.io/bettersis/badge.svg)](https://snapcraft.io/bettersis)
 
 Bettersis, definito brevemente come "bsis", e' una **shell interattiva** 
 che permette di **controllare SIS** (lo strumento per la sintesi e l'ottimizzazione di circuiti sequenziali)
@@ -41,8 +42,11 @@ piu' comodamente rispetto alla shell di default di SIS grazie alle sue nuove fun
 ## Indice
 * [Descrizione](#descrizione)
 * [Requisiti](#requisiti)
+    * [Requisiti per sviluppatori](#requisiti-per-sviluppatori)
 * [Installazione](#installazione)
 * [Guida all'uso](#guida-alluso)
+    * [Storico permanente dei comandi tra piu' sessioni](#storico-permanente-dei-comandi-tra-piu-sessioni)
+* [Trovato qualche problema?](#trovato-qualche-problema)
 * [Changelog](#changelog)
 * [Autore](#autore)
 
@@ -54,7 +58,7 @@ Questo software fornisce una nuova shell interattiva che
 > interattive creando e connettendosi al processo della shell.
 
 La shell interattiva e' controllata da una istanza della classe ```Bettersis```
-che usa la libreria ```prompt_toolkit``` per visualizzare il promt e
+che usa la libreria ```prompt_toolkit``` per visualizzare il prompt e
 la toolbar in basso e fornisce l'autocompletamento e lo storico dei comandi.
 
 Puoi leggere piu' informazioni riguardo al codice di betterSIS su readthedocs [cliccando qui](https://bettersis.readthedocs.io/en/latest/readme.html)
@@ -67,24 +71,80 @@ Puoi leggere piu' informazioni riguardo al codice di betterSIS su readthedocs [c
 * SIS, con il percorso nella variabile d'ambiente "path" (richiamabile con il comando ```sis``` da terminale): lo strumento per la sintesi e l'ottimizzazione di circuiti sequenziali
     > Puoi [scaricarlo da questa pagina](https://jackhack96.github.io/logic-synthesis/sis.html)
 
+    > Non e' necessario installare SIS per la versione dello Snap store
+
+* (snap SOLO per installare la versione dello Snap store)
+
 ### Requisiti per sviluppatori
 * I requisiti indicati nella sezione precedente
 * Python 3 (versione >= 3.6)
     > La libreria prompt-toolkit non supporta le versioni piu' vecchie di Python 3
 * La libreria siswrapper per Python: permette di controllare SIS da Python
 * La libreria prompt-toolkit per Python: gestisce la shell di betterSIS e le sue funzionalita'
-* (Pyinstaller per creare l'eseguibile)
+* (Pyinstaller - solo per creare l'eseguibile)
     > Il sistema operativo su cui si crea l'eseguibile dovrebbe essere il piu' vecchio possibile
     > per supportare i sistemi operativi piu' moderni
     > (Le build non sono retrocompatibili)
 * La libreria certifi: gestisce cerificati SSL/TLS. E' necessaria per collegarsi a Github Release per verificare presenza di aggiornamenti.
+    > Questo e' necessario solo per i sistemi operativi piu' vecchi che non hanno certificati aggiornati
 
 [Torna all'indice](#indice)
 
 ## Installazione
 Puoi:
 
-* (soluzione piu' comoda e facile) Installare il software:
+* (soluzione piu' comoda e facile) Installare il software dallo Snap store:
+    
+    Dal terminale eseguire questo comando:
+    ```
+    sudo snap install bettersis
+    ```
+    > E' necessario avere snap installato. Puoi installarlo [seguendo le istruzioni qui](https://snapcraft.io/docs/installing-snapd). 
+    >
+    > Nota che probabilmente snap e' gia' installato sul tuo computer. (specialmente se si sta utilizzando una versione recente di una distro basata su Ubuntu)
+
+    Dall'interfaccia grafica:
+    1. Clicca questo pulsante:
+
+        [![Scarica dallo Snap Store](https://snapcraft.io/static/images/badges/it/snap-store-black.svg)](https://snapcraft.io/bettersis)
+
+
+    2. Poi clicca sul pulsante "Install" (installa) in alto a destra della pagina
+    3. Clicca su "View in Desktop Store" (visualizza nello store sul desktop) e "Choose an app" (scegli una app)
+    4. Scegli "Ubuntu software" OPPURE "Handler for snap:// URIs" OPPURE "Snap Store"
+        > Queste opzioni sono scritte in ordine di preferenza: se la prima opzione non e' disponibile scegliere la seconda, ecc... Se non c'e' nessuna delle opzioni allora e' consigliato installare betterSIS con il comando scritto sopra
+    5. Clicca sul pulsante "Install" / "Installa"
+    6. (Opzionale) Se vuoi puoi modificare i permessi cliccando sul pulsante "Permissions" / "Permessi"
+        > Consiglio di abilitare/disabilitare solo la opzione "read/write permissions on removable media" (lettura/scrittura su dispositivi rimovibili) che serve per permettere la lettura/scrittura dei file BLIF nelle USB oppure nelle cartelle in ```/mnt/``` (come le cartelle condivise di Virtualbox).
+        >
+        > Gli altri permessi sono necessari per accedere ai file BLIF all'interno della cartella home e per controllare se ci sono aggiornamenti disponibili (Cambiare questi permessi potrebbe impedire alla applicazione di funzionare completamente e/o correttamente finche' non si ri-abilitano i permessi)
+    
+    Vantaggi rispetto alle altre soluzioni:
+    * E' possibile eseguire la shell da qualunque cartella eseguendo il comando ```bettersis``` da terminale.
+    * Non e' necessario installare Python e le altre dipendenze
+    * SIS e' incluso all'interno dello snap insieme a betterSIS: non e' necessario installarlo manualmente
+        > Nota: non succede niente se si decide di installare sia lo snap con sis incluso sia sis,
+        NON vanno in conflitto
+    * Aggiornamenti automatici: quando un nuovo aggiornamento e' disponibile verra' scaricato e installato automaticamente.
+        > Questo permette di avere sempre tutte le nuove funzionalita' e bug fix.
+    * Compatibile con tutti i sistemi operativi che supportano snap.
+    
+    Svantaggi:
+    * Potrebbe usare (leggermente) piu' risorse delle altre installazioni
+    * SIS e' incluso: occupa piu' spazio disco (circa 3.08 MB in piu')
+    * Aggiornamenti completamente automatici: non c'e' modo di poter [disabilitare e ri-abilitare comodamente gli aggiornamenti automatici](https://forum.snapcraft.io/t/snap-method-to-remove-auto-updates/21199)
+    * snap e' necessario per l'installazione
+        > Molte distro basate su Ubuntu ma anche altre hanno [snap installato di fabbrica](https://snapcraft.io/docs/installing-snapd)
+    
+    Puoi disinstallare betterSIS aprendo la pagina sull'Ubuntu Store/Snap store e cliccando sul pulsante rimuovi/disinstalla.
+    > Puoi seguire gli stessi passaggi svolti per installare betterSIS e poi nel passaggio 5 cliccare su rimuovi/disinstalla invece di "installa"
+
+    Puoi anche disinstallarlo eseguendo questo comando:
+    ```
+    snap remove bettersis
+    ```
+
+* Installare il software con il pacchetto DEB:
 
     Scarica il pacchetto .deb da [Github Release](https://github.com/mario33881/betterSIS/releases/latest) e
     installalo utilizzando il seguente comando:
@@ -105,6 +165,11 @@ Puoi:
     * Non e' necessario installare Python e le dipendenze 
       per eseguire ```bettersis.py```
 
+    Svantaggi:
+    * Potrebbe non essere al 100% compatibile con tutti i sistemi operativi / versioni dei sistemi operativi
+        > Sicuramente NON e' compatibile con i sistemi NON basati su debian
+    * Niente aggiornamenti automatici: occorre scaricare e installare manualmente il pacchetto DEB package.
+
     Puoi disinstallare la shell eseguendo il comando:
     ```
     dpkg --remove bettersis
@@ -112,7 +177,7 @@ Puoi:
 
 * Usare l'eseguibile creato da Pyinstaller:
     
-    Scaricare l'eseguibile creato da Pyinstaller dalla pagina [Github Release](https://github.com/mario33881/betterSIS/releases/latest)
+    Scaricare l'eseguibile creato da Pyinstaller dalla pagina [Github Release](https://github.com/mario33881/betterSIS/releases/latest) (e' il file chiamato "bsis" senza estensione file)
 
     Puoi eseguire la shell eseguendo il file:
     ```
@@ -133,9 +198,11 @@ Puoi:
         > Si puo' aggiungere il percorso alla variabile di ambiente "path",
         > altrimenti occorre richiamare il programma con il percorso completo oppure 
         > occorre leggere i file blif specificando il percorso completo
-
+    * Niente aggiornamenti automatici: occorre installare manualmente la nuova versione e sostituire la versione vecchia
     
     > Su molte distro e' possibile scaricare l'eseguibile nella cartella ```bin``` della cartella home (```$HOME```): questo permette di eseguire il comando ```bsis``` da qualsiasi cartella come se betterSIS fosse installato
+
+    Per "disinstallarlo" e' sufficiente cancellare il file.
 
 * Usare il codice sorgente:
 
@@ -160,16 +227,21 @@ Puoi:
         > occorre leggere i file blif specificando il percorso completo
     * Occorre installare Python e le dipendenze per sviluppatori
 
+* (esiste anche una [versione PyPI](https://pypi.org/project/bettersis/) ma non dovresti utilizzarla. L'ho creata per registrare il nome e per evitare possibili confusioni da parte dell'utente)
+    > Potrebbe tornarmi comoda anche per creare futuri metodi di installazione
+
 [Torna all'indice](#indice)
 
 ## Guida all'uso
 
 Eseguire la shell interattiva di ```bettersis```.
->
-> Utilizzare:
-> * Python (si e' deciso di eseguire il codice sorgente) oppure
-> * Il comando ```bsis``` (se ```bettersis``` e' stato installato dal file .deb)
-> * Il comando ```./bsis``` (se si e' deciso di eseguire il file creato da Pyinstaller)
+
+Per eseguire la shell utilizzare:
+* Python (si e' deciso di eseguire il codice sorgente) oppure
+* Il comando ```bsis``` (se ```bettersis``` e' stato installato dal file .deb)
+* Il comando ```./bsis``` (se si e' deciso di eseguire il file creato da Pyinstaller)
+    > Se il percorso dell'eseguibile e' nella variabile d'ambiente ```$PATH``` e' sufficiente eseguire il comando ```bsis```
+* Il comando ```bettersis``` (se si e' installata la versione snap)
 
 Adesso e' possibile utilizzare la shell come se fosse la normale shell di SIS:
 iniziare a leggere file (ad esempio usando ```read_blif```), ottimizzare circuiti,
@@ -178,7 +250,47 @@ simularli, ...
 E' possibile vedere nella GIF ad inizio documentazione
 un esempio di utilizzo.
 
+Utilizzare il comando ```help``` per vedere sia i comandi di SIS sia i nuovi comandi forniti da betterSIS.
+> Se la descrizione non e' sufficiente probabilmente su questa pagina sono presenti maggiori dettagli. Per ulteriori informazioni creare una issue.
+
 Sono stati scritti dei tutorial su readthedocs (in italiano): [clicca qui per vedere i tutorial](https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html)
+
+---
+
+### Storico permanente dei comandi tra piu' sessioni
+
+Questa funzionalita' permette di eseguire comandi SIS, chiudere betterSIS e poi riaprirlo in futuro e avere memorizzati i comandi eseguiti in passato utilizzando i pulsanti freccia su/giu'.
+
+Questa funzionalita' e' disabilitata di default perche' betterSIS necessita' di scrivere il file ```~/.bsis_history``` per salvare i vecchi comandi e l'utente potrebbe non volere questo comportamento dal programma.
+
+Per abilitare questa funzionalita' occorre impostare la variabile d'ambiente "```BSIS_HISTORY_ENABLED```" a "true".
+
+> Per impostare la variabile d'ambiente modificare il file ```~/.bashrc``` file (o l'equivalente della shell di default del sistema operativo) e
+> aggiungere questa riga ```export BSIS_HISTORY_ENABLED=true``` a fine file.
+
+Di default il limite della dimensione dello storico e' di 100 KB ma e' possibile modificarlo impostando la variabile d'ambiente "```BSIS_HISTORY_SIZELIMIT```" (il valore minimo e' 1000 bytes)
+> Per modificare questa dimensione aggiungere al file ```~/.bashrc``` (o equivalente) la seguente riga: ```export BSIS_HISTORY_SIZELIMIT=10000```.
+>
+> Sostituire "10000" con il numero di byte massimo desiderato.
+
+Chiudere e riaprire la shell per attuare le modifiche.
+
+[Torna all'indice](#indice)
+
+## Trovato qualche problema?
+
+Per favore crea una "issue" con tutti i dettagli qui: https://github.com/mario33881/betterSIS/issues
+
+Se hai usato:
+* la versione snap: esegui il seguente comando per creare un file di log e poi copia il contenuto nella issue.
+
+        cat /var/log/syslog | grep \"bettersis\" > pybettersis.log
+
+* la versione PyInstaller: esegui il seguente comando per creare un file di log e poi copia il contenuto nella issue.
+
+        cat /var/log/syslog | grep \"bettersis\" > pybettersis.log
+
+* il pacchetto DEB: copia il contenuto del file ```/var/log/pybettersis/pybettersis.log``` nella issue
 
 [Torna all'indice](#indice)
 
@@ -186,19 +298,16 @@ Sono stati scritti dei tutorial su readthedocs (in italiano): [clicca qui per ve
 
 **WIP 1.2.1:** <br>
 ### Funzionalita' aggiuntive:
-* Aggiunto storico permanente dei comandi tra piu' sessioni (vengono salvati all'interno del file ```~/.bsis_history```):
-  impostare la variabile d'ambiente "```BSIS_HISTORY_ENABLED```" a "true" per abilitare questa funzione (e' necessario chiudere e poi riaprire la shell)
-    > Il limite della dimensione del file di default e' di 100 KB ma e' possibile cambiarlo impostando la variabile d'ambiente "```BSIS_HISTORY_SIZELIMIT```" (la dimensione minima consentita e' di 1000 byte)
+* Aggiunto storico permanente dei comandi tra piu' sessioni. Vengono salvati all'interno del file ```~/.bsis_history```. Questa funzionalita' e' disabilitata di default.
 
-    > Per impostare le variabili d'ambiente modificare il file ```~/.bashrc``` (o l'equivalente della shell di default del sistema operativo)
-    > aggiungendo la riga ```export BSIS_HISTORY_ENABLED=true``` in fondo al file.
-    >
-    > Per il limite della dimensione del file ```.bsis_history``` aggiungere la seguente riga: ```export BSIS_HISTORY_SIZELIMIT=10000``` (sostituire "10000" con il numero di byte desiderato)
+  Impostare la variabile d'ambiente "```BSIS_HISTORY_ENABLED```" a "true" per abilitare questa funzione (e' necessario chiudere e poi riaprire la shell).
+  Leggere la documentazione per i dettagli su come abilitare questa funzionalita' e come modificare il limite della dimensione dello storico.
 * Aggiunto il comando ```bsis_tutorials```: apre il browser alla [pagina dei tutorial SIS](https://bettersis.readthedocs.io/en/latest/tutorials/tutorials.html)
 * Aggiunto il comando ```bsis_documentation```: apre il browser alla [pagina della documentazione di betterSIS](https://bettersis.readthedocs.io/en/latest/readme.html)
 * Aggiunto il comando ```bsis_releases```: apre il browser alla [pagina per scaricare l'ultima versione di betterSIS](https://github.com/mario33881/betterSIS/releases/latest)
 * Aggiunto il comando ```bsis_checkblif```: utilizza la libreria blifparser come un semplice tool di verifica per validare i file BLIF
 * Adesso il comando ```help``` visualizza anche i comandi di betterSIS
+* Nuovo metodo di installazione attraverso lo Snap store. E' possibile installare betterSIS con il comando ```snap install bettersis``` oppure utilizzando l'interfaccia grafica dello Snap store.
 
 ### Fix:
 * Adesso il programma riesce a verificare la presenza di aggiornamenti
