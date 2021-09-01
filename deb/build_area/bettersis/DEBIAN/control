@@ -1,0 +1,8 @@
+Package: bettersis
+Section: custom
+Priority: optional
+Architecture: all
+Essential: no
+Maintainer: Zenaro Stefano
+Description: Improved interactive shell for SIS
+Homepage: https://github.com/mario33881/betterSIS

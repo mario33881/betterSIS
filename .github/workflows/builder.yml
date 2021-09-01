@@ -10,6 +10,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2.3.4
+
     - name: Install docker
       run: |
         sudo apt-get update
@@ -19,15 +20,29 @@ jobs:
              $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
         sudo apt-get update
         sudo apt-get install docker-ce docker-ce-cli containerd.io -y
-    - name: Build
+
+    - name: Build PyInstaller version
       run: |
         docker run -v "$(pwd):/src/" cdrx/pyinstaller-linux:python3
         ls
         ls dist
         ls dist/linux
     
-    - name: Archive bettersis executable
+    - name: Archive bettersis PyInstaller version
       uses: actions/upload-artifact@v2
       with:
-        name: bettersis
+        name: bsis
         path: dist/linux/bettersis
+    
+    - name: Build DEB package
+      run: |
+        cd deb
+        docker build -t deb_builder .
+        cd ..
+        docker run -v "$PWD:/src/" deb_builder
+    
+    - name: Archive bettersis DEB package
+      uses: actions/upload-artifact@v2
+      with:
+        name: bettersis.deb
+        path: deb/bettersis.deb

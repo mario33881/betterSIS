@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+echo '$template AppLogFormat, "%TIMESTAMP:::date-pgsql%%TIMESTAMP:27:32:date-rfc3339%(%syslogseverity-text%)%msg%\n"' > /etc/rsyslog.d/24-pybettersis.conf
+echo 'if $app-name == '\''bettersis'\'' then -/var/log/pybettersis/pybettersis.log;AppLogFormat' >> /etc/rsyslog.d/24-pybettersis.conf
+echo '& ~' >> /etc/rsyslog.d/24-pybettersis.conf
+sudo service rsyslog restart
