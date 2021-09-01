@@ -23,30 +23,15 @@ def get_readme():
     return long_description
 
 
-def get_requirements():
-    """
-    Returns list with the requirements.
-    :return list requirements_list: list of dependencies
-    """
-    requirements = ""
-    this_directory = os.path.abspath(os.path.dirname(__file__))
-
-    if os.path.isfile(os.path.join(this_directory, 'requirements.txt')):
-        with open(os.path.join(this_directory, 'requirements.txt'), encoding='utf-8') as f:
-            requirements = f.read()
-    else:
-        raise Exception("requirements.txt file not found")
-
-    requirements = requirements.replace("\n\n", "\n")
-    requirements_list = requirements.split("\n")
-
-    return requirements_list
-
-
 if __name__ == '__main__':
 
     setuptools.setup(
-        install_requires=get_requirements(),  # dependency
+        install_requires=[
+            "siswrapper==1.2.1",
+            "prompt-toolkit==3.0.20",
+            "certifi==2021.5.30", 
+            "blifparser==1.0.0"
+        ],  # dependencies
         python_requires='>=3',
         packages=setuptools.find_packages(include=['bettersis']),
 
