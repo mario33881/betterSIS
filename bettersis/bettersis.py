@@ -407,6 +407,10 @@ class Bettersis:
                                               "(with no parameters) AFTER using the read_blif command"))
                     self.lastcmd_success = False
 
+        # bsis_update command
+        elif t_command == "bsis_update" and os.getenv("APPIMAGE") and os.getenv("APPDIR"):
+            self.lastcmd_success = update_checker.update_appimage()
+
         # help command
         elif t_command == "help":
             print("\nSIS COMMANDS:")
@@ -422,6 +426,10 @@ class Bettersis:
             print("* bsis_checkblif : BLIF parser/validation tool")
             print("* bsis_script : executes optimization and mapping commands in one command "
                   "(needs parameters to specify the type of circuit to optimize/map)")
+
+            if os.getenv("APPIMAGE") and os.getenv("APPDIR"):
+                # Running inside AppImage: show that you can update the AppImage
+                print("* bsis_update: download the latest version (as an AppImage)")
 
             print("\n> If you would like to know more about these commands, "
                   "execute the 'bsis_documentation' command to open the documentation website")
@@ -457,23 +465,23 @@ class Bettersis:
         """
         if t_path == "":
             # show files and directories inside the current folder
-            print_formatted_text(HTML("<orange>(F)iles</orange> and <blue>(D)irectories</blue> inside '" + os.getcwd() + "'"))
+            print_formatted_text(HTML("<orange>(F)iles</orange> and <DeepSkyBlue>(D)irectories</DeepSkyBlue> inside '" + os.getcwd() + "'"))
             print("-" * 50)
             self.lastcmd_success = True
             for el in os.listdir():
                 if os.path.isdir(el):
-                    print_formatted_text(HTML("<blue>(D) " + el + "</blue>"))
+                    print_formatted_text(HTML("<DeepSkyBlue>(D) " + el + "</DeepSkyBlue>"))
                 else:
                     print_formatted_text(HTML("<orange>(F) " + el + "</orange>"))
 
         elif os.path.isdir(t_path):
             # show files and directories inside the specified folder
-            print_formatted_text(HTML("<orange>(F)iles</orange> and <blue>(D)irectories</blue> inside '" + t_path + "'"))
+            print_formatted_text(HTML("<orange>(F)iles</orange> and <DeepSkyBlue>(D)irectories</DeepSkyBlue> inside '" + t_path + "'"))
             print("-" * 50)
             self.lastcmd_success = True
             for el in os.listdir(t_path):
                 if os.path.isdir(el):
-                    print_formatted_text(HTML("<blue>(D) " + el + "</blue>"))
+                    print_formatted_text(HTML("<DeepSkyBlue>(D) " + el + "</DeepSkyBlue>"))
                 else:
                     print_formatted_text(HTML("<orange>(F) " + el + "</orange>"))
         else:
@@ -582,6 +590,10 @@ def main():
     logger.info("[PLATFORM] Using OS: %s" % platform.platform())
     logger.info("[PLATFORM] OS version: %s" % platform.version())
     logger.info("[PLATFORM] Python version: %s" % platform.python_version())
+
+    if os.getenv("APPIMAGE") and os.getenv("APPDIR"):
+        # Running inside AppImage: allow the user to update the image
+        bettersis_cmds.append("bsis_update")
 
     bettersis = None
 

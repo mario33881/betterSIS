@@ -7,6 +7,8 @@ contains function that help BetterSIS to check for updates
 
 __author__ = "Zenaro Stefano"
 
+import os
+import subprocess
 import logging
 import urllib.request
 import json
@@ -21,6 +23,12 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
+ghreleases_apiurl = "https://api.github.com/repos/mario33881/bettersis/releases"
+old_versions = [
+    "1.0.0",
+    "1.1.0",
+    "1.2.0"
+]
 
 
 def extract_version(version_string):
@@ -133,10 +141,63 @@ def check_updates(t_ghreleases_apiurl, t_version):  # noqa: C901
     return res
 
 
+def update_appimage():
+    """
+    If this function was run in an appimage and there are updates,
+    download the latest AppImage and ask the user if they want to 
+    delete old versions (if present).
+
+    :return bool success: True if the check for updates was successful
+    """
+    success = False
+    update_info = check_updates(ghreleases_apiurl, __version__)
+
+    try:
+        if "APPIMAGE" in os.environ and "APPDIR" in os.environ:
+            if update_info["success"]:
+                if update_info["update_available"]:
+                    aiut_path = os.path.join(os.environ["APPDIR"], "appimageupdate", "AppRun")
+                    subprocess.call([aiut_path, os.environ["APPIMAGE"]])
+                else:
+                    print("Already using latest version. No new updates found.")
+                
+                success = True
+
+                found_old_version = False
+                wants_delete = False
+
+                for version in old_versions:
+                    version_path = os.path.join(os.environ["APPDIR"], "BetterSIS-" + version + "-x86_64.AppImage")
+                    if os.path.isfile(version_path) or os.path.isfile(version_path + ".zs-old"):
+                        if not found_old_version:
+                            found_old_version = True
+                            user_input = ""
+                            while user_input not in ["y", "n"]:
+                                user_input = input("Found an/many old AppImage(s): do you want to delete it? [y/n]: ")
+                                user_input.strip().lower()
+                            
+                            if user_input == "y":
+                                wants_delete = True
+                        
+                        if wants_delete and os.path.isfile(version_path):
+                            os.remove(version_path)
+                        
+                        if wants_delete and os.path.isfile(version_path + ".zs-old"):
+                            os.remove(version_path + ".zs-old")
+            else:
+                print("Couldn't get releases data")
+        else:
+            print("Can't check for updates: it looks like you are not running the AppImage version")
+        
+    except Exception as e:
+        print("Something went wrong during the update:", e)
+    
+    return success
+
+
 if __name__ == "__main__":
 
     import pprint
-    ghreleases_apiurl = "https://api.github.com/repos/mario33881/bettersis/releases"
 
     print("This is a simple test for this module:")
 
