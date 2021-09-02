@@ -51,7 +51,13 @@ mkdir -p squashfs-root/usr/share/icons/hicolor/128x128/apps/
 if [ "$svg" = "0" ] ; then
     sudo apt-get install inkscape -y
     wget $icon_url -O $icon_name.svg
+
+    set +euo pipefail
     inkscape --export-type="png" -w 128 -h 128 $icon_name.svg -o squashfs-root/usr/share/icons/hicolor/128x128/apps/$icon_name.png
+    if [ "$?" != "0" ] ; then
+        set -euo pipefail
+        inkscape -z -w 128 -h 128 $icon_name.svg -e squashfs-root/usr/share/icons/hicolor/128x128/apps/$icon_name.png
+    fi
 else
     sudo apt-get install imagemagick -y
     wget $icon_url -O $icon_name.png
@@ -75,7 +81,7 @@ cd ..
 
 # Convert back into an AppImage
 export VERSION=$(cat squashfs-root/opt/python*/lib/python*/site-packages/$pip_app_name-*.dist-info/METADATA | grep "^Version:.*" | cut -d " " -f 2)
-sudo apt install -y python3-pip python3-setuptools patchelf desktop-file-utils libgdk-pixbuf2.0-dev fakeroot strace fuse
+#sudo apt install -y python3-pip python3-setuptools patchelf desktop-file-utils libgdk-pixbuf2.0-dev fakeroot strace fuse
 sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
 sudo chmod +x /usr/local/bin/appimagetool
 
