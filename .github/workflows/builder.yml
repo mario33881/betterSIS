@@ -24,6 +24,7 @@ jobs:
     - name: Build PyInstaller version
       run: |
         docker run -v "$(pwd):/src/" cdrx/pyinstaller-linux:python3
+        cp dist/linux/bettersis dist/linux/bsis
         ls
         ls dist
         ls dist/linux
@@ -32,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: bsis
-        path: dist/linux/bettersis
+        path: dist/linux/bsis
     
     - name: Build DEB package
       run: |
