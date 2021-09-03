@@ -3,6 +3,11 @@ set -euo pipefail
 set -x
 IFS=$'\n\t'
 
+if [ "$(logname)" = "vagrant" ]; then
+    ls
+    rm -rf /home/vagrant/*
+fi
+
 app_name="BetterSIS"
 app_comment="The modern shell for SIS (the circuit simulator and optimizer)"
 terminal="true"
@@ -81,9 +86,14 @@ cd ..
 
 # Convert back into an AppImage
 export VERSION=$(cat squashfs-root/opt/python*/lib/python*/site-packages/$pip_app_name-*.dist-info/METADATA | grep "^Version:.*" | cut -d " " -f 2)
-#sudo apt install -y python3-pip python3-setuptools patchelf desktop-file-utils libgdk-pixbuf2.0-dev fakeroot strace fuse
+sudo apt install -y fuse
 sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
 sudo chmod +x /usr/local/bin/appimagetool
 
 export ARCH=$architecture
-appimagetool ./squashfs-root/ --sign -u "gh-releases-zsync|mario33881|betterSIS|latest|BetterSIS-*x86_64.AppImage.zsync"
+appimagetool ./squashfs-root/ -u "gh-releases-zsync|mario33881|betterSIS|latest|BetterSIS-*x86_64.AppImage.zsync"
+
+if [ "$(logname)" = "vagrant" ]; then
+    ls
+    cp BetterSIS-*x86_64.AppImage* /src/.
+fi

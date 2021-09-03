@@ -15,3 +15,6 @@ dist/
 
 *.egg-info/
 *.snap
+
+*.AppImage
+*.zsync
