@@ -36,7 +36,7 @@ apps:
     command: usr/local/bin/sis  # this is where the dump plugin puts the executable
     plugs:
       - home                    # the app reads and writes blif files
-      - removable-media         # the app reads and writes blif files in USBs, /mnt/, ...
+      - removable-media         # (disabled by default) the app reads and writes blif files in USBs, /mnt/, ...
 
   bettersis:
     command: bin/bettersis  # setup.py contains entry point that creates this executable
@@ -46,7 +46,8 @@ apps:
     plugs:
       - network             # the app checks if new versions are available
       - home                # the app reads and writes blif files
-      - removable-media     # the app reads and writes blif files in USBs, /mnt/, ...
+      - desktop             # used to open the web browser to open tutorials, release page, ...
+      - removable-media     # (disabled by default) the app reads and writes blif files in USBs, /mnt/, ...
 
 
 # these bindings allow sis to find files
