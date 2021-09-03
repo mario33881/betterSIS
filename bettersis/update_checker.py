@@ -135,9 +135,10 @@ def check_updates(t_ghreleases_apiurl, t_version):  # noqa: C901
     except Exception as e:
         logger.error("[UPDATES] Error during update check: ", exc_info=True, stack_info=True)
         res["errors"].append(e)
-    else:
+
+    if res["update_available"]:
         logger.debug("[UPDATES] Checked updates: last version found"
-                     " is version {}, update available? {}".format(dotted_last_version, res["update_available"]))
+                     " is version {}, update available? {}".format(res["update_version"], res["update_available"]))
     return res
 
 
