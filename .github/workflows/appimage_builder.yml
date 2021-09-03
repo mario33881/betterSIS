@@ -1,4 +1,4 @@
-name: Builder
+name: AppImage Builder
 
 on:
   workflow_dispatch:
