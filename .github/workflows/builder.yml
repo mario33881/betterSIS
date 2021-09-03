@@ -29,12 +29,6 @@ jobs:
         ls dist
         ls dist/linux
     
-    - name: Archive bettersis PyInstaller version
-      uses: actions/upload-artifact@v2
-      with:
-        name: bsis
-        path: dist/linux/bsis
-    
     - name: Build DEB package
       run: |
         cd deb
@@ -42,8 +36,10 @@ jobs:
         cd ..
         docker run -v "$PWD:/src/" deb_builder
     
-    - name: Archive bettersis DEB package
+    - name: Archive bettersis DEB package and Pyinstaller executable
       uses: actions/upload-artifact@v2
       with:
-        name: bettersis.deb
-        path: deb/bettersis.deb
+        name: deb_pyinstaller_builds
+        path: |
+          deb/bettersis.deb
+          dist/linux/bsis

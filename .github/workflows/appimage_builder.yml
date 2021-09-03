@@ -21,7 +21,7 @@ jobs:
     - name: Archive AppImage version
       uses: actions/upload-artifact@v2
       with:
-        name: appimage_files
+        name: appimage_build
         path: |
           BetterSIS-*-x86_64.AppImage
           BetterSIS-*-x86_64.AppImage.zsync
