@@ -54,9 +54,20 @@ apps:
 # like *.genlib files, script.rugged, ...
 
 layout:
-  /usr/share:
-    bind: $SNAP/usr/share
+  /usr/share/doc/sis:
+    bind: $SNAP/usr/share/doc/sis
 
-  /usr/local:
-    bind: $SNAP/usr/local
+  /usr/local/bin:
+    bind: $SNAP/usr/local/bin
 
+  /usr/local/include/sis:
+    bind: $SNAP/usr/local/include/sis
+
+  /usr/local/lib:
+    bind: $SNAP/usr/local/lib
+
+  /usr/local/man:
+    bind: $SNAP/usr/local/man
+
+  /usr/local/share/sis:
+    bind: $SNAP/usr/local/share/sis
