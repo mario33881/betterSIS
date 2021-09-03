@@ -24,11 +24,6 @@ except ImportError:
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 ghreleases_apiurl = "https://api.github.com/repos/mario33881/bettersis/releases"
-old_versions = [
-    "1.0.0",
-    "1.1.0",
-    "1.2.0"
-]
 
 
 def extract_version(version_string):
@@ -71,6 +66,39 @@ def extract_version(version_string):
     return res
 
 
+def get_old_versions(t_ghreleases_apiurl):
+    """
+    Returns a list of old versions.
+
+    First the function collects all the releases in a list and then
+    removes the latest release from the list.
+
+    :param str t_ghreleases_apiurl: api url for gh releases
+    :return list versions: old versions
+    """
+    with urllib.request.urlopen(
+        t_ghreleases_apiurl,
+        context=ssl.create_default_context(cafile=certifi.where())
+    ) as url:
+        releases_data = json.loads(url.read().decode())
+
+    versions = []
+    for data in releases_data:
+        if "tag_name" in data.keys():
+            versions.append(data["tag_name"])
+
+    with urllib.request.urlopen(
+        t_ghreleases_apiurl + "/latest",
+        context=ssl.create_default_context(cafile=certifi.where())
+    ) as url:
+        latest_release_data = json.loads(url.read().decode())
+
+    if "tag_name" in latest_release_data.keys():
+        versions.remove(latest_release_data["tag_name"])
+
+    return versions
+
+
 def check_updates(t_ghreleases_apiurl, t_version):  # noqa: C901
     """
     Checks for updates.
@@ -79,7 +107,7 @@ def check_updates(t_ghreleases_apiurl, t_version):  # noqa: C901
     :param str t_ghreleases_apiurl: api url for gh releases
     :return dict res: dictionary with success status, errors, update_version, update_available
     """
-    res = {"success": False, "errors": [], "update_version": None, "update_available": False}
+    res = {"success": False, "errors": [], "latest_version": None, "update_available": False}
 
     try:
         current_version = extract_version(t_version)
@@ -87,58 +115,47 @@ def check_updates(t_ghreleases_apiurl, t_version):  # noqa: C901
         if current_version["success"]:
             # Get Github Releases information
             with urllib.request.urlopen(
-                t_ghreleases_apiurl,
+                t_ghreleases_apiurl + "/latest",
                 context=ssl.create_default_context(cafile=certifi.where())
             ) as url:
-                releases_data = json.loads(url.read().decode())
+                latest_release_data = json.loads(url.read().decode())
 
-            latest_data = {"success": False, "major_version": 0, "minor_version": 0, "patch_version": 0}
+            if "tag_name" in latest_release_data.keys():
+                tag_name = latest_release_data["tag_name"]
+                logger.debug("Found latest release version: " + tag_name)
+                res["latest_version"] = tag_name
+                latest_version_data = extract_version(tag_name)
 
-            # get latest version from Github Releases
-            for data in releases_data:
-                if "tag_name" in data.keys():
-                    tag_name = data["tag_name"]
-                    version_data = extract_version(tag_name)
+                if latest_version_data["success"]:
+                    res["success"] = True
 
-                    if version_data["success"]:
-                        latest_data["success"] = True
-                        if version_data["major_version"] > latest_data["major_version"]:
-                            latest_data["major_version"] = version_data["major_version"]
-
-                        if version_data["minor_version"] > latest_data["minor_version"]:
-                            latest_data["minor_version"] = version_data["minor_version"]
-
-                        if version_data["patch_version"] > latest_data["patch_version"]:
-                            latest_data["patch_version"] = version_data["patch_version"]
-
-            if latest_data["success"]:
-                res["success"] = True
-                dotted_last_version = "{}.{}.{}".format(latest_data["major_version"],
-                                                        latest_data["minor_version"],
-                                                        latest_data["patch_version"])
-
-                # if one of the "ifs" is true, the currently running version is not the latest version
-                if latest_data["major_version"] > current_version["major_version"]:
-                    res["update_available"] = True
-                    res["update_version"] = dotted_last_version
-
-                elif latest_data["major_version"] == current_version["major_version"]:
-                    if latest_data["minor_version"] > current_version["minor_version"]:
+                    # if one of the "ifs" is true, the currently running version is not the latest version
+                    if latest_version_data["major_version"] > current_version["major_version"]:
                         res["update_available"] = True
-                        res["update_version"] = dotted_last_version
 
-                    elif latest_data["minor_version"] == current_version["minor_version"]:
-                        if latest_data["patch_version"] > current_version["patch_version"]:
+                    elif latest_version_data["major_version"] == current_version["major_version"]:
+                        if latest_version_data["minor_version"] > current_version["minor_version"]:
                             res["update_available"] = True
-                            res["update_version"] = dotted_last_version
+
+                        elif latest_version_data["minor_version"] == current_version["minor_version"]:
+                            if latest_version_data["patch_version"] > current_version["patch_version"]:
+                                res["update_available"] = True
+                else:
+                    e = "[CHECK_UPDATES] Couldn't parse the latest version string '{}'".format(tag_name)
+                    logger.error(e)
+                    res["errors"].append(e)
+        else:
+            e = "[CHECK_UPDATES] Couldn't parse the current version string '{}'".format(t_version)
+            logger.error(e)
+            res["errors"].append(e)
 
     except Exception as e:
-        logger.error("[UPDATES] Error during update check: ", exc_info=True, stack_info=True)
+        logger.error("[CHECK_UPDATES] Error during update check: ", exc_info=True, stack_info=True)
         res["errors"].append(e)
 
     if res["update_available"]:
-        logger.debug("[UPDATES] Checked updates: last version found"
-                     " is version {}, update available? {}".format(res["update_version"], res["update_available"]))
+        logger.debug("[CHECK_UPDATES] Checked updates: latest version found"
+                     " is version {}, update available? {}".format(res["latest_version"], res["update_available"]))
     return res
 
 
@@ -151,7 +168,7 @@ def update_appimage():  # noqa: C901
     :return bool success: True if the check for updates was successful
     """
     success = False
-    update_info = check_updates(ghreleases_apiurl, __version__)
+    update_info = check_updates(ghreleases_apiurl, __version__.split(" ")[1])
 
     try:
         if "APPIMAGE" in os.environ and "APPDIR" in os.environ:
@@ -167,7 +184,7 @@ def update_appimage():  # noqa: C901
                 found_old_version = False
                 wants_delete = False
 
-                for version in old_versions:
+                for version in get_old_versions(ghreleases_apiurl):
                     version_path = os.path.join(os.environ["APPDIR"], "BetterSIS-" + version + "-x86_64.AppImage")
                     if os.path.isfile(version_path) or os.path.isfile(version_path + ".zs-old"):
                         if not found_old_version:
@@ -209,3 +226,6 @@ if __name__ == "__main__":
     noupdates = check_updates(ghreleases_apiurl, "999.999.999")
     print("\nNo Update found: ")
     pprint.pprint(noupdates)
+
+    print("\nOld versions:")
+    pprint.pprint(get_old_versions(ghreleases_apiurl))

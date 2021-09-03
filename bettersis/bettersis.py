@@ -12,6 +12,8 @@ import logging.handlers
 import platform
 import re
 import os
+import argparse
+import traceback
 
 import siswrapper
 import blifparser.blifparser as blifparser
@@ -49,20 +51,32 @@ bettersis_cmds = [
     "help",
 ]
 
+using_appimage = os.getenv("APPIMAGE") and os.getenv("APPDIR")
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
 
-def show_ghissues_msg():
+def show_ghissues_msg(t_err):
     """
     Shows the "please, report this to the developer" message.
+    :param Exception t_err: error from which to extract the traceback
     """
+    logger.debug("[SHOW_GHISSUES_MSG] Showing Github Issues message with the error")
+
+    print("\nTraceback:\n")
+    traceback.print_tb(t_err.__traceback__)
+    print("")
+    type_of_error = type(t_err)
+    print_formatted_text(HTML("<red>{}:</red> {}".format(type_of_error.__name__, str(t_err))))
+
     print("\nPlease, (if someone didn't post this error already) create a Github Issue here: '{}'\n"
           "and share the '/var/log/pybettersis/pybettersis.log' log file\n"
           "to help the developer to fix the problem\n".format(github_repository_url + "/issues"))
-    print("> If you are using the PyInstaller build, execute this command:")
+    print("> If you are NOT using the DEB package version, execute this command:")
     print("> 'cat /var/log/syslog | grep \"bettersis\" > pybettersis.log'\n"
-          "to create the log file inside the current directory.")
+          "> to create the log file inside the current directory.")
+
+    print("\nYou should also make sure that no private information is present in the log file before publishing it")
 
 
 class Bettersis:
@@ -85,6 +99,7 @@ class Bettersis:
     """
     def __init__(self):
         self.res = {"success": False, "errors": [], "stdout": None}
+        logger.debug("[__INIT__] Running SIS using siswrapper")
         self.sis = siswrapper.Siswrapper()
         self.lastcmd = "FIRSTCOMMAND"
         self.lastcmd_success = False
@@ -97,12 +112,15 @@ class Bettersis:
                                                        __version__.split(" ")[1])
             if updates_res["success"]:
                 if updates_res["update_available"]:
-                    print("\nNew Update Available! (latest: {})".format(updates_res["update_version"]))
+                    print("\nNew Update Available! (latest: {})".format(updates_res["latest_version"]))
                     print("Type the 'bsis_releases' command to open the download webpage for the last release!")
+
+                    if using_appimage:
+                        print("You can execute the 'bsis_update' command to download the latest AppImage")
             else:
                 for error in updates_res["errors"]:
-                    logger.warning("[ERROR-UPDATE] {}".format(error), exc_info=True)
-
+                    print(error)
+                    logger.warning("[ERROR-UPDATE] {}".format(str(error)), exc_info=True)
             self.main()
         else:
             for error in self.sis.res["errors"]:
@@ -122,9 +140,8 @@ class Bettersis:
             print(" ██████╔╝███████╗   ██║      ██║   ███████╗██║  ██║███████║██║███████║ ")
             print(" ╚═════╝ ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝ ")
         except UnicodeEncodeError:
-            # The user probably didn't set an UTF-8 language
-            # in the $LANG environment variable
-            pass
+            logger.debug("user probably didn't set an UTF-8 language in the "
+                         "$LANG environment variable: not showing the ASCII art")
 
         print("                                                                       ")
         print(" ===================================================================== ")
@@ -162,6 +179,7 @@ class Bettersis:
         # if the BSIS_HISTORY_ENABLED environment variable is set to "true",
         # use a history file inside the home directory
         if self.manage_history_file():
+            logger.debug("[MAIN] BSIS_HISTORY_ENABLED is set to true: setting up file history")
             history_file = FileHistory(self.history_file_path)
             session = PromptSession(history=history_file)
 
@@ -170,11 +188,12 @@ class Bettersis:
             command = session.prompt('bsis> ',
                                      completer=siscompleter.get_siscompleter(),  # use completer from siscompleter.py
                                      complete_in_thread=True,                    # better performance for autocompletion
+                                     auto_suggest=AutoSuggestFromHistory(),      # suggest rest of command from history
                                      bottom_toolbar="")                          # empty toolbar
 
         except (KeyboardInterrupt, EOFError):
             # user pressed Ctrl+C or Ctrl+D
-            logger.debug("[MAIN] User wants to exit the software (at least one command has been executed before)")
+            logger.debug("[MAIN] User wants to exit the software (first prompt)")
         else:
             # keep getting commands from the user
             while True:
@@ -198,9 +217,11 @@ class Bettersis:
                     break
 
         # control, if necessary, the size of the history file before closing betterSIS
+        logger.debug("[MAIN] Checking/keeping under control the size of the history file (if the history file has been used)")
         self.manage_history_file()
 
         # stop sis process
+        logger.debug("[MAIN] Stopping SIS")
         self.sis.stop()
 
     def manage_history_file(self):
@@ -273,8 +294,6 @@ class Bettersis:
 
             toolbar = HTML(toolbar_msg)
 
-        logger.debug("[BOTTOM_TOOLBAR] %s" % toolbar)
-
         return toolbar
 
     def manage_multiple_commands(self, t_commands):
@@ -307,7 +326,7 @@ class Bettersis:
         edit_matches = re.match(r"edit[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
         checkblif_matches = re.match(r"bsis_checkblif[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
 
-        logger.debug("[%s-BSIS_COMMAND] %s" % (self.lastcmd, t_command))
+        logger.debug("[%s-MANAGE_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
 
         # cd command
         if cd_matches:
@@ -382,10 +401,14 @@ class Bettersis:
                     print("=" * 50)
                     print("\n{} issues found".format(len(blif.problems)))
                     self.lastcmd_success = True
+                    logger.debug("[%s-EXECUTED_CHECKBLIF_BSIS_COMMAND] %s : %s"
+                                 % (self.lastcmd, "filepath specified and exists", filepath))
                 else:
                     print_formatted_text(HTML("<b><red>[ERROR]</red></b> bsis_checkblif input file doesn't exist: "
                                               "please specify a correct path OR "
                                               "call bsis_checkblif (with no parameters) AFTER using the read_blif command"))
+                    logger.debug("[%s-EXECUTED_CHECKBLIF_BSIS_COMMAND] %s : %s"
+                                 % (self.lastcmd, "filepath specified but IT DOES NOT exist", filepath))
                     self.lastcmd_success = False
             else:
                 # user didn't specify input path: using the file read using the read_blif command (if available)
@@ -399,20 +422,32 @@ class Bettersis:
 
                     print("=" * 50)
                     print("\n{} issues found".format(len(blif.problems)))
+
+                    logger.debug("[%s-EXECUTED_CHECKBLIF_BSIS_COMMAND] %s : %s" % (
+                        self.lastcmd,
+                        "filepath NOT specified but a read command was used before",
+                        self.sis.read_path
+                        )
+                    )
+
                     self.lastcmd_success = True
                 else:
                     print_formatted_text(HTML("<b><red>[ERROR]</red></b> "
                                               "no file was specified for the bsis_checkblif command: "
                                               "please specify a correct path as a parameter OR call bsis_checkblif "
                                               "(with no parameters) AFTER using the read_blif command"))
+                    logger.debug("[%s-EXECUTED_CHECKBLIF_BSIS_COMMAND] %s"
+                                 % (self.lastcmd, "filepath NOT specified and a read command WAS NOT USED before"))
                     self.lastcmd_success = False
 
         # bsis_update command
-        elif t_command == "bsis_update" and os.getenv("APPIMAGE") and os.getenv("APPDIR"):
+        elif t_command == "bsis_update" and using_appimage:
+            logger.debug("[%s-EXECUTED_BSIS_UPDATE_BSIS_COMMAND] %s" % (self.lastcmd, "trying to find AppImage updates"))
             self.lastcmd_success = update_checker.update_appimage()
 
         # help command
         elif t_command == "help":
+            logger.debug("[%s-EXECUTED_HELP_BSIS_COMMAND] %s" % (self.lastcmd, "showing all the commands"))
             print("\nSIS COMMANDS:")
             self.manage_command(t_command)
 
@@ -427,9 +462,13 @@ class Bettersis:
             print("* bsis_script : executes optimization and mapping commands in one command "
                   "(needs parameters to specify the type of circuit to optimize/map)")
 
-            if os.getenv("APPIMAGE") and os.getenv("APPDIR"):
+            if using_appimage:
                 # Running inside AppImage: show that you can update the AppImage
-                print("* bsis_update: download the latest version (as an AppImage)")
+                logger.debug("[%s-EXECUTED_HELP_BSIS_COMMAND] %s" % (
+                    self.lastcmd, "also showing the bsis_update command (running in AppImage)"
+                    )
+                )
+                print("* bsis_update : download the latest version (as an AppImage)")
 
             print("\n> If you would like to know more about these commands, "
                   "execute the 'bsis_documentation' command to open the documentation website")
@@ -439,9 +478,8 @@ class Bettersis:
         else:
             self.lastcmd_success = False
             error_msg = "<b><red>[ERROR]</red></b> Unexpected betterSIS command ('" + t_command + "')..."
-            show_ghissues_msg()
+            show_ghissues_msg(Exception(error_msg))
             logger.critical("[%s-UNKNOWN_BSIS_COMMAND] %s" % (self.lastcmd, t_command), exc_info=True)
-            print_formatted_text(HTML(error_msg))
 
     def bsiscmd_cd(self, t_path):
         """
@@ -528,24 +566,18 @@ class Bettersis:
         # to parse the command output
         cmd_res = self.sis.parsed_exec(t_command)
 
-        if boold:
-            print_formatted_text(HTML("<b><skyblue>[DEBUG]</skyblue></b> Executed command: '%s'" % t_command))
-            print_formatted_text(HTML("<b><skyblue>[DEBUG]</skyblue></b> Returned: %s" % cmd_res))
-
-        logger.debug("[%s-EXECUTED_COMMAND] %s" % (self.lastcmd, t_command))
-        logger.debug("[%s-SISWRAPPER_RETURN] %s" % (self.lastcmd, cmd_res))
+        logger.debug("[%s-EXECUTED_COMMAND] Executed command: %s" % (self.lastcmd, t_command))
+        logger.debug("[%s-SISWRAPPER_RETURN] Returned: %s" % (self.lastcmd, cmd_res))
 
         # set success status (used for the bottom toolbar)
         self.lastcmd_success = cmd_res["success"]
 
-        # if stdout is present, go to newline and show messages that are not warnings
-        # > warnings are shown now only if the output parser didn't work
+        # if stdout is present, go to newline and show the output of the command
         if cmd_res["stdout"] is not None:
             print("")
             for line in cmd_res["stdout"].split("\r\n"):
-                if not line.startswith("Warning:") or "warnings" not in cmd_res.keys():
-                    print(line)
-                    logger.debug("[%s-STDOUT] %s" % (self.lastcmd, line))
+                print(line)
+                logger.debug("[%s-STDOUT] %s" % (self.lastcmd, line))
 
         # if the command returns warnings, show the warnings
         if "warnings" in cmd_res.keys():
@@ -574,6 +606,21 @@ def main():
     """
     Main function: sets up the logger, calls betterSIS and manages exceptions
     """
+    global boold
+
+    parser = argparse.ArgumentParser(prog="bsis/bettersis")
+    parser.add_argument('--debug', action='store_true', default=False, help='Enables advanced logging for debugging')
+    parser.add_argument(
+        '--verbosedebug',
+        action='store_true',
+        default=False,
+        help='If used with the debug flag: shows debug data on the terminal'
+    )
+    args = parser.parse_args()
+
+    if args.debug:
+        boold = True
+
     # remove NullHandler
     logger.removeHandler(logger.handlers[0])
 
@@ -587,6 +634,10 @@ def main():
 
     if boold:
         logger.setLevel(logging.DEBUG)
+        if args.verbosedebug:
+            console_handler = logging.StreamHandler()
+            console_handler.setFormatter(formatter)
+            logger.addHandler(console_handler)
     else:
         logger.setLevel(logging.INFO)
 
@@ -595,13 +646,15 @@ def main():
     logger.info("[PLATFORM] OS version: %s" % platform.version())
     logger.info("[PLATFORM] Python version: %s" % platform.python_version())
 
-    if os.getenv("APPIMAGE") and os.getenv("APPDIR"):
+    if using_appimage:
         # Running inside AppImage: allow the user to update the image
+        logger.debug("[MAIN_FUNC] Running inside an AppImage: adding 'bsis_update' command to bettersis_cmds")
         bettersis_cmds.append("bsis_update")
 
     bettersis = None
 
     try:
+        logger.debug("[MAIN_FUNC] Running BetterSIS")
         bettersis = Bettersis()
 
         # show errors (if present)
@@ -609,14 +662,16 @@ def main():
             print_formatted_text(HTML(error.replace("[ERROR]", "<b><red>[ERROR]</red></b>")))
 
     except Exception as e:
-        logger.critical("[MAIN] This error was unexpected and interrupted the program: ", exc_info=True)
-        print_formatted_text(HTML("<red>Exception:</red> {}".format(e)))
-        show_ghissues_msg()
+        logger.critical("[MAIN_FUNC] This error was unexpected and interrupted the program: ", exc_info=True)
+        show_ghissues_msg(e)
 
+    logger.debug("[MAIN_FUNC] Stop SIS if it is still running")
     # stop SIS's process if it is still running
     if bettersis is not None:
         if bettersis.sis.started:
             bettersis.sis.stop()
+
+    logger.debug("[MAIN_FUNC] Reached the end of the script")
 
 
 if __name__ == "__main__":
