@@ -465,7 +465,9 @@ class Bettersis:
         """
         if t_path == "":
             # show files and directories inside the current folder
-            print_formatted_text(HTML("<orange>(F)iles</orange> and <DeepSkyBlue>(D)irectories</DeepSkyBlue> inside '" + os.getcwd() + "'"))
+            print_formatted_text(HTML("<orange>(F)iles</orange> and "
+                                      "<DeepSkyBlue>(D)irectories</DeepSkyBlue> "
+                                      "inside '" + os.getcwd() + "'"))
             print("-" * 50)
             self.lastcmd_success = True
             for el in os.listdir():
@@ -476,7 +478,9 @@ class Bettersis:
 
         elif os.path.isdir(t_path):
             # show files and directories inside the specified folder
-            print_formatted_text(HTML("<orange>(F)iles</orange> and <DeepSkyBlue>(D)irectories</DeepSkyBlue> inside '" + t_path + "'"))
+            print_formatted_text(HTML("<orange>(F)iles</orange> and "
+                                      "<DeepSkyBlue>(D)irectories</DeepSkyBlue> "
+                                      "inside '" + t_path + "'"))
             print("-" * 50)
             self.lastcmd_success = True
             for el in os.listdir(t_path):

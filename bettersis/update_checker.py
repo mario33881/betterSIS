@@ -141,10 +141,10 @@ def check_updates(t_ghreleases_apiurl, t_version):  # noqa: C901
     return res
 
 
-def update_appimage():
+def update_appimage():  # noqa: C901
     """
     If this function was run in an appimage and there are updates,
-    download the latest AppImage and ask the user if they want to 
+    download the latest AppImage and ask the user if they want to
     delete old versions (if present).
 
     :return bool success: True if the check for updates was successful
@@ -160,7 +160,7 @@ def update_appimage():
                     subprocess.call([aiut_path, os.environ["APPIMAGE"]])
                 else:
                     print("Already using latest version. No new updates found.")
-                
+
                 success = True
 
                 found_old_version = False
@@ -175,23 +175,23 @@ def update_appimage():
                             while user_input not in ["y", "n"]:
                                 user_input = input("Found an/many old AppImage(s): do you want to delete it? [y/n]: ")
                                 user_input.strip().lower()
-                            
+
                             if user_input == "y":
                                 wants_delete = True
-                        
+
                         if wants_delete and os.path.isfile(version_path):
                             os.remove(version_path)
-                        
+
                         if wants_delete and os.path.isfile(version_path + ".zs-old"):
                             os.remove(version_path + ".zs-old")
             else:
                 print("Couldn't get releases data")
         else:
             print("Can't check for updates: it looks like you are not running the AppImage version")
-        
+
     except Exception as e:
         print("Something went wrong during the update:", e)
-    
+
     return success
 
 
