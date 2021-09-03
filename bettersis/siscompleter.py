@@ -211,7 +211,7 @@ def get_siscompleter():
 
     :return prompt_toolkit.completion.nested.NestedCompleter siscompleter: contains SIS commands with their parameters
     """
-    siscompleter = NestedCompleter.from_nested_dict({
+    commands = {
         "act_map": get_act_map_params(),
         "add_inverter": None,
         "alias": None,
@@ -391,7 +391,13 @@ def get_siscompleter():
         "bsis_documentation": None,
         "bsis_releases": None,
         "bsis_checkblif": get_files()
-    })
+    }
+
+    if os.getenv("APPIMAGE") and os.getenv("APPDIR"):
+        # running inside an AppImage
+        commands["bsis_update"] = None
+
+    siscompleter = NestedCompleter.from_nested_dict(commands)
 
     return siscompleter
 
