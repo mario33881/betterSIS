@@ -316,6 +316,7 @@ Se hai usato:
     > il terminale deve essere configurato per usare una lingua con encoding UTF-8 con la variabile d'ambiente ```$LANG``` per poter visualizzare quei caratteri ASCII.
     >
     > Ora la "ASCII art" non viene visualizzata quando il terminale non e' configurato con encoding UTF-8.
+* (siswrapper) Risolti errori di timeout per i comandi con l'output suddiviso in pagine (come, ad esempio, il comando ```help read_blif```).
 
 **2021-03-17 1.2.0:** <br>
 ### Funzionalita' aggiuntive:

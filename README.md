@@ -317,6 +317,7 @@ If you used:
     > the terminal must be set to use an UTF-8 language using the ```$LANG``` environment variable to be able to show those ASCII characters.
     >
     > Now the ASCII art is simply not shown if the user's terminal doesn't support it.
+* (siswrapper) Fixed timeout error on commands that gave paginated outputs such as the ```help read_blif``` command.
 
 **2021-03-17 1.2.0:** <br>
 ### Features:
