@@ -325,6 +325,7 @@ class Bettersis:
         ls_matches = re.match(r"ls[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
         edit_matches = re.match(r"edit[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
         checkblif_matches = re.match(r"bsis_checkblif[\s]*[(\")*(\')*]*([^\"']*)[(\")*(\')*]*", t_command)
+        help_matches = re.match(r"help ([^\"']*)", t_command)
 
         logger.debug("[%s-MANAGE_BSIS_COMMAND] %s" % (self.lastcmd, t_command))
 
@@ -473,6 +474,9 @@ class Bettersis:
             print("\n> If you would like to know more about these commands, "
                   "execute the 'bsis_documentation' command to open the documentation website")
             self.lastcmd_success = True
+
+        elif help_matches:
+            self.manage_command(t_command)
 
         # unexpected bsis command
         else:
