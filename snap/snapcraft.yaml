@@ -14,7 +14,7 @@ description: |
   You can read more about betterSIS here: https://github.com/mario33881/betterSIS
 
 grade: stable
-confinement: strict  # block everything put the things specified as "plugs"
+confinement: strict  # block everything but the things specified as "plugs"
 
 
 parts:

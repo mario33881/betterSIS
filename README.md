@@ -93,6 +93,11 @@ You can read more about betterSIS's code on readthedocs [by clicking here](https
 [Go to the index](#index)
 
 ## Installation
+
+> You can also see a summary of the [differences between installation methods here](https://github.com/mario33881/betterSIS/wiki/Differences-between-versions)
+>
+> After reading the summary you can follow the instructions to install betterSIS using your prefered method and read its advantages and disadvantages down below.
+
 You can:
 
 * (Easiest and best option) Install the software from the Snap store.
@@ -138,6 +143,13 @@ You can:
     * snap is required to install it 
         > Most Ubuntu based distros and others already [have it installed by default](https://snapcraft.io/docs/installing-snapd)
     
+    Advantage/Disadvantage: 
+    * Snaps are very limited in permissions. This means that you can easily find Permission Errors if you try to open files in folders in which you don't have permissions to enter as a user.
+        > I suggest you to open and use betterSIS from a folder that is somewhere inside the home directory (for example ```/home/myuser/Documents/myprojects/sis_projects```) and to NOT use sudo to open bettersis.
+        >
+        > You should also be able to give permissions to open and use betterSIS in removable media by
+        > following the 6th step described above "Advantages over the other options"
+
     You can uninstall it by opening the betterSIS page on the Ubuntu Store/Snap store and clicking the remove/uninstall button.
     > You can follow the same steps to install it and then click on remove/uninstall instead of "install" at the 5th step.
 
@@ -145,6 +157,38 @@ You can:
     ```
     snap remove bettersis
     ```
+
+* Use the AppImage executable:
+
+    Download the .AppImage file from the [Github Release page here](https://github.com/mario33881/betterSIS/releases/latest).
+    > Ignore the ```.AppImage.zsync``` file: it is used by the AppImage to find updates and you DON'T need to download it
+
+    You can start the shell by executing the file:
+    ```
+    ./Bettersis-<version>-x86_64.AppImage
+    ```
+    > Replace ```<version>``` with the version number (like ```1.2.1```)
+
+    > If the command says "Permission denied", you need to set the file type to executable using this command:
+    > ```
+    > chmod +x Bettersis-<version>-x86_64.AppImage
+    > ```
+    > Make sure that you are in the same directory as the file
+    
+    Advantages:
+    * No installation required
+    * There's no need to install Python and its dependencies
+    * You can update the AppImage by using the ```bsis_update``` command from the betterSIS shell
+
+    Disadvantages:
+    * Hard to use because of the unknown path
+        > You could add it to the path environment variable,
+        > otherwise you have to call it using the full path or you
+        > have to read blif files using their full path
+    
+    > On many distros you can put the executable inside the ```bin``` folder inside your home folder (```$HOME```): this allows you to execute the ```bsis``` command from every folder. The result is the same as installing betterSIS and executing that command.
+
+    Delete the file to "uninstall" betterSIS.
 
 * Install the software as a DEB package
 
@@ -177,9 +221,9 @@ You can:
     dpkg --remove bettersis
     ```
 
-* Use the Pyinstaller executable
+* Use the PyInstaller executable
     
-    Download the Pyinstaller executable from the [Github Release page here](https://github.com/mario33881/betterSIS/releases/latest) (its the one called "bsis" with no file extension)
+    Download the PyInstaller executable from the [Github Release page here](https://github.com/mario33881/betterSIS/releases/latest) (its the one called "bsis" with no file extension)
 
     You can start the shell by executing the file:
     ```
@@ -298,6 +342,11 @@ If you used:
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 **WIP 1.2.1:** <br>
+### Changes:
+* Now the original output is kept completely intact (included warnings) and at the end of the command execution warnings are shown a second time.
+    > Warnings were hidden during the command execution because they were considered redondant (to the developer) but having the full "history" of the output
+    > and then a brief summary of Warnings and/or errors makes more sense.
+
 ### Features:
 * Added persistent command history across different sessions (they are saved inside the ```~/.bsis_history``` file). 
 
@@ -309,6 +358,10 @@ If you used:
 * Added the ```bsis_checkblif``` command: uses the blifparser library as a basic parser/validation tool for BLIF files
 * Now the ```help``` command also shows betterSIS commands
 * New release on the Snap store. You can now install this software using the ```snap install bettersis``` command or using the Snap Store GUI.
+* New release as an AppImage. You can think of it as having an updatable PyInstaller version.
+    > Use the ```bsis_update``` to update your AppImage when an update is available
+* Added two arguments to betterSIS: the ```--debug``` flag used to write more details in the log file and the ```--verbosedebug``` flag to also show debug information inside the shell
+    > ```--verbosedebug``` only works when you also use the ```--debug``` flag
 
 ### Fixes:
 * Now the program can correctly check if an update is available.

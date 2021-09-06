@@ -91,6 +91,11 @@ Puoi leggere piu' informazioni riguardo al codice di betterSIS su readthedocs [c
 [Torna all'indice](#indice)
 
 ## Installazione
+
+> Puoi vedere un riassunto delle [differenze tra i vari metodi di installazione qui](https://github.com/mario33881/betterSIS/wiki/Differenza-tra-metodi-di-installazione).
+>
+> Dopo aver guardato il riassunto e' possibile leggere maggiori dettagli su come installare betterSIS con il metodo desiderato e sui vantaggi e svantaggi qui sotto.
+
 Puoi:
 
 * (soluzione piu' comoda e facile) Installare il software dallo Snap store:
@@ -136,6 +141,13 @@ Puoi:
     * snap e' necessario per l'installazione
         > Molte distro basate su Ubuntu ma anche altre hanno [snap installato di fabbrica](https://snapcraft.io/docs/installing-snapd)
     
+    Vantaggio/Svantaggio:
+    * Le Snap sono molto limitate in termini di permessi. Questo significa che e' facile incontrare errori "Permission Error" se si cerca di aprire file in cartelle in cui si ha il permesso di entrare/modificare file come utente.
+        > Suggerisco di aprire e usare betterSIS in una cartella che e' da qualche parte all'interno della cartella home (Un esempio di cartella valida ```/home/mioutente/Documenti/imieiprogetti/progetti_sis```) e di NON usare sudo per aprire betterSIS.
+        >
+        > Potresti anche dare i permessi per aprire ed utilizzare betterSIS in dispositivi rimovibili
+        > seguendo il passo numero 6 descritto sopra a "Vantaggi rispetto alle altre soluzioni"
+
     Puoi disinstallare betterSIS aprendo la pagina sull'Ubuntu Store/Snap store e cliccando sul pulsante rimuovi/disinstalla.
     > Puoi seguire gli stessi passaggi svolti per installare betterSIS e poi nel passaggio 5 cliccare su rimuovi/disinstalla invece di "installa"
 
@@ -143,6 +155,38 @@ Puoi:
     ```
     snap remove bettersis
     ```
+
+* Usare l'eseguibile AppImage:
+
+    Scaricare il file .AppImage dalla [pagina Github Release qui](https://github.com/mario33881/betterSIS/releases/latest).
+    > Ignora il file ```.AppImage.zsync```: e' usato dalla AppImage per trovare aggiornamenti e NON e' necessario scaricarlo
+
+    E' possibile eseguire betterSIS con questo comando:
+    ```
+    ./Bettersis-<version>-x86_64.AppImage
+    ```
+    > Sostituire ```<version>``` con il numero di versione (come ```1.2.1```)
+
+    > Se il terminale visualizza "Permesso negato", e' necessario impostare come eseguibile il file:
+    > ```
+    > chmod +x Bettersis-<version>-x86_64.AppImage
+    > ```
+    > Assicurarsi di essere nella stessa cartella del file prima di eseguire il comando
+    
+    Vantaggi:
+    * Non e' necessario installare betterSIS
+    * Non e' necessario installare Python e le sue dipendenze
+    * E' possibile aggiornare la AppImage utilizzando il comando ```bsis_update``` dalla shell di betterSIS
+
+    Svantaggi:
+    * Difficile da usare a causa del percorso del file
+        > Si puo' aggiungere il percorso alla variabile di ambiente "path",
+        > altrimenti occorre richiamare il programma con il percorso completo oppure 
+        > occorre leggere i file blif specificando il percorso completo
+    
+    > Su molte distribuzioni e' possibile scaricare l'eseguibile nella cartella ```bin``` della cartella home (```$HOME```): questo permette di eseguire il comando ```bsis``` da qualsiasi cartella come se betterSIS fosse installato
+
+    Per "disinstallarlo" e' sufficiente cancellare il file.
 
 * Installare il software con il pacchetto DEB:
 
@@ -175,9 +219,9 @@ Puoi:
     dpkg --remove bettersis
     ```
 
-* Usare l'eseguibile creato da Pyinstaller:
+* Usare l'eseguibile creato da PyInstaller:
     
-    Scaricare l'eseguibile creato da Pyinstaller dalla pagina [Github Release](https://github.com/mario33881/betterSIS/releases/latest) (e' il file chiamato "bsis" senza estensione file)
+    Scaricare l'eseguibile creato da PyInstaller dalla pagina [Github Release](https://github.com/mario33881/betterSIS/releases/latest) (e' il file chiamato "bsis" senza estensione file)
 
     Puoi eseguire la shell eseguendo il file:
     ```
@@ -297,6 +341,11 @@ Se hai usato:
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
 **WIP 1.2.1:** <br>
+### Modifiche:
+* Adesso l'output originale e' mantenuto completamente intatto (inclusi i warning) e alla fine dell'esecuzione del comando vengono visualizzati i warning una seconda volta.
+    > I warning erano nascosti perche' erano considerati duplicati (scelta dello sviluppatore) ma avere uno "storico" completo dell'output
+    > e poi un breve riassunto con gli errori e/o warning ha molto piu' senso.
+
 ### Funzionalita' aggiuntive:
 * Aggiunto storico permanente dei comandi tra piu' sessioni. Vengono salvati all'interno del file ```~/.bsis_history```. Questa funzionalita' e' disabilitata di default.
 
@@ -308,6 +357,10 @@ Se hai usato:
 * Aggiunto il comando ```bsis_checkblif```: utilizza la libreria blifparser come un semplice tool di verifica per validare i file BLIF
 * Adesso il comando ```help``` visualizza anche i comandi di betterSIS
 * Nuovo metodo di installazione attraverso lo Snap store. E' possibile installare betterSIS con il comando ```snap install bettersis``` oppure utilizzando l'interfaccia grafica dello Snap store.
+* Nuovo metodo di installazione: AppImage. E' paragonabile alla versione PyInstaller ma e' aggiornabile automaticamente.
+    > Utilizzare il comando ```bsis_update``` per aggiornare la AppImage quando e' disponibile un nuovo aggiornamento
+* Aggiunti due parametri a betterSIS: la flag ```--debug``` usata per scrivere piu' informazioni sul file di log e la flag ```--verbosedebug``` che visualizza le informazioni di debug nella shell.
+    > ```--verbosedebug``` necessita di essere utilizzato insieme a ```--debug```
 
 ### Fix:
 * Adesso il programma riesce a verificare la presenza di aggiornamenti
