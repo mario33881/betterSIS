@@ -85,7 +85,7 @@ def limit_history_size(t_file, t_size_limit, t_output=None):
     remove_blank_lines(t_file, tmp_filepath + ".nospaces.txt")
 
     # if the file size permits to read last t_limit bytes, remove the first bytes
-    if filesize > t_size_limit:
+    if filesize > t_limit:
         # truncate the file by keeping the last t_limit chars/bytes
         truncate_beginning(tmp_filepath + ".nospaces.txt", tmp_filepath + ".trunc.txt", t_limit)
 
