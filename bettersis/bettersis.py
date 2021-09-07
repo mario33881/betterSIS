@@ -113,7 +113,8 @@ class Bettersis:
             if updates_res["success"]:
                 if updates_res["update_available"]:
                     print("\nNew Update Available! (latest: {})".format(updates_res["latest_version"]))
-                    print("Type the 'bsis_releases' command to open the download webpage for the last release!")
+                    print("Type the 'bsis_releases' command to open the download webpage for the latest release!")
+                    print("> If you are using the Snap version type 'snap refresh' on the terminal to update to the latest version")
 
                     if using_appimage:
                         print("You can execute the 'bsis_update' command to download the latest AppImage")

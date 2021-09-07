@@ -340,7 +340,7 @@ Se hai usato:
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
-**WIP 1.2.1:** <br>
+**2021-09-07 1.2.1:** <br>
 ### Modifiche:
 * Adesso l'output originale e' mantenuto completamente intatto (inclusi i warning) e alla fine dell'esecuzione del comando vengono visualizzati i warning una seconda volta.
     > I warning erano nascosti perche' erano considerati duplicati (scelta dello sviluppatore) ma avere uno "storico" completo dell'output

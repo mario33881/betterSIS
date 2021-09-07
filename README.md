@@ -341,7 +341,7 @@ If you used:
 [Go to the index](#index)
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
-**WIP 1.2.1:** <br>
+**2021-09-07 1.2.1:** <br>
 ### Changes:
 * Now the original output is kept completely intact (included warnings) and at the end of the command execution warnings are shown a second time.
     > Warnings were hidden during the command execution because they were considered redondant (to the developer) but having the full "history" of the output
