@@ -362,6 +362,7 @@ If you used:
     > Use the ```bsis_update``` to update your AppImage when an update is available
 * Added two arguments to betterSIS: the ```--debug``` flag used to write more details in the log file and the ```--verbosedebug``` flag to also show debug information inside the shell
     > ```--verbosedebug``` only works when you also use the ```--debug``` flag
+* The simple text editor now shows the text "Saved to file" when the user saves the file using Ctrl+S
 
 ### Fixes:
 * Now the program can correctly check if an update is available.

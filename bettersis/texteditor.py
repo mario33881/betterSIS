@@ -117,6 +117,8 @@ class SimpleTextEditor():
     :param str t_file: file to open with the text editor
     """
     def __init__(self, t_file):
+        self.saved_file = False  # used to set the toolbar text to "saved to file"
+
         if not os.path.isfile(t_file):
             raise Exception("ERROR: '{}' file doesn't exist".format(t_file))
 
@@ -171,7 +173,9 @@ class SimpleTextEditor():
         def _(event):
             """
             Saves the file (hotkey Ctrl + S)
+            and sets self.saved_file to True to show in the toolbar the text "saved to file"
             """
+            self.saved_file = True
             with open(t_file, "w") as f:
                 f.write(self.text_field.text)
 
@@ -208,8 +212,14 @@ class SimpleTextEditor():
         """
         Shows control hotkeys.
 
+        If the user saved the file with Ctrl-S show "Saved to file" instead.
+
         :return str: string with the control commands
         """
+        if self.saved_file:
+            self.saved_file = False
+            return " | Saved to file |"
+
         return " | Ctrl-C: exit | Ctrl-S: save | Ctrl-U: undo |"
 
     def get_statusbar_right_text(self):

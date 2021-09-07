@@ -361,6 +361,7 @@ Se hai usato:
     > Utilizzare il comando ```bsis_update``` per aggiornare la AppImage quando e' disponibile un nuovo aggiornamento
 * Aggiunti due parametri a betterSIS: la flag ```--debug``` usata per scrivere piu' informazioni sul file di log e la flag ```--verbosedebug``` che visualizza le informazioni di debug nella shell.
     > ```--verbosedebug``` necessita di essere utilizzato insieme a ```--debug```
+* L'editor di testo visualizza il messaggio "Saved to file" quando l'utente salva il file utilizzando la combinazione di tasti Ctrl+S
 
 ### Fix:
 * Adesso il programma riesce a verificare la presenza di aggiornamenti
