@@ -17,7 +17,7 @@ icon_name="bettersis"
 icon_url="https://raw.githubusercontent.com/mario33881/betterSIS/64bf89345c4e5465d60828b4c8d54ffe9e2cb9bb/_static/images/logo.svg"
 architecture="x86_64"
 python_version="python3.8"
-python_full_version="${python_version}.11"
+python_full_version="${python_version}.12"
 python_short_version="cp38"
 svg="0" # 0: true (uses inkscape for svg -> png), 1: false
 
