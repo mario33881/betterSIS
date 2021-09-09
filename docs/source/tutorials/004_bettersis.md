@@ -9,11 +9,9 @@ html_meta:
 # betterSIS: la shell moderna per SIS
 
 <p align="center">
-<img style="height: 350px;" height="350px" src="https://raw.githubusercontent.com/mario33881/betterSIS/69a1208e0bcb21236b9daf3318763ed793cada8d/images/logo.svg" />
+<img style="height: 350px;" height="350px" src="https://raw.githubusercontent.com/mario33881/betterSIS/e541aea3c849503b4c16c22d586cc98aa7732039/_static/images/logo.svg" />
 </p>
-<p align="center">
-<img height="450px" src="https://raw.githubusercontent.com/mario33881/betterSIS/69a1208e0bcb21236b9daf3318763ed793cada8d/images/example.gif" />
-</p>
+<script style="height: 350px; width: 100%;" height="350px" id="asciicast-02RkuwG4vNtsVb3LvxukxV34z" src="https://asciinema.org/a/02RkuwG4vNtsVb3LvxukxV34z.js" async data-autoplay="true"></script>
 
 SIS non ha alcune funzionalita' che ci si possono aspettare da una shell moderna come, ad esempio, l'autocompletamento dei comandi con il tasto tab, storico dei comandi con cui si puo' interagire utilizzando i pulsanti freccia verso l'alto e verso il basso, modifica dei comandi gia' scritti spostando il cursore a destra e a sinistra con i relativi tasti freccia...
 
@@ -31,21 +29,38 @@ E' possibile scaricare betterSIS (o il suo codice sorgente) da Github [cliccando
 
 #### Installare betterSIS
 
-Per installare betterSIS scaricare dalla pagina [Github releases di betterSIS](https://github.com/mario33881/betterSIS/releases/latest) il pacchetto ```.deb``` e installarlo eseguendo il comando:
-
-```
-sudo dpkg -i bettersis.deb
-```
-
+Esistono [diversi metodi di installazione](https://github.com/mario33881/betterSIS/wiki/Differenza-tra-metodi-di-installazione). 
 ```{note}
-Verra' chiesta la password del "super user" (equivalente dell'account amministratore per Windows): inserirla e premere invio.
-
-NOTA: la password per sicurezza non viene visualizzata sul terminale (NEMMENO nascosta tra asterischi "*")
+Dopo aver capito quale versione fa al caso nostro e' possibile seguire le [istruzioni per installarla da qui](https://github.com/mario33881/betterSIS)
 ```
 
-```{note}
-Se il file scaricato si chiama in maniera diversa modificare nel comando `bettersis.deb` con il nome del file.
+Il metodo consigliato perche' e' il piu' semplice e permette di ricevere automaticamente gli ultimi aggiornamenti e' installare la versione Snap.
+
+E' possibile installare betterSIS da terminale con il seguente comando:
 ```
+sudo snap install bettersis
+```
+
+E' anche possibile installarlo da interfaccia grafica seguendo queste istruzioni:
+1. Clicca questo pulsante:
+
+    [![Scarica dallo Snap Store](https://snapcraft.io/static/images/badges/it/snap-store-black.svg)](https://snapcraft.io/bettersis)
+
+2. Poi clicca sul pulsante "Install" (installa) in alto a destra della pagina
+3. Clicca su "View in Desktop Store" (visualizza nello store sul desktop) e "Choose an app" (scegli una app)
+4. Scegli "Ubuntu software" OPPURE "Handler for snap:// URIs" OPPURE "Snap Store"
+    ```{note}
+    Queste opzioni sono scritte in ordine di preferenza: se la prima opzione non e' disponibile scegliere la seconda, ecc... Se non c'e' nessuna delle opzioni allora e' consigliato installare betterSIS con il comando scritto sopra
+    ```
+5. Clicca sul pulsante "Install" / "Installa"
+6. (Opzionale) Se vuoi puoi modificare i permessi cliccando sul pulsante "Permissions" / "Permessi"
+    ```{note}
+    Consiglio di abilitare/disabilitare solo la opzione "read/write permissions on removable media" (lettura/scrittura su dispositivi rimovibili) che serve per permettere la lettura/scrittura dei file BLIF nelle USB oppure nelle cartelle in ```/mnt/``` (come le cartelle condivise di Virtualbox).
+    
+    Gli altri permessi sono necessari per accedere ai file BLIF all'interno della cartella home e per controllare se ci sono aggiornamenti disponibili (Cambiare questi permessi potrebbe impedire alla applicazione di funzionare completamente e/o correttamente finche' non si ri-abilitano i permessi)
+    ```
+
+Dopo aver installato betterSIS e' possibile eseguirlo da terminale con il comando ```bettersis```.
 
 Per maggiori dettagli su questo ed altri metodi di installazione accedere al repository Github [cliccando qui](https://github.com/mario33881/betterSIS)
 
