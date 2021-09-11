@@ -390,7 +390,20 @@ def get_siscompleter():
         "bsis_tutorials": None,
         "bsis_documentation": None,
         "bsis_releases": None,
-        "bsis_checkblif": get_files()
+        "bsis_checkblif": get_files(),
+        "blif2graph": {
+            "--fsm" : {
+                "--input": get_files(),
+                "--output": None,
+                "--format": {
+                    "svg": None,
+                    "pdf": None
+                },
+                "--view_graph": None,
+                "--style": get_files(),
+                "--debug": None,
+            }
+        }
     }
 
     if os.getenv("APPIMAGE") and os.getenv("APPDIR"):

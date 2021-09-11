@@ -14,8 +14,10 @@ import re
 import os
 import argparse
 import traceback
+import shutil
 
 import siswrapper
+import blif2graph
 import blifparser.blifparser as blifparser
 from prompt_toolkit import PromptSession
 from prompt_toolkit import print_formatted_text, HTML
@@ -49,6 +51,7 @@ bettersis_cmds = [
     "bsis_releases",
     "bsis_checkblif",
     "help",
+    "blif2graph"
 ]
 
 using_appimage = os.getenv("APPIMAGE") and os.getenv("APPDIR")
@@ -479,6 +482,20 @@ class Bettersis:
 
         elif help_matches:
             self.manage_command(t_command)
+
+        # blif2graph
+        elif command == "blif2graph":
+            if shutil.which("dot"):
+                params = t_command.replace("blif2graph", "")
+                params = [param for param in params.split(" ") if param.strip() != ""]
+                try:
+                    if blif2graph.main(params) == 0:
+                        self.lastcmd_success = True
+                except SystemExit:
+                    pass
+            else:
+                print("blif2graph depends on graphviz to create graphs, "
+                      "you can install it here: https://graphviz.org/download/")
 
         # unexpected bsis command
         else:

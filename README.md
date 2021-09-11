@@ -341,6 +341,13 @@ If you used:
 [Go to the index](#index)
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
+**WIP 1.2.2:** <br>
+### Features:
+* Added the ```blif2graph``` command: generates an FSM graph from a BLIF file
+    > You can see an [example usage here](https://github.com/mario33881/blif2graph)
+
+    > This script was inspired by [generate-stg](https://github.com/bohzio/sis-tools/blob/master/generate-stg), a tool created by Mattia Corradi and Dalla Chiara Michele
+
 **2021-09-07 1.2.1:** <br>
 ### Changes:
 * Now the original output is kept completely intact (included warnings) and at the end of the command execution warnings are shown a second time.

@@ -340,6 +340,13 @@ Se hai usato:
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
+**WIP 1.2.2:** <br>
+### Funzionalita' aggiuntive:
+* Aggiunto il comando ```blif2graph```: genera un grafo a partire da un file BLIF.
+    > E' possibile vedere [un esempio di utilizzo qui](https://github.com/mario33881/blif2graph)
+
+    > Per scrivere questo script mi sono ispirato a [generate-stg](https://github.com/bohzio/sis-tools/blob/master/generate-stg), un programma creato da Mattia Corradi e Dalla Chiara Michele
+
 **2021-09-07 1.2.1:** <br>
 ### Modifiche:
 * Adesso l'output originale e' mantenuto completamente intatto (inclusi i warning) e alla fine dell'esecuzione del comando vengono visualizzati i warning una seconda volta.

@@ -30,7 +30,9 @@ if __name__ == '__main__':
             "siswrapper==1.2.2",
             "prompt-toolkit==3.0.20",
             "certifi==2021.5.30",
-            "blifparser==1.0.0"
+            "blifparser==1.0.0",
+            "graphviz==0.17",
+            "blif2graph==1.0.0"
         ],  # dependencies
         python_requires='>=3',
         packages=setuptools.find_packages(include=['bettersis']),
