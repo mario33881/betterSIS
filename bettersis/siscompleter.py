@@ -392,7 +392,7 @@ def get_siscompleter():
         "bsis_releases": None,
         "bsis_checkblif": get_files(),
         "blif2graph": {
-            "--fsm" : {
+            "--fsm": {
                 "--input": get_files(),
                 "--output": None,
                 "--format": {

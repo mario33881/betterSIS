@@ -41,6 +41,7 @@ parts:
     conda-packages:
     - graphviz
 
+
 apps:
   sis:
     command: usr/local/bin/sis  # this is where the dump plugin puts the executable
@@ -64,6 +65,7 @@ apps:
     plugs:
     - desktop     # used to access font files
     - home        # used to read/write input/output files
+
 
 # these bindings allow sis to find files
 # like *.genlib files, script.rugged, ...
