@@ -1,6 +1,6 @@
 name: bettersis
 version: git
-base: core18
+base: core20
 
 summary: The modern shell for SIS (the circuit simulator and optimizer)
 description: |
@@ -27,7 +27,6 @@ parts:
   # use the setup.py file to install the python app
   bettersis:
     plugin: python
-    python-version: python3
     source: .
 
   # use conda to install graphviz (stage-packages are dependencies that are not installed from conda)
@@ -61,7 +60,7 @@ apps:
       - removable-media     # (disabled by default) the app reads and writes blif files in USBs, /mnt/, ...
 
   dot:
-    command: dot
+    command: bin/dot
     plugs:
     - desktop     # used to access font files
     - home        # used to read/write input/output files
