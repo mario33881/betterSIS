@@ -2,6 +2,9 @@ name: bettersis
 version: git
 base: core20
 
+architectures:
+  - build-on: amd64  # SIS was compiled for 64 bit CPUs
+
 summary: The modern shell for SIS (the circuit simulator and optimizer)
 description: |
   Bettersis, or bsis for short, is an **interactive shell**
