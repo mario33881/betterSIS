@@ -2,5 +2,5 @@ siswrapper==1.2.2
 prompt-toolkit==3.0.22
 certifi==2021.10.8
 blifparser==1.0.0
-graphviz==0.17
+graphviz==0.18.1
 blif2graph==1.0.0
