@@ -12,4 +12,4 @@ per-file-ignores =
     tests/test_texteditor.py: E402
     # Linter doesn't know that what is imported is being run by unittest
     tests/test_all.py: F401, F403
-exclude = .git,__pycache__,build,dist
+exclude = .git,__pycache__,build,dist,tools

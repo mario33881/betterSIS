@@ -68,7 +68,7 @@ class TestSiscompleter(unittest.TestCase):
                 self.assertEqual(type(k), str, "parameter should be a string")
 
             visited.add(k)
-    
+
     def test_commands(self):
         """
         Tests the commands variable.
