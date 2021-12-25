@@ -25,54 +25,6 @@ class TestUpdateChecker(unittest.TestCase):
     Tests update_checker.py
     """
 
-    def test_extract_version(self):
-        """
-        Tests extract_version() function:
-        extracts the version numbers from a string.
-        """
-        ver_data = update_checker.extract_version("")
-        self.assertFalse(ver_data["success"], "empty string doesn't contain a correct version")
-        self.assertIsNone(ver_data["major_version"])
-        self.assertIsNone(ver_data["minor_version"])
-        self.assertIsNone(ver_data["patch_version"])
-
-        ver_data = update_checker.extract_version(".")
-        self.assertFalse(ver_data["success"], "one dot is not a correct version")
-        self.assertIsNone(ver_data["major_version"])
-        self.assertIsNone(ver_data["minor_version"])
-        self.assertIsNone(ver_data["patch_version"])
-
-        ver_data = update_checker.extract_version("..")
-        self.assertFalse(ver_data["success"], "the string '..' doesn't contain version numbers")
-        self.assertIsNone(ver_data["major_version"])
-        self.assertIsNone(ver_data["minor_version"])
-        self.assertIsNone(ver_data["patch_version"])
-
-        ver_data = update_checker.extract_version("a.b.c")
-        self.assertFalse(ver_data["success"], "the string 'a.b.c' doesn't contain version numbers")
-        self.assertIsNone(ver_data["major_version"])
-        self.assertIsNone(ver_data["minor_version"])
-        self.assertIsNone(ver_data["patch_version"])
-
-        ver_data = update_checker.extract_version("1.c.0")
-        self.assertFalse(ver_data["success"], "the string '1.c.0' doesn't contain version numbers")
-        self.assertIsNone(ver_data["major_version"])
-        self.assertIsNone(ver_data["minor_version"])
-        self.assertIsNone(ver_data["patch_version"])
-
-        ver_data = update_checker.extract_version("-1.4.3")
-        self.assertFalse(ver_data["success"], "the string '-1.4.3' doesn't contain version "
-                                              "numbers (negative numbers are not allowed)")
-        self.assertIsNone(ver_data["major_version"])
-        self.assertIsNone(ver_data["minor_version"])
-        self.assertIsNone(ver_data["patch_version"])
-
-        ver_data = update_checker.extract_version("1.2.3")
-        self.assertTrue(ver_data["success"], "the string '1.2.3' is a correct version")
-        self.assertEqual(ver_data["major_version"], 1)
-        self.assertEqual(ver_data["minor_version"], 2)
-        self.assertEqual(ver_data["patch_version"], 3)
-
     def test_check_updates(self):
         """
         Tests check_updates() function: tells if an update is available
