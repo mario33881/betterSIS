@@ -12,6 +12,8 @@ import os
 import sys
 import unittest
 
+from prompt_toolkit.completion.nested import NestedCompleter
+
 # import siscompleter from the ../bettersis folder
 curr_dir = os.path.realpath(os.path.dirname(__file__))
 bettersis_path = os.path.join(curr_dir, "..", "bettersis")
@@ -48,13 +50,13 @@ class TestSiscompleter(unittest.TestCase):
             self.assertIsNone(folders[folder_param], "folders don't have sub-parameters")
             self.assertEqual(type(folder_param), str, "folders should be strings")
 
-    def test_get_act_map_params(self):
+    def test_help_params(self):
         """
-        Tests the get_act_map_params() function.
+        Tests the help_params variable.
         """
-        params = siscompleter.get_act_map_params()
+        commands = siscompleter.help_params
 
-        stack = list(params.items())
+        stack = list(commands.items())
         visited = set()
         while stack:
             k, v = stack.pop()
@@ -66,50 +68,12 @@ class TestSiscompleter(unittest.TestCase):
                 self.assertEqual(type(k), str, "parameter should be a string")
 
             visited.add(k)
-
-    def test_get_read_blif_params(self):
+    
+    def test_commands(self):
         """
-        Tests the get_read_blif_params() function.
+        Tests the commands variable.
         """
-        params = siscompleter.get_read_blif_params()
-
-        stack = list(params.items())
-        visited = set()
-        while stack:
-            k, v = stack.pop()
-            if isinstance(v, dict):
-                if k not in visited:
-                    stack.extend(v.items())
-            else:
-                self.assertIsNone(v, "the sub-parameter has to be None (or a dictionary)")
-                self.assertEqual(type(k), str, "parameter should be a string")
-
-            visited.add(k)
-
-    def test_get_read_eqn_params(self):
-        """
-        Tests the get_read_eqn_params() function.
-        """
-        params = siscompleter.get_read_eqn_params()
-
-        stack = list(params.items())
-        visited = set()
-        while stack:
-            k, v = stack.pop()
-            if isinstance(v, dict):
-                if k not in visited:
-                    stack.extend(v.items())
-            else:
-                self.assertIsNone(v, "the sub-parameter has to be None (or a dictionary)")
-                self.assertEqual(type(k), str, "parameter should be a string")
-
-            visited.add(k)
-
-    def test_get_commands(self):
-        """
-        Tests the get_commands() function.
-        """
-        commands = siscompleter.get_commands()
+        commands = siscompleter.commands
 
         stack = list(commands.items())
         visited = set()
@@ -124,15 +88,24 @@ class TestSiscompleter(unittest.TestCase):
 
             visited.add(k)
 
-    def test_get_source_params(self):
+    def test_get_siscompleter(self):
         """
-        Tests the get_source_params() function.
+        Tests the get_siscompleter() function.
         """
-        params = siscompleter.get_source_params()
+        completer = siscompleter.get_siscompleter()
+        commands = completer.options
+        stack = list(commands.items())
+        visited = set()
+        while stack:
+            k, v = stack.pop()
+            if isinstance(v, NestedCompleter):
+                if k not in visited:
+                    stack.extend(v.options.items())
+            else:
+                self.assertIsNone(v, "the sub-parameter has to be None (or a dictionary)")
+                self.assertEqual(type(k), str, "parameter should be a string")
 
-        for param in params.keys():
-            self.assertIsNone(params[param], "params don't have sub-parameters")
-            self.assertEqual(type(param), str, "param should be strings")
+            visited.add(k)
 
 
 if __name__ == "__main__":
