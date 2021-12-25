@@ -11,11 +11,17 @@ __author__ = "Zenaro Stefano"
 import shutil
 import os
 import tempfile
+import logging
+
+from prompt_toolkit import print_formatted_text, HTML
 
 try:
     from ._version import __version__  # noqa: F401
 except ImportError:
     from _version import __version__  # noqa: F401
+
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
 
 
 def remove_blank_lines(t_input, t_output):
@@ -122,3 +128,55 @@ def limit_history_size(t_file, t_size_limit, t_output=None):
             shutil.copyfile(tmp_filepath + ".nospaces.txt", t_file)
 
     tmp_dir.cleanup()
+
+
+def manage_history_file(t_history_file_path):
+    """
+    Manages the history file size and usage.
+
+    Checks if the ``BSIS_HISTORY_ENABLED`` environment variable is set to true:
+    if is is set to true the function returns True and betterSIS
+    will use the history file,
+    else the history will expire at the end of the session.
+
+    Then, if a history file already exists, checks the ``BSIS_HISTORY_SIZELIMIT`` environment:
+    if the value is a number it is used as a size limit,
+    else the limit is the default one (0.1 MB)
+    """
+    default_size = 0.1 * 1000 * 1000
+    history_file_enabled = False
+
+    if os.getenv("BSIS_HISTORY_ENABLED"):
+        logger.debug("[MANAGE_HISTORY_FILE] The BSIS_HISTORY_ENABLED "
+                        "env. variable is set to '{}'".format(os.getenv("BSIS_HISTORY_ENABLED")))
+
+        if os.getenv("BSIS_HISTORY_ENABLED") == "true":
+            history_file_enabled = True
+
+            # if the history file exists, manage its size
+            if os.path.isfile(t_history_file_path):
+                logger.debug("[MANAGE_HISTORY_FILE] The history file exists, controlling its size...")
+                if os.getenv("BSIS_HISTORY_SIZELIMIT"):
+                    # try to use custom size limit (use default one on error)
+                    try:
+                        size = int(os.getenv("BSIS_HISTORY_SIZELIMIT"))
+                        logger.debug("[MANAGE_HISTORY_FILE] Using custom size limit: '{}' bytes".format(size))
+                        limit_history_size(t_history_file_path, size)
+                    except ValueError:
+                        logger.debug("[MANAGE_HISTORY_FILE] Using default size limit: '{}' bytes "
+                                        "(BSIS_HISTORY_SIZELIMIT is invalid)".format(default_size))
+                        warning_msg = "<b><yellow>[Warning]</yellow></b> The BSIS_HISTORY_SIZELIMIT env. variable value" \
+                                        " ('{}') is invalid: " \
+                                        "it needs to be a number".format(os.getenv("BSIS_HISTORY_SIZELIMIT"))
+
+                        print_formatted_text(HTML(warning_msg))
+
+                        limit_history_size(t_history_file_path, default_size)
+                else:
+                    # use default size limit
+                    logger.debug("[MANAGE_HISTORY_FILE] Using default size limit: '{}' bytes".format(default_size))
+                    limit_history_size(t_history_file_path, default_size)
+    else:
+        logger.debug("[MANAGE_HISTORY_FILE] The BSIS_HISTORY_ENABLED env. variable is NOT set, using normal session")
+
+    return history_file_enabled
