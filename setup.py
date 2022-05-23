@@ -31,7 +31,7 @@ if __name__ == '__main__':
             "prompt-toolkit==3.0.29",
             "certifi==2022.5.18.1",
             "blifparser==1.0.0",
-            "graphviz==0.17",
+            "graphviz==0.20",
             "blif2graph==1.0.0"
         ],  # dependencies
         python_requires='>=3',
