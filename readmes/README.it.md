@@ -248,6 +248,32 @@ Puoi:
 
     Per "disinstallarlo" e' sufficiente cancellare il file.
 
+* Usare la versione docker:
+
+    Installare docker dal [sito ufficiale](https://docs.docker.com/get-docker/).
+
+    Eseguire il seguente comando per scaricare ed eseguire un container con betterSIS:
+    ```bash
+    docker run -it --rm -v "$(pwd):/data" mario33881/bettersis
+    ```
+    > Esegui questo comando in una cartella con i file ```.blif``` che vuoi leggere con betterSIS.
+
+    Vantaggi:
+    * Non c'e' bisogno di installare Python e le dipendenze per eseguire betterSIS.
+
+    Svantaggi:
+    * Difficile da usare: occorre inserire l'intero comando e potrebbe essere necessario configurare docker
+        > Per semplificare il comando potresti impostare un alias con questo comando:
+        > ```bash
+        > alias bsis='docker run -it --rm -v "$(pwd):/data" mario33881/bettersis'
+        > ```
+        > Con l'alias e' possibile eseguire il comando ```bsis``` per eseguire betterSIS con docker.
+        >
+        > Potrebbe essere comodo inserire questo comando nel file ```.bashrc``` (o equivalente) per rendere l'alias permanente ad ogni apertura del terminale.
+
+    * Niente aggiornamenti automatici
+        > E' possibile scaricare l'ultima versione con il comando ```docker pull mario33881/bettersis```
+
 * Usare il codice sorgente:
 
     1. Scarica questo repository
@@ -346,6 +372,11 @@ Se hai usato:
     > E' possibile vedere [un esempio di utilizzo qui](https://github.com/mario33881/blif2graph)
 
     > Per scrivere questo script mi sono ispirato a [generate-stg](https://github.com/bohzio/sis-tools/blob/master/generate-stg), un programma creato da Mattia Corradi e Dalla Chiara Michele
+
+* Aggiunta la [versione docker su docker hub](https://hub.docker.com/r/mario33881/bettersis).
+    > Queste immagini sono state create eseguendo la build con il file ```Dockerfile```.
+    >
+    > Comando di build: ```docker build --progress=plain -t bettersis .```
 
 ### Fix:
 * I comandi che aprivano pagine web (```bsis_documentation```, ```bsis_tutorials```, ```bsis_releases```) non erano in grado di aprire il browser nelle versioni PyInstaller (eseguibile ```bsis```) e pacchetto DEB (```bettersis.deb```).

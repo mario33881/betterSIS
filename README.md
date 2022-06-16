@@ -250,6 +250,32 @@ You can:
 
     Delete the file to "uninstall" betterSIS.
 
+* Use the docker version.
+
+    Install docker from the [official website](https://docs.docker.com/get-docker/).
+
+    You can now download and execute betterSIS using the following command:
+    ```bash
+    docker run -it --rm -v "$(pwd):/data" mario33881/bettersis
+    ```
+    > Execute this command inside a folder with your ```.blif``` files.
+
+    Advantages:
+    * There's no need to install Python and the dependencies to execute betterSIS.
+
+    Disadvantages:
+    * Hard to use: you need to enter the full command and you might need to configure docker
+        > To simplify the command you could set an alias like this:
+        > ```bash
+        > alias bsis='docker run -it --rm -v "$(pwd):/data" mario33881/bettersis'
+        > ```
+        > Now you can run the ```bsis``` command in a folder to run betterSIS.
+        >
+        > You might want to put this command in the ```.bashrc``` file (or their equivalent) to make the alias permanent across different terminal sessions.
+
+    * No automatic updates
+        > You can download the latest version using this command: ```docker pull mario33881/bettersis```
+
 * Use the source code:
 
     1. Download this repository
@@ -347,6 +373,11 @@ If you used:
     > You can see an [example usage here](https://github.com/mario33881/blif2graph)
 
     > This script was inspired by [generate-stg](https://github.com/bohzio/sis-tools/blob/master/generate-stg), a tool created by Mattia Corradi and Dalla Chiara Michele
+
+* Added the [docker version on docker hub](https://hub.docker.com/r/mario33881/bettersis).
+    > These images are created using the ```Dockerfile``` file.
+    >
+    > Build command: ```docker build --progress=plain -t bettersis .```
 
 ### Fixes:
 * Commands that opened web pages (```bsis_documentation```, ```bsis_tutorials```, ```bsis_releases```) weren't able to open the web browser in the PyInstaller (```bsis``` executable) and DEB package (```bettersis.deb```) versions.
