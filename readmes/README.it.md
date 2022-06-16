@@ -347,6 +347,9 @@ Se hai usato:
 
     > Per scrivere questo script mi sono ispirato a [generate-stg](https://github.com/bohzio/sis-tools/blob/master/generate-stg), un programma creato da Mattia Corradi e Dalla Chiara Michele
 
+### Fix:
+* I comandi che aprivano pagine web (```bsis_documentation```, ```bsis_tutorials```, ```bsis_releases```) non erano in grado di aprire il browser nelle versioni PyInstaller (eseguibile ```bsis```) e pacchetto DEB (```bettersis.deb```).
+
 **2021-09-07 1.2.1:** <br>
 ### Modifiche:
 * Adesso l'output originale e' mantenuto completamente intatto (inclusi i warning) e alla fine dell'esecuzione del comando vengono visualizzati i warning una seconda volta.

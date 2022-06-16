@@ -54,8 +54,21 @@ def open_browser(t_url, t_details=""):
         print("You can find the " + t_details + " page at this URL: ", t_url)
 
     except PermissionError:
+        # PyInstaller fix for executables built in docker containers
+        # > found here: https://github.com/pyinstaller/pyinstaller/issues/6334
+        lp_key = "LD_LIBRARY_PATH"
+        # print(f"lp: {os.environ.get(lp_key)}")
+        lp_orig = os.environ.get(f"{lp_key}_ORIG")
+        # print(f"lp_orig: {lp_orig}")
+        if lp_orig is not None:
+            os.environ[lp_key] = lp_orig
+        else:
+            if os.environ.get(lp_key) is not None:
+                del os.environ[lp_key]
+
         webbrowser.open(t_url)
         print("Done, the webpage is open")
+        print("> In case the webpage didn't open, you can find the " + t_details + " page at this URL:", t_url)
         success = True
 
     return success

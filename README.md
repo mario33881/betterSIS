@@ -348,6 +348,9 @@ If you used:
 
     > This script was inspired by [generate-stg](https://github.com/bohzio/sis-tools/blob/master/generate-stg), a tool created by Mattia Corradi and Dalla Chiara Michele
 
+### Fixes:
+* Commands that opened web pages (```bsis_documentation```, ```bsis_tutorials```, ```bsis_releases```) weren't able to open the web browser in the PyInstaller (```bsis``` executable) and DEB package (```bettersis.deb```) versions.
+
 **2021-09-07 1.2.1:** <br>
 ### Changes:
 * Now the original output is kept completely intact (included warnings) and at the end of the command execution warnings are shown a second time.
