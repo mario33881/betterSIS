@@ -29,7 +29,7 @@ if __name__ == '__main__':
         install_requires=[
             "siswrapper==1.2.2",
             "prompt-toolkit==3.0.29",
-            "certifi==2022.5.18.1",
+            "certifi==2022.6.15",
             "blifparser==1.0.0",
             "blif2graph==1.0.0"
         ],  # dependencies
