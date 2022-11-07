@@ -28,7 +28,7 @@ if __name__ == '__main__':
     setuptools.setup(
         install_requires=[
             "siswrapper==1.2.2",
-            "prompt-toolkit==3.0.31",
+            "prompt-toolkit==3.0.32",
             "certifi==2022.9.24",
             "blifparser==1.0.0",
             "blif2graph==1.0.0"
