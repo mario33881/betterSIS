@@ -33,7 +33,7 @@ if __name__ == '__main__':
             "blifparser==1.0.0",
             "blif2graph==1.0.0"
         ],  # dependencies
-        python_requires='>=3',
+        python_requires='>=3.7',
         packages=setuptools.find_packages(include=['bettersis']),
 
         name='bettersis',  # name of the PyPI-package.

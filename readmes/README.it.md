@@ -367,6 +367,9 @@ Se hai usato:
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 
 **WIP 1.2.2:** <br>
+### Modifiche:
+* Abbandonato il supporto per python 3.6
+
 ### Funzionalita' aggiuntive:
 * Aggiunto il comando ```blif2graph```: genera un grafo a partire da un file BLIF.
     > E' possibile vedere [un esempio di utilizzo qui](https://github.com/mario33881/blif2graph)

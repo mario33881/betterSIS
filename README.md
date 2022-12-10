@@ -368,6 +368,9 @@ If you used:
 
 ## Changelog ![](https://i.imgur.com/SDKHpak.png)
 **WIP 1.2.2:** <br>
+### Changes:
+* Dropped python 3.6 support
+
 ### Features:
 * Added the ```blif2graph``` command: generates an FSM graph from a BLIF file
     > You can see an [example usage here](https://github.com/mario33881/blif2graph)
