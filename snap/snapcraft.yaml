@@ -32,16 +32,52 @@ parts:
     plugin: python
     source: .
 
-  # use conda to install graphviz (stage-packages are dependencies that are not installed from conda)
-  # > source code needs additional dependencies
+  # install graphviz and its dependencies
   graphviz:
-    plugin: conda
+    plugin: autotools
+    source: https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/7.0.4/graphviz-7.0.4.tar.gz
+    build-packages:
+      - graphviz
+      - libgvc6
+      - libxau6
+      - libxrender1
+      - libxext6
+      - freeglut3-dev
+      - libgts-dev
+      - swig
+      - libgtkglext1-dev
+      - libglade2-dev
+      - libqt5gui5
+      - qt5-qmake
+      - qt5-default
+      - libann-dev
+      - libdevil-dev
+      - libgd-dev
+      - ghostscript
+      - libgs-dev
+      - liblasi-dev
+      - libpoppler-dev
+      - libpoppler-glib-dev
+      - librsvg2-dev
+      - libwebp-dev
+      - fonts-freefont-ttf
+      - fontconfig-config
+      - pkg-config
+      - libfontconfig
+      - libperl-dev
     stage-packages:
-    - libxau6
-    - libxrender1
-    - libxext6
-    conda-packages:
-    - graphviz
+      - graphviz
+    
+    # build graphviz and then create and save the config6 file containing plugin configs
+    # > fixes the 'There is no layout engine support for "dot"' errpr
+    override-build: |
+      snapcraftctl build
+      find / -iname config6 || true
+      $SNAPCRAFT_PART_INSTALL/usr/bin/dot -c
+      find / -iname config6 || true
+      cat /usr/lib/x86_64-linux-gnu/graphviz/config6a || echo "config6 not found"
+      echo "Copying /usr/lib/x86_64-linux-gnu/graphviz/config6a to $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/graphviz/config6a..."
+      cp /usr/lib/x86_64-linux-gnu/graphviz/config6a $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/graphviz/config6a
 
 
 apps:
@@ -63,7 +99,7 @@ apps:
       - removable-media     # (disabled by default) the app reads and writes blif files in USBs, /mnt/, ...
 
   dot:
-    command: bin/dot
+    command: usr/local/bin/dot
     plugs:
     - desktop     # used to access font files
     - home        # used to read/write input/output files
