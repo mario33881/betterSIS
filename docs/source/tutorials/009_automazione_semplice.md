@@ -1,9 +1,10 @@
 ---
-html_meta:
-  "description lang=en": "SIS simple automation: How to automate script execution in SIS."
-  "description lang=it": "Automazione semplice in SIS: come automatizzare l'esecuzione di script in SIS."
-  "keywords": "betterSIS, SIS, BLIF, SIS automation, SIS scripting"
-  "property=og:locale": "it_IT"
+myst:
+  html_meta:
+    "description lang=en": "SIS simple automation: How to automate script execution in SIS."
+    "description lang=it": "Automazione semplice in SIS: come automatizzare l'esecuzione di script in SIS."
+    "keywords": "betterSIS, SIS, BLIF, SIS automation, SIS scripting"
+    "property=og:locale": "it_IT"
 ---
 
 # Semplice automazione in SIS

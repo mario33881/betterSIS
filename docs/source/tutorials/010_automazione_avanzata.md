@@ -1,9 +1,10 @@
 ---
-html_meta:
-  "description lang=en": "SIS advanced automation: How to automate components verification in SIS using CI/CD workflows."
-  "description lang=it": "Automazione avanzata in SIS: come automatizzare la verifica dei componenti in SIS utilizzando workflow CI/CD."
-  "keywords": "betterSIS, SIS, BLIF, SIS automation, SIS scripting, CI/CD, Github Actions"
-  "property=og:locale": "it_IT"
+myst:
+  html_meta:
+    "description lang=en": "SIS advanced automation: How to automate components verification in SIS using CI/CD workflows."
+    "description lang=it": "Automazione avanzata in SIS: come automatizzare la verifica dei componenti in SIS utilizzando workflow CI/CD."
+    "keywords": "betterSIS, SIS, BLIF, SIS automation, SIS scripting, CI/CD, Github Actions"
+    "property=og:locale": "it_IT"
 ---
 
 # Automazione avanzata di SIS

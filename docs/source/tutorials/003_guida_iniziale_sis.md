@@ -1,9 +1,10 @@
 ---
-html_meta:
-  "description lang=en": "SIS starting guide. Workflow, the and logic gate."
-  "description lang=it": "Guida iniziale SIS. Workflow tipico e la porta logica and."
-  "keywords": "betterSIS, SIS, BLIF, SIS workflow, and logic gate"
-  "property=og:locale": "it_IT"
+myst:
+  html_meta:
+    "description lang=en": "SIS starting guide. Workflow, the and logic gate."
+    "description lang=it": "Guida iniziale SIS. Workflow tipico e la porta logica and."
+    "keywords": "betterSIS, SIS, BLIF, SIS workflow, and logic gate"
+    "property=og:locale": "it_IT"
 ---
 
 # Guida iniziale SIS

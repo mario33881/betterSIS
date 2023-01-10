@@ -1,9 +1,10 @@
 ---
-html_meta:
-  "description lang=en": "SIS documentation: what I've found online."
-  "description lang=it": "Documentazioni SIS: cosa ho trovato online."
-  "keywords": "betterSIS, SIS, BLIF, SIS documentation"
-  "property=og:locale": "it_IT"
+myst:
+  html_meta:
+    "description lang=en": "SIS documentation: what I've found online."
+    "description lang=it": "Documentazioni SIS: cosa ho trovato online."
+    "keywords": "betterSIS, SIS, BLIF, SIS documentation"
+    "property=og:locale": "it_IT"
 ---
 
 # Documentazione SIS online

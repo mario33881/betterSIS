@@ -1,8 +1,9 @@
 ---
-html_meta:
-  "description lang=en": "betterSIS code documentation index."
-  "keywords": "betterSIS, betterSIS code, betterSIS documentation, betterSIS code documentation"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "betterSIS code documentation index."
+    "keywords": "betterSIS, betterSIS code, betterSIS documentation, betterSIS code documentation"
+    "property=og:locale": "en_US"
 ---
 
 # BetterSIS Code Documentation

@@ -1,9 +1,10 @@
 ---
-html_meta:
-  "description lang=en": "betterSIS: the modern shell for SIS. What is betterSIS? How to install betterSIS."
-  "description lang=it": "betterSIS: la shell moderna per SIS. Cosa e' betterSIS? Come installare betterSIS."
-  "keywords": "betterSIS, SIS, BLIF, install betterSIS"
-  "property=og:locale": "it_IT"
+myst:
+  html_meta:
+    "description lang=en": "betterSIS: the modern shell for SIS. What is betterSIS? How to install betterSIS."
+    "description lang=it": "betterSIS: la shell moderna per SIS. Cosa e' betterSIS? Come installare betterSIS."
+    "keywords": "betterSIS, SIS, BLIF, install betterSIS"
+    "property=og:locale": "it_IT"
 ---
 
 # betterSIS: la shell moderna per SIS

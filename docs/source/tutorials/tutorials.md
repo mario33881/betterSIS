@@ -1,9 +1,10 @@
 ---
-html_meta:
-  "description lang=en": "SIS and betterSIS tutorials index. What is SIS and betterSIS? How to install SIS and betterSIS, How to use SIS and betterSIS, SIS automation, SIS errors and warnings fixes and more."
-  "description lang=it": "Indice tutorial SIS e betterSIS. Cosa sono SIS e betterSIS? Come installare SIS e betterSIS, Come usare SIS e betterSIS, automazione SIS, risoluzione errori e warning SIS e molto altro."
-  "keywords": "betterSIS, SIS, BLIF, install SIS, install betterSIS, SIS automation, SIS warnings, SIS errors, SIS fix"
-  "property=og:locale": "it_IT"
+myst:
+  html_meta:
+    "description lang=en": "SIS and betterSIS tutorials index. What is SIS and betterSIS? How to install SIS and betterSIS, How to use SIS and betterSIS, SIS automation, SIS errors and warnings fixes and more."
+    "description lang=it": "Indice tutorial SIS e betterSIS. Cosa sono SIS e betterSIS? Come installare SIS e betterSIS, Come usare SIS e betterSIS, automazione SIS, risoluzione errori e warning SIS e molto altro."
+    "keywords": "betterSIS, SIS, BLIF, install SIS, install betterSIS, SIS automation, SIS warnings, SIS errors, SIS fix"
+    "property=og:locale": "it_IT"
 ---
 
 # SIS/betterSIS Tutorials [ITA]
