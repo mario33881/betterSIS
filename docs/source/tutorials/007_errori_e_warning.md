@@ -503,6 +503,26 @@ Per risolvere il problema:
     ```{note}
     La posizione ideale probabilmente e' sul segnale che "avvia" il datapath
     ```
+  
+  Immagine che rappresenta la situazione in cui appare l'errore "network contains a cycle":
+  ![SIS network cycle](../_static/images/sis_network_cycle.svg)
+
+  Immagine con risoluzione dell'errore:
+  ![SIS no network cycle](../_static/images/sis_no_network_cycle.svg)
+  ```{note}
+  Per risolvere il problema si aggiunge un latch/registro nel datapath che prende in input il segnale proveniente dalla FSM (che in questo caso e' chiamato "ready"). 
+  
+  L'output del latch fara' eseguire la parte di calcolo del datapath.
+  ```
+
+  Esempio di applicazione ([Elaborato SIS architettura degli elaboratori, anno 2020-2021](https://github.com/arc6-202021/lib_componenti_sis)):
+  ![Esempio SIS no network cycle](https://raw.githubusercontent.com/arc6-202021/lib_componenti_sis/a1597a731ccb27d28fb89c9a5d9d5e88d96f90b7/datapath/images/datapath.svg)
+  ```{note}
+  In questo caso il segnale proveniente dalla FSM in input al datapath si chiama "CHECK_DISPONIBILITA".
+  Il segnale viene mandato in input ad un latch e il suo output ("CHECK_DISPONIBILITA_IN") viene utilizzato per consentire la lettura dei dati provenienti dall'esterno del datapath mediante i multiplexer.
+
+  Rimuovendo il latch ed utilizzando direttamente il segnale "CHECK_DISPONIBILITA" per controllare i multiplexer si avrebbe l'errore "network contains a cycle".
+  ```
 
 ---
 
