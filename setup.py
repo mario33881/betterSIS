@@ -30,7 +30,7 @@ if __name__ == '__main__':
             "siswrapper==1.2.2",
             "prompt-toolkit==3.0.37",
             "certifi==2022.12.7",
-            "blifparser==1.0.0",
+            "blifparser==2.0.0",
             "blif2graph==1.0.0"
         ],  # dependencies
         python_requires='>=3.7',
