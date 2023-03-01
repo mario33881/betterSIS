@@ -1,5 +1,5 @@
 siswrapper==1.2.2
-prompt-toolkit==3.0.37
+prompt-toolkit==3.0.38
 certifi==2022.12.7
 blifparser==1.0.0
 blif2graph==1.0.0
