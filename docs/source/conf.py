@@ -43,6 +43,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinx.ext.autodoc",
+    'sphinx.ext.imgconverter',
     "sphinx_rtd_theme",
     "myst_parser",
 ]
