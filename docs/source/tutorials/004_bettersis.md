@@ -67,8 +67,10 @@ Per maggiori dettagli su questo ed altri metodi di installazione accedere al rep
 
 <div align=center>
 
+```{only} html
 [🢠 Guida iniziale SIS](./003_guida_iniziale_sis.md) &nbsp; | &nbsp; [siswrapper: il wrapper per automatizzare SIS con Python 🢡](./005_siswrapper.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

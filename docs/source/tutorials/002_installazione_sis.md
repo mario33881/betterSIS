@@ -89,8 +89,10 @@ Ora e' possibile iniziare a progettare sistemi digitali utilizzando SIS.
 
 <div align=center>
 
+```{only} html
 [🢠 Introduzione a SIS](./001_introduzione_a_sis.md) &nbsp; | &nbsp; [Guida iniziale SIS 🢡](./003_guida_iniziale_sis.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

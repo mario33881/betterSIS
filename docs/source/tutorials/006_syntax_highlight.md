@@ -117,8 +117,10 @@ Le funzionalita' incluse sono:
 
 <div align=center>
 
+```{only} html
 [🢠 siswrapper: il wrapper per automatizzare SIS con Python](./005_siswrapper.md) &nbsp; | &nbsp; [Errori e Warning in SIS 🢡](./007_errori_e_warning.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

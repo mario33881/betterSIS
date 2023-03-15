@@ -249,8 +249,10 @@ Nella prossima pagina della wiki trattero' questo passaggio.
 
 <div align=center>
 
+```{only} html
 [🢠 Documentazione SIS online](./008_documentazione_sis.md) &nbsp; | &nbsp; [Automazione avanzata in SIS 🢡](./010_automazione_avanzata.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

@@ -56,8 +56,10 @@ effettivamente migliorato area/ritardo.
 
 <div align=center>
 
+```{only} html
 [🢠 Indice](./tutorials.md) &nbsp; | &nbsp; [Guida all'installazione di SIS 🢡](./002_installazione_sis.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

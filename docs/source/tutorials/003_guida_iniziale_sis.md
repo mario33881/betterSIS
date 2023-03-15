@@ -234,8 +234,10 @@ La keyword ```.end``` indica la fine del componente definito a partire dalla key
 
 <div align=center>
 
+```{only} html
 [🢠 Installazione SIS](./002_installazione_sis.md) &nbsp; | &nbsp; [betterSIS: la shell moderna per SIS 🢡](./004_bettersis.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

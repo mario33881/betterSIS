@@ -29,8 +29,10 @@ Questa pagina contiene documentazioni/presentazioni riguardanti SIS che ho trova
 
 <div align=center>
 
+```{only} html
 [🢠 Errori e Warning in SIS](./007_errori_e_warning.md) &nbsp; | &nbsp; [Automazione semplice in SIS 🢡](./009_automazione_semplice.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

@@ -27,8 +27,10 @@ Per altri dettagli su siswrapper visitare il suo repository Github [cliccando qu
 
 <div align=center>
 
+```{only} html
 [🢠 betterSIS: la shell moderna per SIS](./004_bettersis.md) &nbsp; | &nbsp; [Syntax Highlighting per file BLIF 🢡](./006_syntax_highlight.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

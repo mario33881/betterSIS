@@ -402,8 +402,10 @@ Per chi invece trova bug di betterSIS:
 
 <div align=center>
 
+```{only} html
 [🢠 Semplice automazione in SIS](./009_automazione_semplice.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>

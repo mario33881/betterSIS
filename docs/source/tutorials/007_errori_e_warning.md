@@ -601,8 +601,10 @@ tra file Windows e Linux (ad esempio se si sta scrivendo i file BLIF su Windows 
 
 <div align=center>
 
+```{only} html
 [🢠 Syntax Highlighting per file BLIF](./006_syntax_highlight.md) &nbsp; | &nbsp; [Documentazione SIS online 🢡 ](./008_documentazione_sis.md)
 
 [🗎 Torna all'indice](./tutorials.md)
+```
 
 </div>
