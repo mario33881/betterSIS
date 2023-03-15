@@ -28,7 +28,7 @@ betterSIS dovrebbe essere compatibile con tutte le versioni di SIS: la libreria 
 
 E' possibile scaricare betterSIS (o il suo codice sorgente) da Github [cliccando qui](https://github.com/mario33881/betterSIS)
 
-#### Installare betterSIS
+## Installare betterSIS
 
 Esistono [diversi metodi di installazione](https://github.com/mario33881/betterSIS/wiki/Differenza-tra-metodi-di-installazione). 
 ```{note}

@@ -35,7 +35,7 @@ Ho realizzato una estensione per Visual Studio Code per aggiungere queste funzio
 
 L'estensione si chiama ["BLIF (SIS)" sul marketplace](https://marketplace.visualstudio.com/items?itemName=mario33881.vscode-blif) di Visual Studio Code o [vscode-blif su Github](https://github.com/mario33881/vscode-blif).
 
-#### Installare l'estensione
+### Installare l'estensione
 
 Per installare l'estensione e' possibile scegliere UNO dei seguenti metodi:
 
