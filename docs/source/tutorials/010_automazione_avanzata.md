@@ -18,6 +18,7 @@ e' verificare che l'output dei circuiti sia l'output atteso.
 * [Verifica avanzata con Python](#verifica-avanzata-con-python)
 * [Workflow e test completamente automatici CI/CD](#workflow-e-test-completamente-automatici-ci-cd)
 
+(verifica-semplice-con-diff)=
 ## Verifica semplice con diff
 
 ```diff``` e' un comando disponibile dalla
@@ -100,6 +101,7 @@ else
 fi
 ```
 
+(verifica-avanzata-con-python)=
 ## Verifica avanzata con Python
 
 Utilizzando un linguaggio di programmazione, come Python,
@@ -124,6 +126,7 @@ del repository dell'elaborato qui: [https://github.com/arc6-202021/lib_component
 Una breve descrizione del programma e' presente alla fine della prossima sezione.
 ```
 
+(workflow-e-test-completamente-automatici-ci-cd)=
 ## Workflow e test completamente automatici CI/CD
 
 ```{note}

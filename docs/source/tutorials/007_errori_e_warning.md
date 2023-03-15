@@ -88,6 +88,7 @@ Gli errori simili sono stati messi nella stessa sezione. Il nome usa ```/``` per
 
 ---
 
+(model-already-defined)=
 ## model already defined
 
 L'errore indica che e' stata utilizzata la stessa stringa per specificare il nome del modello/componente nel file o nei file importati utilizzando la keyword ```.search```:
@@ -114,6 +115,7 @@ Per risolvere il problema occorre scegliere nomi univoci per i ```.model```
 
 ---
 
+(read-blif-no-network-found)=
 ## read_blif: no network found
 
 Si e' eseguito il comando ```read_blif``` su un file che e' vuoto o che non contiene la descrizione del circuito.
@@ -153,6 +155,7 @@ Esempio con un file che cerca di importare un file vuoto:
 
 ---
 
+(search-file-not-found)=
 ## search file not found
 
 Il file letto contiene una keyword ```.search``` che cerca  di importare un file non esistente.
@@ -163,6 +166,7 @@ Questo problema appare anche se si importa un file che cerca di importare un fil
 
 ---
 
+(output-input-name)=
 ## .output / .input / .name
 
 Questo messaggio (preceduto dal numero di riga e dal nome del file) appare perche' si e' sbagliato a scrivere la keyword ```.inputs``` o ```.outputs``` o ```.names``` : manca la ```"s"``` !
@@ -170,6 +174,7 @@ Questo messaggio (preceduto dal numero di riga e dal nome del file) appare perch
 
 ---
 
+(end-null)=
 ## .end ... (null)
 Questo warning puo' essere risolto
 aggiungendo una riga vuota sotto alla riga
@@ -206,6 +211,7 @@ Esempi di messaggio:
 
 ---
 
+(x-is-output-but-y-already-has-function)=
 ## X is output but Y already has function
 Questo errore appare perche' un output
 e' stato definito piu' volte.
@@ -230,6 +236,7 @@ Esempio:
 
 ---
 
+(must-give-f-or-r-but-not-both)=
 ## must give F or R, but not both
 
 Questo errore appare perche' si e' definita una tabella di verita' sia con mintermini sia con maxtermini.
@@ -287,6 +294,7 @@ SOLUZIONE CON MAXTERMINI:
 
 ---
 
+(can-t-find-model-in-files-or-library)=
 ## can't find model in files or library
 
 Questo errore appare perche' si sta cercando
@@ -317,6 +325,7 @@ e l'errore "can't find model in files or library" potrebbe "scomparire".
 
 ---
 
+(calling-subckt-contains)=
 ## calling subckt (contains `=')
 
 Questo errore puo' apparire subito prima dell'errore ```can't find model in files or library```:
@@ -347,6 +356,7 @@ Esempio:
 
 ---
 
+(cyclic-model-dependency-detected)=
 ## Cyclic model dependency detected
 Questo errore si verifica quando un modello cerca
 di importare se stesso utilizzando la keyword ```.subckt```
@@ -371,6 +381,7 @@ e sostituirlo con il nome corretto.
 
 ---
 
+(warning-input-does-not-fanout-warning-node-does-not-fanout)=
 ## warning input does not fanout / warning node does not fanout
 
 Questo tipicamente NON e' un errore: e' un warning.
@@ -465,6 +476,7 @@ Questo warning appare quando:
 
 ---
 
+(warning-node-is-not-driven)=
 ## warning node is not driven
 
 Questo warning, al contrario dei warning ```warning input does not fanout``` / ```warning node does not fanout```, e' tipicamente grave.
@@ -490,6 +502,7 @@ Esempio:
 
 ---
 
+(network-contains-a-cycle)=
 ## network contains a cycle
 
 SIS rileva che un ciclo/loop e' presente nel circuito:
@@ -506,10 +519,13 @@ Per risolvere il problema:
     ```
   
   Immagine che rappresenta la situazione in cui appare l'errore "network contains a cycle":
+
   ![SIS network cycle](../_static/images/sis_network_cycle.svg)
 
   Immagine con risoluzione dell'errore:
+  
   ![SIS no network cycle](../_static/images/sis_no_network_cycle.svg)
+
   ```{note}
   Per risolvere il problema si aggiunge un latch/registro nel datapath che prende in input il segnale proveniente dalla FSM (che in questo caso e' chiamato "ready"). 
   
@@ -527,6 +543,7 @@ Per risolvere il problema:
 
 ---
 
+(errore-non-in-elenco)=
 ## Errore non in elenco
 
 Se le soluzioni indicate in questa pagina non funzionano:

@@ -17,6 +17,7 @@ In questa pagina vengono elencati i metodi piu' semplici:
 * [Script e parametro -f](#script-e-parametro--f)
 * [Automazione avanzata](#automazione-avanzata)
 
+(script-e-il-comando-source)=
 ## Script e il comando source
 
 Questo e' il primo (e il piu' semplice) metodo di automazione
@@ -75,6 +76,7 @@ Per farlo basta:
 
 4. Uscire da SIS con il comando ```quit``` quando si e' finito di usarlo.
 
+(script-e-parametro--f)=
 ## Script e parametro -f
 
 SIS dispone di un parametro, ```-f <file_script>```, che gli permette
@@ -228,6 +230,7 @@ Da notare il ```./``` a inizio comando
 
 Ora con un solo comando facilmente ricordabile e un editor che riconosce in tempo reale la modifica del file di output potete fare modifiche "al volo" al file BLIF, eseguire SIS e memorizzare gli output di tutti i comandi su file!
 
+(automazione-avanzata)=
 ## Automazione avanzata
 
 Il passo successivo e "finale" dell'automazione e' il controllo
