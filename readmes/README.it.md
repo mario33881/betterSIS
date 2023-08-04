@@ -111,7 +111,7 @@ Puoi:
     Dall'interfaccia grafica:
     1. Clicca questo pulsante:
 
-        [![Scarica dallo Snap Store](https://snapcraft.io/static/images/badges/it/snap-store-black.svg)](https://snapcraft.io/bettersis)
+        [![Scarica dallo Snap Store](../_static/images/snap-store-black.svg)](https://snapcraft.io/bettersis)
 
 
     2. Poi clicca sul pulsante "Install" (installa) in alto a destra della pagina

@@ -115,7 +115,7 @@ You can:
 
     1. Click this button:
 
-        [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/bettersis)
+        [![Get it from the Snap Store](_static/images/snap-store-black.svg)](https://snapcraft.io/bettersis)
 
     2. Then click on the "Install" button on the top right side of the webpage
     3. Click on "View in Desktop Store" and "Choose an app"
