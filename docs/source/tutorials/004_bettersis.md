@@ -45,7 +45,7 @@ sudo snap install bettersis
 E' anche possibile installarlo da interfaccia grafica seguendo queste istruzioni:
 1. Clicca questo pulsante:
 
-    [![Scarica dallo Snap Store](https://snapcraft.io/static/images/badges/it/snap-store-black.svg)](https://snapcraft.io/bettersis)
+    [![Scarica dallo Snap Store](../_static/images/snap-store-black.svg)](https://snapcraft.io/bettersis)
 
 2. Poi clicca sul pulsante "Install" (installa) in alto a destra della pagina
 3. Clicca su "View in Desktop Store" (visualizza nello store sul desktop) e "Choose an app" (scegli una app)
